@@ -1,25 +1,25 @@
 from App.database import db
 
 class Notification(db.Model):
-    notifID = db.Column(db.Integer, primary_key=True)
+    notifId = db.Column(db.Integer, primary_key=True)
     # who it was sent to
-    sentToStaffID = db.Column(db.Integer, db.ForeignKey('staff.staffID'))
+    staffId= db.Coloumn(db.Integer,db.ForeignKey('staff.staffId'))
     # who sent it
-    sentFromStudentID = db.Column(db.Integer, db.ForeignKey('student.studentID'))
-    requestBody = db.Column(db.String, nullable=False)
-    status = db.Column(db.String, nullable=False)
+    # requestId = db.Column(db.Integer, db.ForeignKey('student.studentId'))
+    body = db.Column(db.String, nullable=False)
+    seen = db.Column(db.Boolean,default=False nullable=False)
 
-    def __init__(self, sentToStaffID,sentFromStudentID, requestBody):
-        self.sentToStaffID = sentToStaffID
-        self.sentFromStudentID=sentFromStudentID
-        self.requestBody=requestBody
-        self.status="unread"
+    def __init__(self, staffId,studentId, body):
+        self.staffId = staffId
+        # self.requestId=requestId
+        self.body=body
+        self.seen=seen
         
     def toJSON(self):
         return{
-            'notifID': self.notifID,
-            'sentToStaffID': self.sentToStaffID,
-            'sentFromStudentID': self.sentFromStudentID,
-            'requestBody': self.requestBody,
-            'status': self.status
+            'notifId': self.notifId,
+            'staffId': self.staffId,
+            # 'requestID': self.requestID,
+            'body': self.body,
+            'seen': self.seen
         }
