@@ -73,12 +73,7 @@ def get_staff_feed_json(staffID):
     notifs = get_staff_feed(staffID)
     if notifs:
         return [notif.toJSON() for notif in notifs]
-    return None
-
-def notify_staff(notifId):
-
-
-    return None    
+   
 
 
 ### Recommendation Functions
@@ -91,10 +86,10 @@ def reject_request(requestId):
     update_status(requestId,"rejected")
     return None
     '''
-
+'''
 def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
     newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
-    return newrec
+    return newrec'''
 
 def submit_recommendation(sentFromStaffID, sentToStudentID, recURL):
     student = Student.query.get(sentToStudentID)

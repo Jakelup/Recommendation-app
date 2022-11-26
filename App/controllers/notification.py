@@ -46,6 +46,16 @@ def change_status(notif, status):
     if notif:
         notif.status = status
     return notif
+
+
+      return None
+
+
+def notify_staff(notifId):
+
+
+    return None   
+
 '''
 # approve notif
 def approve_notif(staffID, notifID, status):

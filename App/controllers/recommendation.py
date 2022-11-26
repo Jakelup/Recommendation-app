@@ -3,6 +3,10 @@ from App.database import db
 from sqlalchemy.exc import IntegrityError
 
 
+def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
+    newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
+    return newrec
+    
 def get_all_recommendations():
     return Recommendation.query.all()
 
