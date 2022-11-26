@@ -1,7 +1,8 @@
-from App.models import Staff
+from App.models import Staff, Recommendation
 from App.database import db
 from flask import jsonify
 
+###Staff Info Functions
 def get_staff(id):
     staff=Staff.query.get(id)
     if staff:
@@ -71,3 +72,39 @@ def get_staff_feed_json(staffID):
         return [notif.toJSON() for notif in notifs]
     return None
 
+
+### Recommendation Functions
+
+def accept_request(notifId):
+    notifs = get_staff_feed(staffID)
+    if notifs:
+        return [notif.toJSON() for notif in notifs]
+    return None
+
+def reject_request(notifId):
+    notifs = get_staff_feed(staffID)
+    if notifs:
+        return [notif.toJSON() for notif in notifs]
+    return None
+
+def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
+    newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
+    return newrec
+
+def submit_recommendation(sentFromStaffID, sentToStudentID, recURL):
+    student = Student.query.get(sentToStudentID)
+    newrec = create_recommendation(sentFromStaffID, sentToStudentID, recURL)
+    try:
+        db.session.add(newrec)
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return None
+    student.recommendationList.append(newrec)
+    try:
+        db.session.add(student)
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return None
+    return student

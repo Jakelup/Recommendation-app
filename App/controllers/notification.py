@@ -46,7 +46,7 @@ def change_status(notif, status):
     if notif:
         notif.status = status
     return notif
-
+'''
 # approve notif
 def approve_notif(staffID, notifID, status):
     notif = get_user_notif(staffID, notifID)
@@ -59,4 +59,4 @@ def approve_notif(staffID, notifID, status):
             db.session.rollback()
             return None
     return notif
-    
+'''
