@@ -1,4 +1,4 @@
-from App.models import Staff, Recommendation
+from App.models import Staff, Recommendation, Notification
 from App.database import db
 from flask import jsonify
 
@@ -61,6 +61,9 @@ def search_staff(type, keyword):
             return get_staff_by_lastName(keyword)
     return None
 
+
+### Notification Functions
+
 def get_staff_feed(staffID):
     staff = get_staff(staffID)
     return staff.notificationFeed
@@ -72,20 +75,22 @@ def get_staff_feed_json(staffID):
         return [notif.toJSON() for notif in notifs]
     return None
 
+def notify_staff(notifId):
+
+
+    return None    
+
 
 ### Recommendation Functions
-
-def accept_request(notifId):
-    notifs = get_staff_feed(staffID)
-    if notifs:
-        return [notif.toJSON() for notif in notifs]
+'''
+def accept_request(requestId):
+    update_status(requestId,"accepted")
     return None
 
-def reject_request(notifId):
-    notifs = get_staff_feed(staffID)
-    if notifs:
-        return [notif.toJSON() for notif in notifs]
+def reject_request(requestId):
+    update_status(requestId,"rejected")
     return None
+    '''
 
 def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
     newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
