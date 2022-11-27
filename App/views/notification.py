@@ -6,7 +6,8 @@ from App.controllers import (
     get_all_notifs_json,
     get_staff,
     get_user_notif,
-    approve_notif
+    # approve_notif, REMOVED DURING REFACTORING OF NOTICATION CONTROLLER
+    get_pendingR_byStaff
 )
 
 notification_views = Blueprint('notification_views', __name__, template_folder='../templates')

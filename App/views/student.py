@@ -6,7 +6,7 @@ from App.controllers import (
     search_staff,
     get_all_students,
     get_all_students_json,
-    get_student_reclist_json
+    get_student_reclist_json,
 )
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')

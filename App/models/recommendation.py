@@ -5,19 +5,22 @@ class Recommendation(db.Model):
     staffId = db.Column(db.Integer, db.ForeignKey('staff.staffId'))
     studentId = db.Column(db.Integer, db.ForeignKey('student.studentId'))
     body = db.Column(db.String, nullable=False)
-    date = db.Coloumn(db.date, nullable= False)
+    date = db.Column(db.Date, nullable= False)
 
-    def __init__(self, staffId,studentId, body):
+    def __init__(self, recId, staffId, studentId, body, date):
+        self.recId = recId
         self.staffId = staffId
         self.studentId=studentId
         self.body=body
+        self.date = date
     
     def toJSON(self):
         return{
-            'studentId': self.studentId,
+            'recId': self.recId,
             'staffId': self.staffId,
             'studentId': self.studentId,
-            'body': self.body
+            'body': self.body,
+            'date': self.date
         }
 
     

@@ -5,19 +5,31 @@ class Student(User):
     studentId = db.Column(db.Integer, primary_key=True)
     # student has a list of recommendation objects
     recommendationList = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
-    
+    requests = db.relationship('Request',  backref=db.backref('student', lazy='joined')) 
+
+    def __init__(self, username, password, name, faculty, department, studentId, recommendationList):
+        self.username = username
+        self.set_password(password)
+        self.name = name
+        self.faculty = faculty
+        self.department = department
+        self.studentId = studentId
+        self.recommendationList = recommendationList
+        self.user_type = "student"
+
     def toJSON(self):
         return{
             'studentId': self.studentId,
-            'username': self.username,
-            'name': self.firstName,
-            
+            'name': self.name,
+            'faculty': self.faculty,
+            'department': self.department
         }
         
     def toJSON_with_recommendations(self):
         return{
-            'staffId': self.staffId,
-            'username': self.username,
+            'studentId': self.studentId,
             'name': self.name,
+            'faculty': self.faculty,
+            'department': self.department,
             'recommendationList': [recommendation.toJSON() for recommendation in self.recommendationList]
         }

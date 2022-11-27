@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, send_from_direct
 from flask_jwt import jwt_required, current_identity
 
 from App.controllers import (
-    send_recommendation,
+    # send_recommendation, REMOVED DURING REFACTORING OF RECOMMENDATION.PY
     get_all_recommendations_json,
     get_student,
     get_recommendation,
@@ -20,7 +20,7 @@ def sendRecommendation():
         student = get_student(data['sentToStudentID'])
         if not student:
             return Response({'student not found'}, status=404)
-        send_recommendation(current_identity.id, data['sentToStudentID'], data['recURL'])
+        # send_recommendation(current_identity.id, data['sentToStudentID'], data['recURL'])
         return Response({'recommendation sent'}, status=200)
     return Response({"students cannot perform this action"}, status=401)
 

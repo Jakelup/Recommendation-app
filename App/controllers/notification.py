@@ -45,10 +45,8 @@ def get_user_notif(staffID, notifID):
 def change_status(notif, status):
     if notif:
         notif.status = status
-    return notif
-
-
-      return None
+        return notif
+    return None
 
 
 def notify_staff(notifId):
