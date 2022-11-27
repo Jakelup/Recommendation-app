@@ -5,7 +5,7 @@ class Notification(db.Model):
     # who it was sent to
     staffId= db.Column(db.Integer,db.ForeignKey('staff.staffId'))
     # who sent it
-    requestId = db.Column(db.Integer, db.ForeignKey('student.studentId'))
+    requestId = db.Column(db.Integer, db.ForeignKey('request.requestID'))
     body = db.Column(db.String, nullable=False)
     dateNTime = db.Column(db.TIMESTAMP, nullable=False)
     seen = db.Column(db.Boolean, default=False, nullable=False)
