@@ -11,14 +11,18 @@ def get_all_student_requests_JSON():
     requests = get_all_student_requests()
     if not requests:
         return None
-    requests = [requests.toJSON() for requests in requests]
+    requests = [request.toJSON() for request in requests]
     return requests
 
-def get_request():
-    return 0
+def get_request(requestID):
+    return Request.query.filter_by(requestID).first()
     
-def get_request_JSON():
-    return 0
+def get_request_JSON(requestID):
+    req = get_request(requestID)
+    if not req:
+        return None
+    req = request.toJSON(req)
+    return req
     
 def get_pendingR_byStud():
     return 0
