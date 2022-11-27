@@ -11,7 +11,7 @@ from App.controllers import (
 )
 
 notification_views = Blueprint('notification_views', __name__, template_folder='../templates')
-
+'''
 # SEND REQUEST TO STAFF MEMBER
 @notification_views.route('/request/send', methods=['POST'])
 @jwt_required()
@@ -25,6 +25,19 @@ def sendRequest():
         return Response({'request sent successfully'}, status=200)
     return Response({"staff cannot perform this action"}, status=401)
 
+'''
+
+# SEND NOTIFICATION TO STAFF MEMBER
+@notification_views.route('/request/send', methods=['POST'])
+@jwt_required()
+def notify_staff(notifId):
+    if get_staff(current_identity.id):
+        data = get_request()
+        staff = get_staff(data['sentToStaffID'])
+        if not staff:
+            return Response({'staff member not found'}, status=404)
+        send_notification(current_identity.id, data['requestBody'], data['sentToStaffID'])
+    return None   
 
 # VIEW NOTIFICATION
 @notification_views.route('/notifications/<notifID>', methods=['GET'])
