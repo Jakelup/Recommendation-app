@@ -17,6 +17,7 @@ class Staff(User):
         self.department = department
         self.staffId = staffId
         self.requestList = requestList
+        self.notifList = notificationtList
         self.user_type = "staff"
 
     def toJSON(self):

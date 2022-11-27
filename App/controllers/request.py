@@ -4,11 +4,15 @@ from App.database import db
 #TO DO:
 
 def get_all_student_requests():
-    return 0
+    return Request.query.all()
 
 
 def get_all_student_requests_JSON():
-    return 0
+    requests = get_all_student_requests()
+    if not requests:
+        return None
+    requests = [requests.toJSON() for requests in requests]
+    return requests
 
 def get_request():
     return 0
