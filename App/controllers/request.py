@@ -37,10 +37,10 @@ def get_request_JSON(requestID):
     return req
 
 #CHANGE REQUEST STATUS
-def change_status(requestID):
-
-
-    return 0
+def change_status(requestID,newStatus):
+    request = get_request(requestID)
+    request.Status = newStatus
+    return request
 
 
 #STUDENT REQUESTS
