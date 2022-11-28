@@ -39,14 +39,19 @@ def get_all_notifs_json():
     return notifs
 
 # gets a notification from a user's notif feed
+#search notification by Notification ID
 def get_user_notif(staffID, notifID):
     return Notification.query.filter_by(sentToStaffID=staffID, notifID=notifID).first()
 
-def change_status(notif, status):
-    if notif:
-        notif.status = status
-        return notif
-    return None
+
+
+
+
+# def change_status(notif, status):
+#     if notif:
+#         notif.status = true
+#         return notif
+#     return None
 
 
 '''

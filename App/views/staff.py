@@ -7,8 +7,6 @@ from App.controllers import (
     get_all_staff_json,
     get_all_staff_notifs_json,
     get_staff_by_name,
-    get_staff_by_firstName,
-    get_staff_by_lastName,
     get_staff_feed_json
 )
 

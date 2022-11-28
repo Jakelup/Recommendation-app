@@ -3,6 +3,7 @@ from App.database import db
 from flask import jsonify
 
 ###Staff Info Functions
+#search staff by ID
 def get_staff(id):
     staff=Staff.query.get(id)
     if staff:
@@ -26,47 +27,46 @@ def get_all_staff_notifs_json():
     staff = [staf.toJSON_with_notifications() for staf in staff]
     return staff
 
-def get_staff_by_firstName(firstName):
-    staff= Staff.query.filter_by(firstName=firstName).all()
-    staff = [staf.toJSON() for staf in staff]
-    if staff==[]:
-        return None
-    return jsonify(staff)
+# def get_staff_by_firstName(firstName):
+#     staff= Staff.query.filter_by(firstName=firstName).all()
+#     staff = [staf.toJSON() for staf in staff]
+#     if staff==[]:
+#         return None
+#     return jsonify(staff)
 
-def get_staff_by_lastName(lastName):
-    staff=Staff.query.filter_by(lastName=lastName).all()
+# def get_staff_by_lastName(lastName):
+#     staff=Staff.query.filter_by(lastName=lastName).all()
+#     staff = [staf.toJSON() for staf in staff]
+#     if staff == []:
+#         return None
+#     return jsonify(staff)
+
+def get_staff_by_name(name):
+    staff=Staff.query.filter_by(name=name).all()
     staff = [staf.toJSON() for staf in staff]
     if staff == []:
         return None
     return jsonify(staff)
 
-def get_staff_by_name(firstName, lastName):
-    staff=Staff.query.filter_by(firstName=firstName, lastName=lastName).all()
-    staff = [staf.toJSON() for staf in staff]
-    if staff == []:
-        return None
-    return jsonify(staff)
-
-def search_staff(type, keyword):
-    if (type=="ID"):
-        staff = get_staff(keyword)
-        return staff.toJSON()
-    else:
-        if (type=="name"):
-            name=keyword.split(",")
-            return get_staff_by_name(name[0], name[1])
-        if (type=="firstName"):
-            return get_staff_by_firstName(keyword)
-        if (type=="lastName"):
-            return get_staff_by_lastName(keyword)
-    return None
+# def search_staff(type, keyword):
+#     if (type=="ID"):
+#         staff = get_staff(keyword)
+#         return staff.toJSON()
+#     else:
+#         if (type=="name"):
+#             name=keyword.split(",")
+#             return get_staff_by_name(name[0], name[1])
+#         if (type=="firstName"):
+#             return get_staff_by_firstName(keyword)
+#         if (type=="lastName"):
+#             return get_staff_by_lastName(keyword)
+#     return None
 
 
 ### Notification Functions
-
 def get_staff_feed(staffID):
     staff = get_staff(staffID)
-    return staff.notificationFeed
+    return staff.notificationList
 
 # get the notification feed for the current user
 def get_staff_feed_json(staffID):
@@ -91,6 +91,7 @@ def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
     newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
     return newrec'''
 
+##This function should be used for staff submitting rec. Considering moving to views. Will review in testing
 def submit_recommendation(sentFromStaffID, sentToStudentID, recURL):
     student = Student.query.get(sentToStudentID)
     newrec = create_recommendation(sentFromStaffID, sentToStudentID, recURL)
