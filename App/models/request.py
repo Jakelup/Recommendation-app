@@ -1,17 +1,18 @@
 from App.database import db
 import enum
 
-Class Status(enum.Enum):
+class Status(enum.Enum):
  ACCEPTED = "Accepted"
  REJECTED = "Rejected"
  PENDING = "Pending"
+ COMPLETED = "Completed"
 
 class Request(db.Model):
     requestID = db.Column(db.Integer, primary_key=True)
     staffId = db.Column(db.Integer,db.ForeignKey('staff.staffId'))
     studentId = db.Column(db.Integer,db.ForeignKey('student.studentId'))
     body = db.Column(db.String, nullable=False)
-    status = db.Column(db.Enum(Status), nullable = False, default = status.PENDING)
+    status = db.Column(db.Enum(Status), nullable = False, default = Status.PENDING)
     dateNTime = db.Column(db.TIMESTAMP,nullable=False)
     deadline = db.Column(db.Date, nullable=False)
 
