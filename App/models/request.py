@@ -1,11 +1,17 @@
 from App.database import db
+import enum
+
+Class Status(enum.Enum):
+ ACCEPTED = "Accepted"
+ REJECTED = "Rejected"
+ PENDING = "Pending"
 
 class Request(db.Model):
     requestID = db.Column(db.Integer, primary_key=True)
     staffId = db.Column(db.Integer,db.ForeignKey('staff.staffId'))
     studentId = db.Column(db.Integer,db.ForeignKey('student.studentId'))
     body = db.Column(db.String, nullable=False)
-    #status - Luc-Aidan will implement enum
+    status = db.Column(db.Enum(Status), nullable = False, default = status.PENDING)
     dateNTime = db.Column(db.TIMESTAMP,nullable=False)
     deadline = db.Column(db.Date, nullable=False)
 
@@ -14,7 +20,7 @@ class Request(db.Model):
         self.staffId = staffId
         self.studentId = studentId
         self.body = body
-        #add init status 
+        self.status = status
         self.dateNTime = dateNTime
         self.deadline = deadline
         
@@ -24,7 +30,7 @@ class Request(db.Model):
             'staffId': self.staffId,
             'requestID': self.requestID,
             'body': self.body,
-            #add toJSON status
+            'status': self.status,
             'dateNTime': self.dateNTime,
             'seen': self.seen
         }
