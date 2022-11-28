@@ -6,11 +6,12 @@ from App.controllers import (
     get_all_student_requests_JSON,
     get_request,
     get_request_JSON,
-    get_pendingR_byStud,
-    get_acceptedR_byStud,
-    get_acceptedR_byStaff,
-    get_rejectedR_byStaff,
-    get_completedR_byStaff
+    get_student_pendingR,
+    get_student_acceptedR,
+    get_staff_acceptedR,
+    get_staff_rejectedR,
+    get_staff_completedR,
+    get_staff_pendingR
 )
 
 request_views = Blueprint('request_views', __name__, template_folder='../templates')

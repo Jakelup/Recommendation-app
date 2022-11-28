@@ -1,7 +1,6 @@
 from App.models import Request
 from App.database import db
 
-#TO DO:
 
 def get_all_student_requests():
     return Request.query.all()
@@ -24,20 +23,28 @@ def get_request_JSON(requestID):
     req = request.toJSON(req)
     return req
     
-def get_pendingR_byStud():
+
+
+#STUDENT REQUESTS
+def get_student_pendingR(studentID, requestID):
+    req = get_request(requestID)
+    #CHECK REQ STATUS FOR PENDING
     return 0
 
-def get_acceptedR_byStud():
+def get_student_acceptedR():
     return 0
 
-def get_acceptedR_byStaff():
+
+
+##STAFF REQUESTS
+def get_staff_acceptedR():
     return 0
 
-def get_rejectedR_byStaff():
+def get_staff_rejectedR():
     return 0
 
-def get_completedR_byStaff():
+def get_staff_completedR():
     return 0
 
-def get_pendingR_byStaff():
+def get_staff_pendingR():
     return 0
