@@ -39,6 +39,7 @@ def get_request_JSON(requestID):
 #CHANGE REQUEST STATUS
 def change_status(requestID):
 
+
     return 0
 
 
@@ -47,14 +48,14 @@ def get_student_pendingR(studentId):
     requests = get_all_student_requests(studentId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Pending").first()
+    requests = Request.query.filter_by(Status="Pending").all()
     return requests
 
 def get_student_acceptedR(studentId):
     requests = get_all_student_requests(studentId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Accepted").first()
+    requests = Request.query.filter_by(Status="Accepted").all()
     return requests
 
 
@@ -64,26 +65,26 @@ def get_staff_acceptedR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Accepted").first()
+    requests = Request.query.filter_by(Status="Accepted").all()
     return requests
 
 def get_staff_rejectedR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Rejected").first()
+    requests = Request.query.filter_by(Status="Rejected").all()
     return requests
 
 def get_staff_completedR():
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Completed").first()
+    requests = Request.query.filter_by(Status="Completed").all()
     return requests
 
 def get_staff_pendingR():
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Pending").first()
+    requests = Request.query.filter_by(Status="Pending").all()
     return requests
