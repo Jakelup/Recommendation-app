@@ -27,6 +27,15 @@ def sendRequest():
 
 '''
 
+#CREATE A NOTIFICATION FROM ALL PENDING REQUESTS (Refactor routes below to interact with request object)
+# 
+# SEND NOTIFICATIONS TO NOTIFICATIONLOG.HTML
+
+
+
+
+
+
 # SEND NOTIFICATION TO STAFF MEMBER
 @notification_views.route('/request/send', methods=['POST'])
 @jwt_required()
@@ -38,6 +47,7 @@ def notify_staff(notifId):
             return Response({'staff member not found'}, status=404)
         send_notification(current_identity.id, data['requestBody'], data['sentToStaffID'])
     return None   
+
 
 # VIEW NOTIFICATION
 @notification_views.route('/notifications/<notifID>', methods=['GET'])
