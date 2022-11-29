@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response
 from flask_jwt import jwt_required, current_identity
+from flask_login import login_required, current_user
 
 from App.controllers import (
     get_staff, 
@@ -12,6 +13,26 @@ from App.controllers import (
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 
+
+## Render first version of staffMain.html
+@staff_views.route('/staffMain', methods=['GET'])
+# @login_required -- enable this once login is set up
+def load_page():
+    return render_template('staffMain.html')
+
+
+
+
+
+
+
+
+
+
+
+    
+
+### ARCHIVE- ORIGINAL CODE: 
 
 # VIEW NOTIFICATION FEED
 @staff_views.route('/notifications', methods=['GET'])
@@ -40,11 +61,11 @@ def staff():
         return jsonify(staff)
     return ("No staff users recorded")
 
+
+
 # JSON view all staff + their notification feed
-@staff_views.route('/staff/feeds', methods=['GET'])
+@staff_views.route('/staff/NotifFeed', methods=['GET'])
 def staff_notifs():
     staff = get_all_staff_notifs_json()
     if staff:
         return jsonify(staff)
-    return ("No staff users recorded")
-

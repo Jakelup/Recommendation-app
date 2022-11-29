@@ -5,6 +5,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
+from flask_login import LoginManager
 
 from App.database import create_db
 
@@ -54,6 +55,9 @@ def loadConfig(app, config):
         
     for key, value in config.items():
         app.config[key] = config[key]
+
+
+login_manager = LoginManager()
 
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')

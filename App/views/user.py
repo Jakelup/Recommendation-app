@@ -1,9 +1,13 @@
+from flask import Flask
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
 from flask_jwt import jwt_required, current_identity
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, current_user, login_required
 from App.database import db
 from sqlalchemy.exc import IntegrityError
 from flask_bcrypt import Bcrypt
+# from App.main import app
+
+app = Flask(__name__, static_url_path='/static')
 
 from App.controllers import (
     create_user,
@@ -14,48 +18,64 @@ from App.controllers import (
 )
 
 login_manager = LoginManager()
-login_manager.initapp(app)
+login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 @login_manager.user_loader
-def load_user(user.id):
+def load_user(user_id):
     return User.query.get(int(user_id))
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 
 # SIGNUP - CREATE ACCOUNT
-#@user_views.route('/signup', methods=['POST'])
-#def createAccount():
-#    data = request.get_json()
-#    return user_signup(data['firstName'], data['lastName'], data['email'], data['password'], data['userType'])
 
-@app.route('/register', methods=['GET', 'POST'])
+## Render first version of signUp.html: 
+#adjust route accordingly to hold functionality and return the required objects
+@user_views.route('/signUp', methods=['GET', 'POST'])
 def register():
-    form = RegisterForm()
+    # form = RegisterForm()
     
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password = hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        #redirect to approriate page
-        return 
+    # if form.validate_on_submit():
+    #     hashed_password = bcrypt.generate_password_hash(form.password.data)
+    #     new_user = User(username=form.username.data, password = hashed_password)
+    #     db.session.add(new_user)
+    #     db.session.commit()
+        return render_template('signUp.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+    
+
+## Render first version of login.html: 
+#adjust route accordingly to hold functionality and return the required objects
+@user_views.route('/login')
+def getLoginPage():
+    # if current_user.is_authenticated:
+    #     flash('Already Logged In')
+        #if user type is student redirect to studentMain
+        #if user type is staff redirect to staffMain
+        # return redirect()
+    # form = LogIn()
+    return render_template('login.html')
+
+
+
+@user_views.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
+                login_user(user, True)
+                flash('Successful Login')
                 #redirect to homepage
+                #if user type is student redirect to student main
+                #if user type is staff redirect to staff main
                 return
     #redirect to homepage
     return
 
-@app.route('/logout', methods=['GET','POST'])
+@user_views.route('/logout', methods=['GET','POST'])
 @login_required
 def logout():
     logout_user()
@@ -84,3 +104,8 @@ def client_app():
 @user_views.route('/static/users', methods=['GET'])
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
+
+#@user_views.route('/signup', methods=['POST'])
+#def createAccount():
+#    data = request.get_json()
+#    return user_signup(data['firstName'], data['lastName'], data['email'], data['password'], data['userType'])

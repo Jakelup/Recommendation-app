@@ -17,18 +17,22 @@ from App.controllers import (
 
 request_views = Blueprint('request_views', __name__, template_folder='../templates')
 
-#GET ALL PENDING REQUESTS BY STUDENT ID
+
+## Create Route called /studentMain to: 
+    #GET ALL PENDING REQUESTS BY STUDENT ID 
+    #GET ALL ACCEPTED REQUESTS BY STUDENT ID
 
 
 
-#GET ALL ACCEPTED REQUESTS BY STUDENT ID
+## Create Route called /staffMain to: 
+    #GET ALL ACCEPTED REQUESTS BY STAFF ID
+    #BUILD HISTORY: GET ALL REJECTED AND COMPLETED REQUESTS BY STAFF ID
 
 
 
-#GET ALL ACCEPTED REQUESTS BY STAFF ID
+## Create route for /<studentID>/<staffID>/writeRequest
 
 
 
-#BUILD HISTORY: GET ALL REJECTED AND COMPLETED REQUESTS BY STAFF ID
-
-
+## Create route for /<staffID>/<reqID>/writeRecommendation
+#(Use change_status(reqID, "Completed"))

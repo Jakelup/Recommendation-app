@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response
 from flask_jwt import jwt_required, current_identity
+from flask_login import login_required, current_user
 
 from App.controllers import (
     get_student,
@@ -9,6 +10,22 @@ from App.controllers import (
 )
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')
+
+## Render first version of studentMain.html
+@student_views.route('/studentMain', methods=['GET'])
+# @login_required -- enable this once login is set up
+def load_page():
+    return render_template('studentMain.html')
+
+
+
+
+
+
+
+
+
+### ARCHIVE- ORIGINAL CODE: 
 
 # SEARCH STAFF
 @student_views.route('/search', methods=['GET'])
