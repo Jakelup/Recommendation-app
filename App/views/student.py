@@ -37,6 +37,7 @@ def view_all_pending_reqs():
     return Response("Staff cannot perform this action.", status=401)
 
 # GET ALL ACCEPTED REQUESTS
+@student_views.route('/studentMain', methods=['GET'])
     studentID = current_identity.id
     if get_student(studentID):
         accepted = get_student_acceptedR(studentID)
