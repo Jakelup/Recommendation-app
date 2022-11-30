@@ -11,6 +11,19 @@ from App.controllers import (
 
 recommendation_views = Blueprint('recommendation_views', __name__, template_folder='../templates')
 
+
+## Create route for /<staffID>/<reqID>/writeRecommendation
+#(Use change_status(reqID, "Completed"))
+
+
+
+
+
+
+
+
+## ARCHIVE - Original Code:
+
 # SEND RECOMMENDATION TO STUDENT
 @recommendation_views.route('/send', methods=['POST'])
 @jwt_required()

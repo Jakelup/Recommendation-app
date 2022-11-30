@@ -34,5 +34,3 @@ request_views = Blueprint('request_views', __name__, template_folder='../templat
 
 
 
-## Create route for /<staffID>/<reqID>/writeRecommendation
-#(Use change_status(reqID, "Completed"))
