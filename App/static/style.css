@@ -3,3 +3,21 @@
     margin-left: 10px;
     height: 65px;
 }
+
+.profile{
+    margin-left: 20px;
+    height: 65px;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;  /*or use calc(100vh - header_height)*/
+  }
+
+
+/* 
+.col
+{
+  border:2px solid darkgray;  
+} */

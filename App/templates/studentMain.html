@@ -5,5 +5,38 @@
 {{ super() }}
 
 {% block content %}
+<div class="row flex">
+
+    <div class="col s12 m4 l3" >
+        <div class ="row grey">
+            <p>profile</p>
+            <img src="{{url_for('static', filename = 'images/Student_Icon.png')}}" alt="mock profile pic" class="profile">
+        </div>
+        <div class ="row #bbdefb blue lighten-4 flex">
+            <p>active requests</p>
+            <form class="card col s12" method="" action="/">
+                <p>accepted</p>
+            </form>
+            <form class="card col s12" method="" action="/">
+                <p>pending</p>
+            </form>
+        </div>
+    </div>
+    <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
+        <p>write requests goes here </p>
+        <form class="card col s12" method="" action="/">
+            <div class="col s12 #00b0ff light-blue accent-3">Write a Request</div>
+            <p>write</p>
+        </form>
+        <form class="card col s12" method="" action="/">
+            <div class="col s12 #00b0ff light-blue accent-3">Available Staff</div>
+            <p>all staff</p>
+        </form>
+    </div>
+    <div class="col s12 m4 l3 blue lighten-4">
+        <p>recommendations go here </p>
+    </div>
+    
+</div>
     
 {% endblock %}
