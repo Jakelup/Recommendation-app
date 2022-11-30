@@ -23,8 +23,6 @@ def load_page():
 
 
 
-    ###REQUEST ROUTES###
-
     ###STAFF###
 
 # JSON VIEW ALL STAFF
@@ -37,7 +35,7 @@ def view_all_staff():
 
 
 
-    ###RECCOMMENDATIONS###
+    ###RECOMMENDATIONS###
 
 # VIEW RECOMMENDATION LISTING
 @student_views.route('/studentMain', methods=['GET'])

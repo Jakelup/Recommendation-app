@@ -1,6 +1,17 @@
 from App.models import Request
 from App.database import db
+from datetime import date
 
+
+def create_request(studentId,staffId):
+    ### request ID auto generated???
+    body = input('Write your request here.')
+    datetime = date.today()
+    deadline = date.today() + timedelta(days=10)# temp measure until buttons have been decided
+    request = new.Request(requestId, staffId, studentId, body, datetime, deadline)
+    if request:
+        return request
+    return None
 
 def get_all_student_requests(studentId):
     return Request.query.filter_by(studentId).first()

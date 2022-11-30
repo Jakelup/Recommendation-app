@@ -26,11 +26,11 @@ def load_page():
 
 
 
-    ###RECCOMMENDATION ROUTES###
+    ###RECOMMENDATION ROUTES###
 
 # CREATE A RECOMMENDATION
 @staff_views.route('/staffMain', methods=['POST'])
-def create_reccommendation():
+def create_recommendation():
     staff = get_all_staff_json()
     if staff:
         return staff

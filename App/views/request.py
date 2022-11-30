@@ -12,7 +12,8 @@ from App.controllers import (
     get_staff_acceptedR,
     get_staff_rejectedR,
     get_staff_completedR,
-    get_staff_pendingR
+    get_staff_pendingR,
+    create_request
 )
 
 request_views = Blueprint('request_views', __name__, template_folder='../templates')
@@ -99,15 +100,40 @@ def view_all_completed_reqs():
     return Response("Students cannot perform this action.", status=401)
 
 
+# REQUESTS HISTORY
+@request_views.route('/staffMain', methods=['GET'])
+def reqs_history():
+    staffID = current_identity.id
+    if get_staff(staffID):
+        completed = get_staff_completedR(staffID)
+        rejected = get_staff_rejectedR(staffID)
+        history = "COMPLETED History: "
+        if completed:
+            history = history + completed
+        else:
+            history = history + "No completed history found."
+
+        history = "REJECTED History: "
+        if rejected:
+            history = history + rejected
+        else:
+            history = history + "No rejected history found."
+    return history
+
+
 
 
 ## Create route for /<studentID>/<staffID>/writeRequest
 # REQUEST A RECOMMENDATION
 @request_views.route('/studentMain', methods=['POST'])
 def create_request():
-    staff = get_all_staff_json()
-    if staff:
-        return staff
-    return Response({'Staff not found.'}, status=404)
+    studentID = current_identity.id
+    if studentID:
+        staff = get_staff(staffID)
+        request = create_request(studentID,staffID)
+        if request:
+            return request
+        return Response({'The request could not be made.'}, status=422)
+    return Response("Staff cannot perform this action.", status=401)
 
 
