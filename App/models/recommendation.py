@@ -1,4 +1,5 @@
 from App.database import db
+from datetime import date
 
 class Recommendation(db.Model):
     recId = db.Column(db.Integer, primary_key=True)
