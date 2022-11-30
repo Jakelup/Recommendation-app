@@ -6,7 +6,11 @@ from App.controllers import (
     get_student,
     get_all_students,
     get_all_students_json,
+    get_all_staff,
+    get_all_staff_json,
     get_student_reclist_json,
+    get_student_pendingR,
+    get_student_acceptedR,
 )
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')
@@ -19,13 +23,66 @@ def load_page():
 
 
 
+    ###REQUEST ROUTES###
+
+# GET ALL PENDING REQUESTS
+@student_views.route('/studentMain', methods=['GET'])
+def view_all_pending_reqs():
+    studentID = current_identity.id
+    if get_student(studentID):
+        pending = get_student_pendingR(studentID)
+        if pending:
+            return pending
+        return Response({'There are no pending request found for this user.'}, status=404)
+    return Response("Staff cannot perform this action.", status=401)
+
+# GET ALL ACCEPTED REQUESTS
+    studentID = current_identity.id
+    if get_student(studentID):
+        accepted = get_student_acceptedR(studentID)
+        if accepted:
+            return accepted
+        return Response({'There are no accepted request found for this user.'}, status=404)
+    return Response("Staff cannot perform this action.", status=401)
+
+# REQUEST A RECOMMENDATION
+@student_views.route('/studentMain', methods=['POST'])
+def create_request():
+    staff = get_all_staff_json()
+    if staff:
+        return staff
+    return Response({'Staff not found.'}, status=404)
 
 
 
+    ###STAFF###
+
+# JSON VIEW ALL STAFF
+@student_views.route('/studentMain', methods=['GET'])
+def view_all_staff():
+    staff = get_all_staff_json()
+    if staff:
+        return staff
+    return Response({'Staff not found.'}, status=404)
 
 
 
-### ARCHIVE- ORIGINAL CODE: 
+    ###RECCOMMENDATIONS###
+
+# VIEW RECOMMENDATION LISTING
+@student_views.route('/studentMain', methods=['GET'])
+@jwt_required()
+def get_recommendations():
+    studentID = current_identity.id
+    if get_student(studentID):
+        recs = get_student_reclist_json(studentID)
+        if recs:
+            return jsonify(recs)
+        return Response({'There are no recommendations found for this user.'}, status=404)
+    return Response("staff cannot perform this action.", status=401)
+
+'''
+
 
 # SEARCH STAFF
 @student_views.route('/search', methods=['GET'])
@@ -52,20 +109,6 @@ def searchStaff():
         return Response({'staff member not found'}, status=404)
     return Response({"staff cannot perform this action"}, status=401)
 
-
-# VIEW RECOMMENDATION LISTING
-@student_views.route('/recommendations', methods=['GET'])
-@jwt_required()
-def get_recommendations():
-    studentID = current_identity.id
-    if get_student(studentID):
-        recs = get_student_reclist_json(studentID)
-        if recs:
-            return jsonify(recs)
-        return Response({'no recommendations found for this user'}, status=404)
-    return Response("staff cannot perform this action", status=401)
-
-
 # Routes for testing purposes
 @student_views.route('/view/students', methods=['GET'])
 def get_students_page():
@@ -77,3 +120,4 @@ def get_students_page():
 def get_students():
     students = get_all_students_json()
     return jsonify(students)
+'''

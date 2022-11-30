@@ -21,17 +21,6 @@ def load_page():
     return render_template('staffMain.html')
 
 
-
-
-
-
-
-
-
-
-
-    
-
 ### ARCHIVE- ORIGINAL CODE: 
 
 # VIEW NOTIFICATION FEED
