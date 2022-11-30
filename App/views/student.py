@@ -25,37 +25,6 @@ def load_page():
 
     ###REQUEST ROUTES###
 
-# GET ALL PENDING REQUESTS
-@student_views.route('/studentMain', methods=['GET'])
-def view_all_pending_reqs():
-    studentID = current_identity.id
-    if get_student(studentID):
-        pending = get_student_pendingR(studentID)
-        if pending:
-            return pending
-        return Response({'There are no pending request found for this user.'}, status=404)
-    return Response("Staff cannot perform this action.", status=401)
-
-# GET ALL ACCEPTED REQUESTS
-@student_views.route('/studentMain', methods=['GET'])
-    studentID = current_identity.id
-    if get_student(studentID):
-        accepted = get_student_acceptedR(studentID)
-        if accepted:
-            return accepted
-        return Response({'There are no accepted request found for this user.'}, status=404)
-    return Response("Staff cannot perform this action.", status=401)
-
-# REQUEST A RECOMMENDATION
-@student_views.route('/studentMain', methods=['POST'])
-def create_request():
-    staff = get_all_staff_json()
-    if staff:
-        return staff
-    return Response({'Staff not found.'}, status=404)
-
-
-
     ###STAFF###
 
 # JSON VIEW ALL STAFF
