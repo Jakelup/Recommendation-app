@@ -1,40 +1,68 @@
 {% extends "layout.html" %}
 {% block title %}Mendozes Recommendation{% endblock %}
-{% block page %}Mendozes Recommendation System{% endblock %}
+{% block page %}MENDOZES{% endblock %}
 
 {{ super() }}
 
 {% block content %}
 <div class="row flex">
-<!-- 
-    CODE IS NOT NEARLY SORTED(ONLY BY INDENTS), ALSO USED FORMS INSTEAD OF DIVS. 
-    WILL ADD COMMENTS AND ORGANIZE DURING MY NEXT SESSION -->
 
-    <div class="col s12 m4 l3" >
-        <div class ="row grey">
-            <p>profile</p>
-            <img src="{{url_for('static', filename = 'images/Student_Icon.png')}}" alt="mock profile pic" class="profile">
+    <!-- FIRST COLUMN -->
+    <div class="col s12 m4 l3 #bbdefb blue lighten-4" >
+        <!-- PROFILE SECTION -->
+        <div class="card-panel #0d47a1 blue darken-4 center-align white-text" style="margin: 0; box-shadow: none;">
+            <img src="{{url_for('static', filename = 'images/Student_Icon.png')}}" alt="mock profile pic" class="profile" >
+            <h5 class=""><b>NAME</b></h5> <!--JINJA HERE-->
+            <a href="/" class="black-text">LOG OUT</a> 
         </div>
-        <div class ="row #bbdefb blue lighten-4 flex">
-            <p>active requests</p>
-            <form class="card col s12" method="" action="/">
-                <p>accepted</p>
-            </form>
-            <form class="card col s12" method="" action="/"> 
-                <p>pending</p>
-            </form>
+        <br>
+        <!-- ACTIVE REQUESTS SECTION -->
+        <h6>ACTIVE REQUESTS</h6>
+        <!-- ACCEPTED REQUESTS SECTION -->
+        <div class="card-panel">
+            <p>accepted</p>
         </div>
+        <!-- PENDING REQUESTS SECTION -->
+        <div class="card-panel">
+            <p>pending</p>
+        </div>       
     </div>
+    <!-- MIDDLE COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
-        <form class="card col s12" method="" action="/">
-            <div class="col s12 #00b0ff light-blue accent-3">Write a Request</div>
-            <p>write</p>
+        <!-- WRITE REQUEST SECTION -->
+        <form class="card-panel col s12" style="margin-top: 15px;" method="" action="/">
+            <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
+                <h5>Write a Request</h5>
+            </span>
+            <h6 class="grey-text" style="margin-left: 15px;">Please select a staff member below to write a request.</h6>
         </form>
-        <form class="card col s12" method="" action="/">
-            <div class="col s12 #00b0ff light-blue accent-3">Available Staff</div>
-            <p>all staff</p>
-        </form>
+          <!-- STAFF SECTION -->
+        <div class="card-panel col s12">
+            <div class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="height: 50px;">
+                <h5>Available Staff</h5>
+                <table class="black-text">
+                    <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Faculty</th>
+                          <th>Department</th>
+
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td>Example Joe</td><!--JINJA HERE-->
+                        <td>FST </td><!--JINJA HERE-->
+                        <td>DCIT </td><!--JINJA HERE-->
+                        <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3" type="submit" name="" value ="">SELECT</td><!--JINJA HERE-->
+                      </tr>
+                    </tbody>
+                  </table>    
+            </div>
+        </div>
     </div>
+    <!-- FINAL COLUMN: RECOMMENDATION SECTION -->
     <div class="col s12 m4 l3 blue lighten-4">
         <p>recommendations go here </p>
     </div>
