@@ -12,7 +12,7 @@
         <!-- PROFILE SECTION -->
         <div class="card-panel #0d47a1 blue darken-4 center-align white-text" style="margin: 0; box-shadow: none;">
             <img src="{{url_for('static', filename = 'images/Student_Icon.png')}}" alt="mock profile pic" class="profile" >
-            <h5 class=""><b>NAME</b></h5> <!--JINJA HERE-->
+            <h5 class=""><b>NAME </b><i class="material-icons tiny">verified_user</i></h5> <!--JINJA HERE-->
             <a href="/" class="black-text">LOG OUT</a> 
         </div>
         <br>
@@ -20,15 +20,22 @@
         <div class="card-panel #0d47a1 blue darken-4" style="margin: 0; box-shadow: none;">
             <h6 class="white-text" style="margin: 5px;"><b>ACTIVE REQUESTS</b></h6>
             <!-- ACCEPTED REQUESTS SECTION -->
+            <br>
+            <br>
             <div class="card-panel">
                 <!-- TO DO: REQUEST CARD -->
                 <p>accepted goes here</p>
             </div>
+            <h8 class="white-text"><i class="material-icons white-text">insert_emoticon</i> Hang tight! These requests were accepted and your report is on its way!</h8>
+            <br>
+            <br>
+            <br>
             <!-- PENDING REQUESTS SECTION -->
             <div class="card-panel">
                 <!-- TO DO: REQUEST CARD -->
                 <p>pending goes here</p>
-            </div>       
+            </div> 
+            <h8 class="white-text"><i class="material-icons white-text">sentiment_very_dissatisfied</i> Oof.. still pending...</h8>
         </div>
     </div>
     <!-- MIDDLE COLUMN -->
@@ -39,11 +46,12 @@
                 <h5>Write a Request</h5>
             </span>
             <h6 class="grey-text" style="margin-left: 15px;">Please select a staff member below to write a request.</h6>
+            <!-- <button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SEND</button> -->
         </form>
           <!-- STAFF SECTION -->
         <div class="card-panel col s12" style="padding: 0;">
             <div class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="height: 50px;">
-                <h5>Available Staff</h5>
+                <h5>Available Staff   <i class="material-icons">people</i></h5>  
                 <!-- TABLE FOR STAFF -->
                 <table class="black-text">
                     <thead>
@@ -60,7 +68,7 @@
                         <td>Example Joe</td><!--JINJA HERE-->
                         <td>FST </td><!--JINJA HERE-->
                         <td>DCIT </td><!--JINJA HERE-->
-                        <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SELECT</td><!--JINJA HERE-->
+                        <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SELECT</button></td><!--JINJA HERE-->
                       </tr>
                     </tbody>
                   </table>    
@@ -69,10 +77,13 @@
     </div>
     <!-- FINAL COLUMN: RECOMMENDATION SECTION -->
     <div class="col s12 m4 l3 blue lighten-4">
-        <p>recommendations go here </p>
+        <h6 class="center-align" style="margin-top: 25px;"><b>COMPLETED RECOMMENDATIONS</b></h6>
         <!-- TO DO: RECOMMENDATION CARD -->
     </div>
     
 </div>
+
+
+
     
 {% endblock %}

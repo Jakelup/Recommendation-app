@@ -8,14 +8,23 @@
     height: 130px;
 }
 
+.staffprofile{
+  height: 90px;
+}
+
 .flex {
     display: flex;
     flex-wrap: wrap;
     min-height: 100vh;  /*or use calc(100vh - header_height)*/
   }
 
-.staffSel:hover{
-  color: yellow;
+/* .staffSel:hover{
+  color: blue;
+} */
+
+.material-icons{
+  display: inline-flex;
+  vertical-align: top;
 }
 
 .title{
