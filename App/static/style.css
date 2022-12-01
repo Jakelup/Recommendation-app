@@ -14,9 +14,10 @@
     min-height: 100vh;  /*or use calc(100vh - header_height)*/
   }
 
+.staffSel:hover{
+  color: yellow;
+}
 
-/* 
-.col
-{
-  border:2px solid darkgray;  
-} */
+.title{
+  font-family: 'Ubuntu', sans-serif;
+}

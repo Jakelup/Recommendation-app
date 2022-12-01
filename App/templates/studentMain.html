@@ -17,29 +17,34 @@
         </div>
         <br>
         <!-- ACTIVE REQUESTS SECTION -->
-        <h6>ACTIVE REQUESTS</h6>
-        <!-- ACCEPTED REQUESTS SECTION -->
-        <div class="card-panel">
-            <p>accepted</p>
+        <div class="card-panel #0d47a1 blue darken-4" style="margin: 0; box-shadow: none;">
+            <h6 class="white-text" style="margin: 5px;"><b>ACTIVE REQUESTS</b></h6>
+            <!-- ACCEPTED REQUESTS SECTION -->
+            <div class="card-panel">
+                <!-- TO DO: REQUEST CARD -->
+                <p>accepted goes here</p>
+            </div>
+            <!-- PENDING REQUESTS SECTION -->
+            <div class="card-panel">
+                <!-- TO DO: REQUEST CARD -->
+                <p>pending goes here</p>
+            </div>       
         </div>
-        <!-- PENDING REQUESTS SECTION -->
-        <div class="card-panel">
-            <p>pending</p>
-        </div>       
     </div>
     <!-- MIDDLE COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
         <!-- WRITE REQUEST SECTION -->
-        <form class="card-panel col s12" style="margin-top: 15px;" method="" action="/">
+        <form class="card-panel col s12" style="margin-top: 15px;  padding: 0;" method="" action="/">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Write a Request</h5>
             </span>
             <h6 class="grey-text" style="margin-left: 15px;">Please select a staff member below to write a request.</h6>
         </form>
           <!-- STAFF SECTION -->
-        <div class="card-panel col s12">
+        <div class="card-panel col s12" style="padding: 0;">
             <div class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="height: 50px;">
                 <h5>Available Staff</h5>
+                <!-- TABLE FOR STAFF -->
                 <table class="black-text">
                     <thead>
                       <tr>
@@ -55,7 +60,7 @@
                         <td>Example Joe</td><!--JINJA HERE-->
                         <td>FST </td><!--JINJA HERE-->
                         <td>DCIT </td><!--JINJA HERE-->
-                        <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3" type="submit" name="" value ="">SELECT</td><!--JINJA HERE-->
+                        <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SELECT</td><!--JINJA HERE-->
                       </tr>
                     </tbody>
                   </table>    
@@ -65,6 +70,7 @@
     <!-- FINAL COLUMN: RECOMMENDATION SECTION -->
     <div class="col s12 m4 l3 blue lighten-4">
         <p>recommendations go here </p>
+        <!-- TO DO: RECOMMENDATION CARD -->
     </div>
     
 </div>
