@@ -20,15 +20,32 @@
                     <h5 class="">Get started on these requests!</h5>
                 </div>
                 <!-- NOTIFACTION BUTTON -->
-                <div class="col s2">
+                <div class="col s2 right-align">
                     <!-- Trigger/Open The Modal -->
-                    <button id="myBtn" class="waves-effect waves-light btn black"><i class="material-icons white-text">menu</i></button>
+                    <button id="myBtn" class="waves-effect waves-light btn-large #00b0ff light-blue accent-3"><i class="material-icons white-text">notifications_active</i></button>
                     <!-- Notification Modal -->
                     <div id="myModal" class="modal">
                         <!-- Modal Content -->
                         <div class="modal-content">
                             <span class="close">&times;</span>
-
+                            <br>
+                            <br>
+                            <!-- TO DO: FOR LOOP-->
+                            <div class="card-panel #00b0ff light-blue left-align white-text">
+                                <h6><i class="material-icons">account_box</i><b> Student Name</b></h6> <!-- JINJA HERE-->
+                                <h8><b>Request: </b></h8><h8>This is the actual request heheh</h8><!-- JINJA HERE-->
+                                <br><br>
+                                <div class="row">
+                                    <div class="col s6">
+                                    </div>
+                                    <div class="col s3 right-align">
+                                        <button class="waves-effect waves-light btn #f44336 red" type="submit" name="" value =""> Reject </button>    
+                                    </div>
+                                    <div class="col s3">
+                                        <button class="waves-effect waves-light btn #4caf50 green" type="submit" name="" value =""> Accept </button>    
+                                    </div>
+                                </div>
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -93,7 +110,9 @@
                 <h5>Write Recommendation</h5>
             </span>
             <h6 class="grey-text" style="margin-left: 15px;">Please select a REQUEST to get started writing!</h6>
-            <!-- <button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SEND</button> -->
+            <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
         </form>
     </div>
     
