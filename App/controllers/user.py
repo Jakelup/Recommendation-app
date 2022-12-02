@@ -20,7 +20,7 @@ def student_signup(id, username, password, name, faculty, department):
         db.session.add(newStudent)
         db.session.commit()
         return newStudent
-    except IntegrityError: # attempted to insert a duplicate user
+    except IntegrityError: # attempted to insert a duplicate user or other errors
         db.session.rollback()
         return None
     #     return Response({'user already exists with this username'}, status=400) #error message
