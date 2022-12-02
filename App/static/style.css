@@ -47,17 +47,18 @@
 
 footer{
   position: absolute;
-  /* bottom:0px;
+  bottom:0px;
   left:0;
-  right:0;   */
-  background-color: blue ;
+  right:0;   
+  background-color: #0d47a1 ;
   /* height: px; */
   width:100vw;
   font-family:'Ubuntu', sans-serif;
-  display:flex;
+  /* display:flex;  */
   justify-content: center;
   text-align: center;
   padding: 5px 0;
+  flex-direction: column;
 }
 
  /* .footer-content{
@@ -73,6 +74,16 @@ footer{
   word-spacing: 2px;
   color:white;
 
+}
+body {
+  background-color:#bbdefb;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; 
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 
