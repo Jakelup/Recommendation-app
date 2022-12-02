@@ -7,6 +7,12 @@ from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
 from flask_login import LoginManager
 
+login_manager = LoginManager()
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
 from App.database import create_db
 
 from App.controllers import (
@@ -21,6 +27,8 @@ from App.views import (
     notification_views,
     recommendation_views,
 )
+
+
 
 # New views must be imported and added to this list
 
@@ -57,8 +65,6 @@ def loadConfig(app, config):
         app.config[key] = config[key]
 
 
-login_manager = LoginManager()
-
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
     CORS(app)
@@ -72,5 +78,7 @@ def create_app(config={}):
     add_views(app, views)
     create_db(app)
     setup_jwt(app)
+    login_manager.init_app(app)
     app.app_context().push()
     return app
+

@@ -17,8 +17,8 @@ student_views = Blueprint('student_views', __name__, template_folder='../templat
 
 ## Render first version of studentMain.html
 @student_views.route('/studentMain', methods=['GET'])
-# @login_required -- enable this once login is set up
-def load_page():
+@login_required
+def studentMain():
     return render_template('studentMain.html')
 
 

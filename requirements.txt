@@ -12,3 +12,5 @@ Flask-Migrate==3.1.0
 Werkzeug==2.0.0
 coverage==6.4.4
 Flask-Bcrypt==1.0.1
+flask_wtf  == 1.0.1
+wtform == 1.0

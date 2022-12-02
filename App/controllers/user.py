@@ -4,27 +4,38 @@ from sqlalchemy.exc import IntegrityError
 from flask import Response
 
 # Create new User
-def create_user(email, password, userType, firstName, lastName):
+def create_user(username, password, name, faculty, department, userType):
     if (userType=="student"):
-        newuser = Student(email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
+        newuser = Student(username=username,
+        password=password,
+        name=name,
+        faculty=faculty,
+        department=department,
+        userType=userType)
     else:
         if (userType=="staff"):
-            newuser = Staff(email=email, password=password, userType=userType, firstName=firstName, lastName=lastName)
+            newuser = Staff(username=username,
+        password=password,
+        name=name,
+        faculty=faculty,
+        department=department,
+        userType=userType)
     return newuser
 
 # SIGNUP
-def user_signup(firstName, lastName, email, password, userType):
-    newuser = create_user(email=email,
+def user_signup(username, password, name, faculty, department, userType):
+    newuser = create_user(username=username,
         password=password,
-        userType=userType,
-        firstName=firstName,
-        lastName=lastName)
+        name=name,
+        faculty=faculty,
+        department=department,
+        userType=userType)
     try:
         db.session.add(newuser)
         db.session.commit()
     except IntegrityError: # attempted to insert a duplicate user
         db.session.rollback()
-        return Response({'user already exists with this email'}, status=400) #error message
+        return Response({'user already exists with this username'}, status=400) #error message
     return Response({'user created successfully'}, status=201) # success
 
 # get User by id
@@ -42,3 +53,11 @@ def get_all_users_json():
     users = [user.toJSON() for user in users]
     return users
 
+def validate_User(username, password):
+    if User != None: #table empty
+        user = User.query.filter_by(username = username).all()
+        for u in user:
+            if u and u.check_password(password):
+                return u
+        return None
+    return None

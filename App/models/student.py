@@ -33,3 +33,4 @@ class Student(User):
             'department': self.department,
             'recommendationList': [recommendation.toJSON() for recommendation in self.recommendationList]
         }
+

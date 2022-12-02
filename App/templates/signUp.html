@@ -1,9 +1,69 @@
 {% extends "layout.html" %}
 {% block title %}Mendozes Recommendation{% endblock %}
-{% block page %}Mendozes Recommendation System{% endblock %}
+{% block page %}{{usertype}} Sign Up{% endblock %}
 
 {{ super() }}
 
 {% block content %}
+
+    <div class="row center-align">
+      <form id="myForm" class="col s12 m8 offset-m2" method="POST" action="/signup/{{usertype}}">
+          {{ form.csrf_token }}
+
+          {% if form.csrf_token.error %}
+          <div class="warning">You have submitted an invalid CSRF token</div>
+           {% endif %}
+          <div class="input-field col s12 m8 offset-m2"> 
+            <i class="material-icons prefix">assignment_ind</i>
+            {{ form.username(size=20, class="validate") }}
+            {{ form.username.label }}
+          </div>
+
+          <div class="input-field col s12 m8 offset-m2">
+            <i class="material-icons prefix">lock_outline</i>
+            {{ form.password(size=20, class="validate") }}
+            {{ form.password.label }}
+          </div>
+
+          <div class="input-field col s12 m8 offset-m2">
+            <i class="material-icons prefix">lock</i>
+            {{ form.confirm(size=20, class="validate") }}
+            {{ form.confirm.label }}
+          </div>
+
+          <div class="input-field col s12 m8 offset-m2"> 
+            <i class="material-icons prefix">person</i>
+            {{ form.name(size=20, class="validate") }}
+            {{ form.name.label }}
+          </div>
+
+          <div class="input-field col s12 m8 offset-m2"> 
+            <i class="material-icons prefix">group</i>
+            {{ form.faculty(size=20, class="validate") }}
+            {{ form.faculty.label }}
+          </div>
+
+          <div class="input-field col s12 m8 offset-m2"> 
+            <i class="material-icons prefix">recent_actors</i>
+            {{ form.department(size=20, class="validate") }}
+            {{ form.department.label }}
+          </div>
+
+          <div class="row">
+            <div class="col s5 left-align" style="margin-left: 170px;">
+                <a href="/login/{{usertype}}" class="grey-text"><u><i>I already have an account</i></u></a>
+                <br>
+                <a href="/" class="blue-text"><i>Not {{usertype}}</i></a>
+            </div>
+            <div class="col s4 right-align">
+            </div>
+            <div class="col s3" style="margin-left: 50px;">
+              {{ form.submit (class="btn white-text #0d47a1 blue darken-4")}}
+            </div>
+          </div>
+
+      </form>
+     
+    </div>
     
 {% endblock %}

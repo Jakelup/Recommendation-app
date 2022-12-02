@@ -5,5 +5,12 @@
 {{ super() }}
 
 {% block content %}
+
+<div style="margin-left: 15px">
+    <a href="/login/{{usertype}}"> Log in </a>
+    <br>
+    <a href="/signup/{{usertype}}"> SignUp </a>
+</div>
+
     
 {% endblock %}

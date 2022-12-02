@@ -18,9 +18,22 @@
     min-height: 100vh;  /*or use calc(100vh - header_height)*/
   }
 
-/* .staffSel:hover{
-  color: blue;
-} */
+
+/* label focus color */
+.input-field input:focus + label {
+  color: #0d47a1 !important;
+}
+/* label underline focus color */
+.row .input-field input:focus {
+  border-bottom: 1px solid #0d47a1 !important;
+  box-shadow: 0 1px 0 0 #0d47a1 !important
+}
+/* label icons focus color */
+.row .input-field .material-icons{
+  color: #0d47a1 !important;
+}
+
+
 
 .material-icons{
   display: inline-flex;
