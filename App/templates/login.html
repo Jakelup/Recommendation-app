@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="row" style="margin-top: 50px;">
-    <form class="col s12 m8 offset-m2" method="POST" action="/login">
+    <form class="col s12 m8 offset-m2" method="POST" action="/login/{{usertype}}">
         {{ form.csrf_token }}
         {% if form.csrf_token.error %}
            <div class="warning">You have submitted an invalid CSRF token</div>

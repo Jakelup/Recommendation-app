@@ -17,7 +17,8 @@ from App.controllers import (
     get_all_users,
     get_all_users_json,
     get_user,
-    user_signup
+    user_signup,
+    validate_User
 )
 
 from App.models import (
@@ -35,7 +36,7 @@ user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 
 ##STUDENT SIGN UP PAGES
-@user_views.route('/signup/Student', methods=['GET', 'POST'])
+@user_views.route('/signup/Student')
 def getStudentSignUpPage():
     if current_user.is_authenticated:
         flash('You cannot create an account while logged in.')
@@ -43,9 +44,9 @@ def getStudentSignUpPage():
     form = StudentRegister()
     return render_template('signUp.html', form=form, usertype="Student")
 
-@app.route('/signup/Student', methods=['POST'])
+@app.route('/signup/Student', methods=['GET', 'POST'])
 def studentSignUpAction():
-    form = StudentRegister()()
+    form = StudentRegister()
     data = request.form 
     msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="student")
     if msg == "Error":
@@ -59,17 +60,17 @@ def studentSignUpAction():
 
 
 ##STAFF SIGN UP PAGES
-@user_views.route('/signup/Staff', methods=['GET', 'POST'])
+@user_views.route('/signup/Staff')
 def getStaffSignUpPage():
     if current_user.is_authenticated:
         flash('You cannot create an account while logged in.')
         return render_template('studentMain.html')
-    form = StudentRegister()
+    form = StaffRegister()
     return render_template('signUp.html', form=form, usertype="Staff")
 
-@app.route('/signup/Staff', methods=['POST'])
+@app.route('/signup/Staff', methods=['GET', 'POST'])
 def staffSignUpAction():
-    form = StudentRegister()()
+    form = StaffRegister()
     data = request.form 
     msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="staff")
     if msg == "Error":
@@ -99,13 +100,13 @@ def getLoginPage():
 @user_views.route('/login/Student', methods=['GET', 'POST'])
 def login():
     form = StudentLogIn()
+    data = request.form
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = validate_User(data['username'], data['password'])
         if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user, True)
-                flash('Successful Login')
-                return render_template('studentMain.html', form=form, usertype="Student")
+            login_user(user, True)
+            flash('Successful Login')
+            return render_template('studentMain.html', form=form, usertype="Student") 
     flash('Invalid. Check username and/or password')
     return render_template('login.html', form=form, usertype="Student")
 

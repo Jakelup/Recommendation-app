@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, EqualTo, Email
 
 class StudentRegister(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
-    password = PasswordField('New Password', validators=[InputRequired(), EqualTo('confirm', message='Passwords must match')])
+    password = PasswordField('Create Password', validators=[InputRequired(), EqualTo('confirm', message='Passwords must match')])
     confirm  = PasswordField('Repeat Password')
     name = StringField('Name', validators=[InputRequired()])
     faculty = StringField('Faculty', validators=[InputRequired()])

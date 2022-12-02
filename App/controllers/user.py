@@ -53,3 +53,11 @@ def get_all_users_json():
     users = [user.toJSON() for user in users]
     return users
 
+def validate_User(username, password):
+    if User != None: #table empty
+        user = User.query.filter_by(username = username).all()
+        for u in user:
+            if u and u.check_password(password):
+                return u
+        return None
+    return None
