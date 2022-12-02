@@ -76,7 +76,7 @@ footer{
 
 }
 body {
-  background-color:#bbdefb;
+  /* background-color:#bbdefb; */
   display: flex;
   min-height: 100vh;
   flex-direction: column; 
