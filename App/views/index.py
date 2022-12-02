@@ -8,10 +8,10 @@ def index_page():
 
 @index_views.route('/chooseAccount/student', methods=['GET'])
 def loadstudent():
-    usertype = "student"
+    usertype = "Student"
     return render_template('account.html', usertype=usertype)
 
 @index_views.route('/chooseAccount/staff', methods=['GET'])
 def loadstaff():
-    usertype = "staff"
+    usertype = "Staff"
     return render_template('account.html', usertype=usertype)

@@ -5,3 +5,4 @@ from .recommendation import *
 from .notification import *
 from .request import *
 from .login import *
+from .signup import *
