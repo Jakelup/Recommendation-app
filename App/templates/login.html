@@ -1,9 +1,43 @@
 {% extends "layout.html" %}
 {% block title %}Mendozes Recommendation{% endblock %}
-{% block page %}Mendozes Recommendation System{% endblock %}
+{% block page %}{{usertype}} Login{% endblock %}
 
 {{ super() }}
 
 {% block content %}
+
+<div class="row" style="margin-top: 50px;">
+    <form class="col s12 m8 offset-m2" method="POST" action="/login">
+        {{ form.csrf_token }}
+        {% if form.csrf_token.error %}
+           <div class="warning">You have submitted an invalid CSRF token</div>
+        {% endif %}
+        <div class="input-field col s12 m8 offset-m2"> 
+          <i class="material-icons prefix">person</i>
+          {{ form.username(size=20, class="validate") }}
+          {{ form.username.label }}
+        </div>
+
+        <div class="input-field col s12 m8 offset-m2">
+          <i class="material-icons prefix">lock</i>
+          {{ form.password(size=20, class="validate") }}
+          {{ form.password.label }}
+        </div>
+
+        <div class="input-field col s12 m8 offset-m2">
+          <div class="row">
+            <div class="col s6 right-align" style="margin-top: 10px;">
+            </div>
+            <div class="col s4 right-align">
+              <a href="/signup/{{usertype}}" class="grey-text"><u><i>I don't have an account</i></u></a>
+              <a href="/" class="blue-text"><i>Not {{usertype}}</i></a>
+            </div>
+            <div class="col s2">
+              {{ form.submit (class="btn white-text #0d47a1 blue darken-4")}}
+            </div>
+          </div>
+        </div> 
+    </form>
+</div>
     
 {% endblock %}

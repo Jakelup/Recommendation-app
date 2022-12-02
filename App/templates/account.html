@@ -5,5 +5,18 @@
 {{ super() }}
 
 {% block content %}
+
+<div style="margin-left: 15px">
+    {% if usertype == "student" %}
+        <a href="/login/student"> Log in </a>
+        <br>
+        <a href="/signUp/student"> SignUp </a>
+    {% elif usertype == "staff" %}
+        <a href="/login/staff"> Log in </a>
+        <br>
+        <a href="/signUp/staff"> SignUp </a>
+    {% endif %}
+</div>
+
     
 {% endblock %}

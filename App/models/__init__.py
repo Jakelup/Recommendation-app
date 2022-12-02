@@ -4,3 +4,4 @@ from .staff import *
 from .recommendation import *
 from .notification import *
 from .request import *
+from .login import *

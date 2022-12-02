@@ -5,81 +5,108 @@ from flask_login import LoginManager, current_user, login_required
 from App.database import db
 from sqlalchemy.exc import IntegrityError
 from flask_bcrypt import Bcrypt
-# from App.main import app
 
 app = Flask(__name__, static_url_path='/static')
+
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+
 
 from App.controllers import (
     create_user,
     get_all_users,
     get_all_users_json,
     get_user,
-    user_signup,
+    user_signup
 )
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+from App.models import (
+    StudentLogIn,
+    StaffLogIn
+)
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
-
 # SIGNUP - CREATE ACCOUNT
 
-## Render first version of signUp.html: 
-#adjust route accordingly to hold functionality and return the required objects
-@user_views.route('/signUp', methods=['GET', 'POST'])
-def register():
+
+##STUDENT SIGN UP PAGE
+@user_views.route('/signUp/Student', methods=['GET', 'POST'])
+def registerStudent():
     # form = RegisterForm()
     
     # if form.validate_on_submit():
-    #     hashed_password = bcrypt.generate_password_hash(form.password.data)
-    #     new_user = User(username=form.username.data, password = hashed_password)
-    #     db.session.add(new_user)
-    #     db.session.commit()
+    #     user_signup(data['firstName'], data['lastName'], data['email'], data['password'], data['userType'])
         return render_template('signUp.html')
 
+
+
     
+## LOG IN:
 
-## Render first version of login.html: 
-#adjust route accordingly to hold functionality and return the required objects
-@user_views.route('/login')
+##STUDENT LOGIN PAGES
+@user_views.route('/login/student')
 def getLoginPage():
-    # if current_user.is_authenticated:
-    #     flash('Already Logged In')
-        #if user type is student redirect to studentMain
-        #if user type is staff redirect to staffMain
-        # return redirect()
-    # form = LogIn()
-    return render_template('login.html')
+    if current_user.is_authenticated:
+        flash('Already Logged In')
+        return render_template('studentMain.html')
+    form = StudentLogIn()
+    return render_template('login.html', form=form, usertype="Student")
 
 
 
-@user_views.route('/login', methods=['GET', 'POST'])
+@user_views.route('/login/student', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    form = StudentLogIn()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, True)
                 flash('Successful Login')
-                #redirect to homepage
-                #if user type is student redirect to student main
-                #if user type is staff redirect to staff main
-                return
-    #redirect to homepage
-    return
+                return render_template('studentMain.html', form=form, usertype="Student")
+    flash('Invalid. Check username and/or password')
+    return render_template('login.html', form=form, usertype="Student")
+
+
+
+##STAFF LOGIN PAGES
+@user_views.route('/login/staff')
+def getStaffLoginPage():
+    if current_user.is_authenticated:
+        flash('Already Logged In')
+        return render_template('staffMain.html')
+    form = StaffLogIn()
+    return render_template('login.html', form=form, usertype="Staff")
+
+
+
+@user_views.route('/login/staff', methods=['GET', 'POST'])
+def loginStaff():
+    form = StaffLogIn()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user, True)
+                flash('Successful Login')
+                return render_template('staffMain.html', form=form, usertype="Staff")
+    flash('Invalid. Check username and/or password')
+    return render_template('login.html', form=form, usertype="Staff")
+
+
+
+
 
 @user_views.route('/logout', methods=['GET','POST'])
 @login_required
 def logout():
     logout_user()
-    return render_template('login.html')
+    return render_template('index.html')
+
+
+
 
 # Routes for testing purposes
 # check identity of current user
@@ -105,7 +132,3 @@ def client_app():
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
 
-#@user_views.route('/signup', methods=['POST'])
-#def createAccount():
-#    data = request.get_json()
-#    return user_signup(data['firstName'], data['lastName'], data['email'], data['password'], data['userType'])

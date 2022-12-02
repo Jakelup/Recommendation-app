@@ -6,12 +6,25 @@
 
 {% block content %}
     <div style="margin-left: 20px;">
-        <h5>Temporary links</h5>
-        <a href="/chooseAccount">account.html</a><br>
-        <a href="/signUp">signUp.html</a><br>
-        <a href="/login">logIn.html</a><br>
-        <a href="/studentMain">studentmain.html</a><br>
-        <a href="/staffMain">staffmain.html</a><br>
+     
+        <div class="col center-align">
+            <div class="row s7">
+                <img src="{{url_for('static', filename = 'images/colourlogo_transparentBG1.png')}}" alt="logo" class="brand-logo hide-on-med-and-down" style="height: 400px">
+            </div>
+            <div class="row s1 left-align" style="margin: 250px">
+                <p>I'M A ... </p>
+            </div>
+            <div class="row s2" style="margin-top: 0px">
+                <div class="col s6">
+                    <a href="/chooseAccount/student"> Student Button </a>
+                </div>
+                <div class="col s6">
+                    <a href="/chooseAccount/staff"> Staff Button </a>
+                </div>
+            </div>
+        </div>
+        
+
     </div>
     
 
