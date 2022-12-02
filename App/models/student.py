@@ -19,7 +19,7 @@ class Student(User):
         self.faculty = faculty
         self.department = department
         self.id = id
-        self.userType = "staff"
+        self.userType = "student"
 
 
 

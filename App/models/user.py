@@ -6,7 +6,7 @@ from flask_login import UserMixin
 # class Base(declarative_base()):
 #     pass
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
     __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
