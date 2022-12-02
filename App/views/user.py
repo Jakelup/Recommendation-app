@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Blueprint, render_template, jsonify, request, send_from_directory
+from flask import Blueprint, flash, redirect, render_template, jsonify, request, send_from_directory, url_for
 from flask_jwt import jwt_required, current_identity
 from flask_login import LoginManager, current_user, login_required
 from App.database import db
@@ -13,12 +13,16 @@ login_manager.login_view = 'login'
 
 
 from App.controllers import (
-    create_user,
+    # create_user,
     get_all_users,
     get_all_users_json,
+    get_all_students_json,
     get_user,
-    user_signup,
-    validate_User
+    staff_signup,
+    student_signup,
+    validate_Staff,
+    validate_Student,
+    login_user
 )
 
 from App.models import (
@@ -52,14 +56,15 @@ def LoginAction():
     form = StudentLogIn()
     data = request.form
     if form.validate_on_submit():
-        user = validate_User(data['username'], data['password'])
+        user = validate_Student(data['username'], data['password'])
         if user:
             login_user(user, True)
             flash('Successful Login')
             return redirect(url_for('student_views.studentMain'))
 
     flash('Invalid. Check username and/or password')
-    return redirect(url_for('LoginAction'))
+    return render_template('login.html', form=form, usertype="Student")
+    # return redirect(url_for('user_views.LoginAction'))
 
 
 
@@ -72,26 +77,24 @@ def getStaffLoginPage():
     form = StaffLogIn()
     return render_template('login.html', form=form, usertype="Staff")
 
-
-
 @user_views.route('/login/Staff', methods = {'POST'})
 def loginStaff():
     form = StaffLogIn()
     data = request.form
     if form.validate_on_submit():
-        user = validate_User(data['username'], data['password'])
+        user = validate_Staff(data['username'], data['password'])
         if user:
             login_user(user, True)
             flash('Successful Login')
             return redirect(url_for('staff_views.staffMain'))
 
     flash('Invalid. Check username and/or password')
-    return redirect(url_for('loginStaff'))
+    return redirect(url_for('user_views.loginStaff'))
 
 
 
 
-
+## LOGOUT
 @user_views.route('/logout', methods=['GET','POST'])
 @login_required
 def logout():
@@ -106,7 +109,7 @@ def logout():
 
 
 ##STUDENT SIGN UP PAGES
-@user_views.route('/signup/Student')
+@user_views.route('/signup/Student', methods = ['GET'])
 def getStudentSignUpPage():
     if current_user.is_authenticated:
         flash('You cannot create an account while logged in.')
@@ -114,17 +117,20 @@ def getStudentSignUpPage():
     form = StudentRegister()
     return render_template('signUp.html', form=form, usertype="Student")
 
-@app.route('/signup/Student', methods = {'POST'})
+@user_views.route('/signup/Student', methods = ['GET', 'POST'])
 def studentSignUpAction():
     form = StudentRegister()
     data = request.form 
-    msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="student")
-    if msg == "Error":
+    student = student_signup(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
+    if student == None:
         flash('Error in creating account')
-        return redirect(url_for('getStudentSignUpPage'))
+        # return redirect(url_for('user_views.getStudentSignUpPage'))
+        return render_template('signUp.html', form=form, usertype="Student")
     else:
         flash('Account Created!')
-    return redirect(url_for('LoginAction'))
+    # return redirect(url_for('user_views.LoginAction'))
+    return render_template('login.html', form=form, usertype="Student")
+
 
 
 
@@ -138,17 +144,20 @@ def getStaffSignUpPage():
     form = StaffRegister()
     return render_template('signUp.html', form=form, usertype="Staff")
 
-@app.route('/signup/Staff', methods = {'POST'})
+@user_views.route('/signup/Staff', methods = {'POST'})
 def staffSignUpAction():
     form = StaffRegister()
     data = request.form 
-    msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="staff")
-    if msg == "Error":
+    staff = staff_signup(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
+    if staff == None:
         flash('Error in creating account')
-        return redirect(url_for('getStaffSignUpPage'))
+        # return redirect(url_for('getStaffSignUpPage'))
+        return render_template('signUp.html', form=form, usertype="Staff")
     else:
         flash('Account Created!')
-        return redirect(url_for('loginStaff'))
+        # return redirect(url_for('user_views.loginStaff'))
+        return render_template('login.html', form=form, usertype="Staff")
+
 
 
 
@@ -170,7 +179,7 @@ def get_user_page():
 # JSON View all Users
 @user_views.route('/users')
 def client_app():
-    users = get_all_users_json()
+    users = get_all_students_json()
     return jsonify(users)
 
 # STATIC View all Users

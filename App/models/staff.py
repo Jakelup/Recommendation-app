@@ -9,16 +9,14 @@ class Staff(User):
     requestList = db.relationship('Request', backref=db.backref('staff', lazy='joined'))
     
 
-    def __init__(self, username, password, faculty, department, staffId, requestList):
+    def __init__(self, username, password, name, faculty, department, staffId):
         self.username = username
         self.set_password(password)
         self.name = name
         self.faculty = faculty
         self.department = department
         self.staffId = staffId
-        self.requestList = requestList
-        self.notifList = notificationtList
-        self.user_type = "staff"
+        # self.userType = userType
 
     def toJSON(self):
         return {

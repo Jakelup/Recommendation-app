@@ -20,7 +20,7 @@ staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 
 ## Render first version of staffMain.html
 @staff_views.route('/staffMain', methods=['GET'])
-@login_required 
+# @login_required 
 def staffMain():
     return render_template('staffMain.html')
 
