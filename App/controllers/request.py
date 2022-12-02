@@ -3,13 +3,14 @@ from App.database import db
 from datetime import date
 
 
-def create_request(studentId,staffId):
+def create_request(studentId,staffId,body):
     ### request ID auto generated???
-    body = input('Write your request here.')
     datetime = date.today()
     deadline = date.today() + timedelta(days=10)# temp measure until buttons have been decided
-    request = new.Request(requestId, staffId, studentId, body, datetime, deadline)
+    request = new.Request(staffId, studentId, body, datetime, deadline)
     if request:
+        db.session.add(request)
+        db.session.commit()
         return request
     return None
 

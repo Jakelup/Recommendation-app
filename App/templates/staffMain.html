@@ -10,20 +10,49 @@
     <!-- FIRST COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4" >
         <!-- PROFILE SECTION -->
-        <div class="card-panel #0d47a1 blue darken-4 white-text" style="margin: 0; box-shadow: none;">
+        <div class="card-panel #0d47a1 blue darken-4 white-text" style="margin-top: 35px; margin-left: 15px;  margin-right: 15px; box-shadow: none;">
             <div class="row">
                 <div class="col s2">
                     <img src="{{url_for('static', filename = 'images/Staff_Icon.png')}}" alt="mock profile pic" class="staffprofile" >
                 </div>
-                <div class="col s10">
+                <div class="col s8">
                     <h5 class="">Hey <b>Jinja Name Here</b>,</h5> <!--JINJA HERE-->
                     <h5 class="">Get started on these requests!</h5>
                 </div>
+                <!-- NOTIFACTION BUTTON -->
+                <div class="col s2 right-align">
+                    <!-- Trigger/Open The Modal -->
+                    <button id="myBtn" class="waves-effect waves-light btn-large #00b0ff light-blue accent-3"><i class="material-icons white-text">notifications_active</i></button>
+                    <!-- Notification Modal -->
+                    <div id="myModal" class="modal">
+                        <!-- Modal Content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <br>
+                            <br>
+                            <!-- TO DO: FOR LOOP-->
+                            <div class="card-panel #00b0ff light-blue left-align white-text">
+                                <h6><i class="material-icons">account_box</i><b> Student Name</b></h6> <!-- JINJA HERE-->
+                                <h8><b>Request: </b></h8><h8>This is the actual request heheh</h8><!-- JINJA HERE-->
+                                <br><br>
+                                <div class="row">
+                                    <div class="col s6">
+                                    </div>
+                                    <div class="col s3 right-align">
+                                        <button class="waves-effect waves-light btn #f44336 red" type="submit" name="" value =""> Reject </button>    
+                                    </div>
+                                    <div class="col s3">
+                                        <button class="waves-effect waves-light btn #4caf50 green" type="submit" name="" value =""> Accept </button>    
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         <!-- ACCEPTED REQUESTS -->
-        <div class="card-panel" style="padding: 0;">
-            <span class="col s12 #0d47a1 blue darken-4 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
+        <div class="card-panel" style="margin: 25px; padding: 0;">
+            <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Accepted Requests</h5>
             </span>
             <!-- TABLE FOR REQUESTS -->
@@ -40,15 +69,14 @@
                   <tr>
                     <td>Example Amy</td><!--JINJA HERE-->
                     <td>FST </td><!--JINJA HERE-->
-                    <td>Hey i'd like to have a recommendation written for grad school. </td><!--JINJA HERE-->
-                    <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SELECT</button></td><!--JINJA HERE-->
+                    <td><a href="" class="" type="submit" name="" value ="">Hey i'd like to have a recommendation written for grad school. </a></td><!--JINJA HERE-->
                   </tr>
                 </tbody>
               </table>    
         </div>
         <!-- HISTORY SECTION -->
-        <div class="card-panel" style="margin: 0; box-shadow: none; padding: 0;">
-            <span class="col s12 #0d47a1 blue darken-4 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
+        <div class="card-panel" style="margin: 25px; box-shadow: none; padding: 0;">
+            <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>History</h5>
             </span>
              <!-- TABLE FOR REQUESTS -->
@@ -70,25 +98,25 @@
                 </tbody>
               </table>    
         </div>
+        </div>
         <br>
-        <br>
-        <a href="/" class="red-text">LOG OUT</a> 
+        <a href="/" class="red-text" style="margin-left: 620px;">LOG OUT</a> 
     </div>
     <!-- RIGHT COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
         <!-- WRITE RECOMMENDATION SECTION -->
-        <form class="card-panel col s12" style="margin-top: 15px;  padding: 0;" method="" action="/">
+        <form class="card-panel col s12" style="margin-top: 35px; margin-left: 15px;  margin-right: 15px; padding: 0;" method="" action="/">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Write Recommendation</h5>
             </span>
             <h6 class="grey-text" style="margin-left: 15px;">Please select a REQUEST to get started writing!</h6>
-            <!-- <button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SEND</button> -->
+            <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
         </form>
     </div>
     
 </div>
-
-
 
     
 {% endblock %}

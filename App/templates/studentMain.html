@@ -10,10 +10,10 @@
     <!-- FIRST COLUMN -->
     <div class="col s12 m4 l3 #bbdefb blue lighten-4" >
         <!-- PROFILE SECTION -->
-        <div class="card-panel #0d47a1 blue darken-4 center-align white-text" style="margin: 0; box-shadow: none;">
+        <div class="card-panel #0d47a1 blue darken-4 center-align white-text" style="margin-top: 0; box-shadow: none;">
             <img src="{{url_for('static', filename = 'images/Student_Icon.png')}}" alt="mock profile pic" class="profile" >
             <h5 class=""><b>NAME </b><i class="material-icons tiny">verified_user</i></h5> <!--JINJA HERE-->
-            <a href="/" class="black-text">LOG OUT</a> 
+            <a href="/" class="red-text"><h8>LOG OUT</h8></a> 
         </div>
         <br>
         <!-- ACTIVE REQUESTS SECTION -->
@@ -24,16 +24,34 @@
             <br>
             <div class="card-panel">
                 <!-- TO DO: REQUEST CARD -->
-                <p>accepted goes here</p>
+                <table class="black-text">
+                    <tbody>
+                      <!-- TO DO: FOR LOOP-->
+                      <tr>
+                        <td>Request: </td><!--JINJA HERE-->
+                        <td>Example of accepted request </td><!--JINJA HERE-->
+                      </tr>
+                    </tbody>
+                </table>   
             </div>
             <h8 class="white-text"><i class="material-icons white-text">insert_emoticon</i> Hang tight! These requests were accepted and your report is on its way!</h8>
             <br>
             <br>
             <br>
+            <br>
+            <br>
+            <br>
             <!-- PENDING REQUESTS SECTION -->
             <div class="card-panel">
-                <!-- TO DO: REQUEST CARD -->
-                <p>pending goes here</p>
+                <table class="black-text">
+                    <tbody>
+                    <!-- TO DO: FOR LOOP-->
+                      <tr>
+                        <td>Request: </td><!--JINJA HERE-->
+                        <td>Hey can you write a req for bleep </td><!--JINJA HERE-->
+                      </tr>
+                    </tbody>
+                </table>    
             </div> 
             <h8 class="white-text"><i class="material-icons white-text">sentiment_very_dissatisfied</i> Oof.. still pending...</h8>
         </div>
@@ -41,15 +59,22 @@
     <!-- MIDDLE COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
         <!-- WRITE REQUEST SECTION -->
-        <form class="card-panel col s12" style="margin-top: 15px;  padding: 0;" method="" action="/">
+        <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; padding: 0;" method="" action="/">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Write a Request</h5>
             </span>
-            <h6 class="grey-text" style="margin-left: 15px;">Please select a staff member below to write a request.</h6>
-            <!-- <button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="" value ="">SEND</button> -->
+            <div class="input-field col s12">
+                <h6 class="grey-text" style="margin-left: 15px;">Please select a staff member below to write a request.</h6>
+                <!-- <textarea id="rtext" name="rtext" class="materialize-textarea" aria-required></textarea>
+                <label for="textarea1">Write Review</label>
+                <input type = "hidden" name = "staffid" value = ""> -->
+                <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
         </form>
           <!-- STAFF SECTION -->
-        <div class="card-panel col s12" style="padding: 0;">
+        <div class="card-panel col s12" style="padding: 0; margin: 15px; ">
             <div class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="height: 50px;">
                 <h5>Available Staff   <i class="material-icons">people</i></h5>  
                 <!-- TABLE FOR STAFF -->
@@ -78,7 +103,11 @@
     <!-- FINAL COLUMN: RECOMMENDATION SECTION -->
     <div class="col s12 m4 l3 blue lighten-4">
         <h6 class="center-align" style="margin-top: 25px;"><b>COMPLETED RECOMMENDATIONS</b></h6>
-        <!-- TO DO: RECOMMENDATION CARD -->
+        <!-- TO DO: FOR LOOP-->
+        <div class="card-panel #00b0ff light-blue left-align white-text">
+            <h6><i class="material-icons">account_box</i><b> Staff Name</b></h6> <!-- JINJA HERE-->
+            <h8><b>Recommendation: </b></h8><h8>Lacey Macey is a great student or wadeva</h8><!-- JINJA HERE-->
+        </div>  
     </div>
     
 </div>

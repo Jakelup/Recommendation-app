@@ -30,27 +30,20 @@ def sendRequest():
 
 # SEND NOTIFICATIONS TO NOTIFICATIONLOG.HTML
 
-## Render first version of notificationLog.html
-@notification_views.route('/notificationLog', methods=['GET'])
-# @login_required -- enable this once login is set up
-def load_page():
-    return render_template('notificationLog.html')
 
-
-
-#Create route with address /notifcationLog/<staffID> to get and return notifcations 
+#Create route with address /staffMain/notifcationLog/<staffID> to get and return notifcations 
 #(created from pendings requests for a staff: Refactor routes below to interact with request object)
 
 
 
-#Create route /acceptRequest/<reqID> that will change the status of a request to accepted. Change the notification to seen using the ID
+#Create route /staffMain/acceptRequest/<reqID> that will change the status of a request to accepted. Change the notification to seen using the ID
 #Seen notifications should no longer have accept reject buttons
 #(Use change_status(reqID, "Accepted"), it's already imported)
 
 
 
 
-#Create route /acceptRequest/<reqID> that will change the status of a request to rejected. Change the notification to seen using the ID
+#Create route /staffMain/acceptRequest/<reqID> that will change the status of a request to rejected. Change the notification to seen using the ID
 #Seen notifications should no longer have accept reject buttons
 #(Use change_status(reqID, "Rejected"), it's already imported)
 

@@ -1,7 +1,4 @@
-tasks:
-  - init: pyenv install 3.9.10
-    command: pyenv install 3.9.10
-    
+tasks:    
   - init: pip install -r requirements.txt
     command: pip install -r requirements.txt
 
