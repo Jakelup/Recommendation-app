@@ -31,6 +31,39 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+
+footer{
+  position: absolute;
+  /* bottom:0px;
+  left:0;
+  right:0;   */
+  background-color: blue ;
+  /* height: px; */
+  width:100vw;
+  font-family:'Ubuntu', sans-serif;
+  display:flex;
+  justify-content: center;
+  text-align: center;
+  padding: 5px 0;
+}
+
+ /* .footer-content{
+ 
+  padding: 10px 0;
+   background-color: ; 
+
+}  */
+
+ .footer-content p{
+  font-size: 14px;
+  /* text-transform: capitalize; */
+  word-spacing: 2px;
+  color:white;
+
+}
+
+
+
 .input-field textarea:focus + label {
   color: #2196f3 !important;
 }
@@ -76,3 +109,4 @@
   text-decoration: none;
   cursor: pointer;
 }
+
