@@ -32,6 +32,12 @@
           </div>
 
           <div class="input-field col s12 m8 offset-m2"> 
+            <i class="material-icons prefix">portrait</i>
+            {{ form.sID(size=20, class="validate") }}
+            {{ form.sID.label }}
+          </div>
+
+          <div class="input-field col s12 m8 offset-m2"> 
             <i class="material-icons prefix">person</i>
             {{ form.name(size=20, class="validate") }}
             {{ form.name.label }}

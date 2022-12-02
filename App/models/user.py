@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String, nullable=False)
     faculty = db.Column(db.String, nullable=False)
     department = db.Column(db.String, nullable=False)
-    
+    # userType = db.Column(db.String, nullable=False)
 
     def __init__(self, password, username, name, faculty, department):
         self.set_password(password)
@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
         self.faculty=faculty
         self.department=department
 
+
     def toJSON(self):
         return{
             'id': self.id,
@@ -26,6 +27,7 @@ class User(db.Model, UserMixin):
             'name': self.name,
             'faculty': self.faculty,
             'department': self.department
+            # 'userType': self.userType
         }
 
     def set_password(self, password):

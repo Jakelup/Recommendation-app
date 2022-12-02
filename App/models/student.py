@@ -7,15 +7,14 @@ class Student(User):
     recommendationList = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
     requests = db.relationship('Request',  backref=db.backref('student', lazy='joined')) 
 
-    def __init__(self, username, password, name, faculty, department, studentId, recommendationList):
+    def __init__(self, username, password, name, faculty, department, studentId):
         self.username = username
         self.set_password(password)
         self.name = name
         self.faculty = faculty
         self.department = department
         self.studentId = studentId
-        self.recommendationList = recommendationList
-        self.user_type = "student"
+
 
     def toJSON(self):
         return{
