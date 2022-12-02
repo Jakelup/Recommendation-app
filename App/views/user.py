@@ -32,56 +32,6 @@ from App.models import (
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 
-# SIGNUP - CREATE ACCOUNT
-
-
-##STUDENT SIGN UP PAGES
-@user_views.route('/signup/Student')
-def getStudentSignUpPage():
-    if current_user.is_authenticated:
-        flash('You cannot create an account while logged in.')
-        return render_template('studentMain.html')
-    form = StudentRegister()
-    return render_template('signUp.html', form=form, usertype="Student")
-
-@app.route('/signup/Student', methods=['GET', 'POST'])
-def studentSignUpAction():
-    form = StudentRegister()
-    data = request.form 
-    msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="student")
-    if msg == "Error":
-        flash('Error in creating account')
-        return redirect(url_for('getStudentSignUpPage'))
-    else:
-        flash('Account Created!')
-        return render_template('login.html', form=form, usertype="Student")
-
-
-
-
-##STAFF SIGN UP PAGES
-@user_views.route('/signup/Staff')
-def getStaffSignUpPage():
-    if current_user.is_authenticated:
-        flash('You cannot create an account while logged in.')
-        return render_template('studentMain.html')
-    form = StaffRegister()
-    return render_template('signUp.html', form=form, usertype="Staff")
-
-@app.route('/signup/Staff', methods=['GET', 'POST'])
-def staffSignUpAction():
-    form = StaffRegister()
-    data = request.form 
-    msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="staff")
-    if msg == "Error":
-        flash('Error in creating account')
-        return redirect(url_for('getStaffSignUpPage'))
-    else:
-        flash('Account Created!')
-        return render_template('login.html', form=form, usertype="Staff")
-
-
-
 
     
 ## LOG IN:
@@ -91,14 +41,14 @@ def staffSignUpAction():
 def getLoginPage():
     if current_user.is_authenticated:
         flash('Already Logged In')
-        return render_template('studentMain.html')
+        return redirect(url_for('student_views.studentMain'))
     form = StudentLogIn()
     return render_template('login.html', form=form, usertype="Student")
 
 
 
-@user_views.route('/login/Student', methods=['GET', 'POST'])
-def login():
+@user_views.route('/login/Student', methods = {'POST'})
+def LoginAction():
     form = StudentLogIn()
     data = request.form
     if form.validate_on_submit():
@@ -106,9 +56,10 @@ def login():
         if user:
             login_user(user, True)
             flash('Successful Login')
-            return render_template('studentMain.html', form=form, usertype="Student") 
+            return redirect(url_for('student_views.studentMain'))
+
     flash('Invalid. Check username and/or password')
-    return render_template('login.html', form=form, usertype="Student")
+    return redirect(url_for('LoginAction'))
 
 
 
@@ -117,24 +68,25 @@ def login():
 def getStaffLoginPage():
     if current_user.is_authenticated:
         flash('Already Logged In')
-        return render_template('staffMain.html')
+        return redirect(url_for('staff_views.staffMain'))
     form = StaffLogIn()
     return render_template('login.html', form=form, usertype="Staff")
 
 
 
-@user_views.route('/login/Staff', methods=['GET', 'POST'])
+@user_views.route('/login/Staff', methods = {'POST'})
 def loginStaff():
     form = StaffLogIn()
+    data = request.form
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = validate_User(data['username'], data['password'])
         if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user, True)
-                flash('Successful Login')
-                return render_template('staffMain.html', form=form, usertype="Staff")
+            login_user(user, True)
+            flash('Successful Login')
+            return redirect(url_for('staff_views.staffMain'))
+
     flash('Invalid. Check username and/or password')
-    return render_template('login.html', form=form, usertype="Staff")
+    return redirect(url_for('loginStaff'))
 
 
 
@@ -145,6 +97,59 @@ def loginStaff():
 def logout():
     logout_user()
     return render_template('index.html')
+
+
+
+
+
+# SIGNUP - CREATE ACCOUNT
+
+
+##STUDENT SIGN UP PAGES
+@user_views.route('/signup/Student')
+def getStudentSignUpPage():
+    if current_user.is_authenticated:
+        flash('You cannot create an account while logged in.')
+        return redirect(url_for('student_views.studentMain'))
+    form = StudentRegister()
+    return render_template('signUp.html', form=form, usertype="Student")
+
+@app.route('/signup/Student', methods = {'POST'})
+def studentSignUpAction():
+    form = StudentRegister()
+    data = request.form 
+    msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="student")
+    if msg == "Error":
+        flash('Error in creating account')
+        return redirect(url_for('getStudentSignUpPage'))
+    else:
+        flash('Account Created!')
+    return redirect(url_for('LoginAction'))
+
+
+
+
+##STAFF SIGN UP PAGES
+@user_views.route('/signup/Staff')
+def getStaffSignUpPage():
+    if current_user.is_authenticated:
+        flash('You cannot create an account while logged in.')
+        return redirect(url_for('staff_views.staffMain'))
+    form = StaffRegister()
+    return render_template('signUp.html', form=form, usertype="Staff")
+
+@app.route('/signup/Staff', methods = {'POST'})
+def staffSignUpAction():
+    form = StaffRegister()
+    data = request.form 
+    msg = user_signup(data['username'], data['password'], data['name'], data['faculty'], data['department'], userType="staff")
+    if msg == "Error":
+        flash('Error in creating account')
+        return redirect(url_for('getStaffSignUpPage'))
+    else:
+        flash('Account Created!')
+        return redirect(url_for('loginStaff'))
+
 
 
 
