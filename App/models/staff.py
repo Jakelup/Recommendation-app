@@ -2,12 +2,15 @@ from App.database import db
 from App.models import User
 
 class Staff(User):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'staff'
     # staff has a list of notification objects
     notificationList = db.relationship('Notification', backref=db.backref('staff', lazy='joined'))
     # staff has a list of request objects
     requestList = db.relationship('Request', backref=db.backref('staff', lazy='joined'))
     
+    __mapper_args__ = {
+        "polymorphic_identity": "staff",
+    }
 
     def __init__(self, id, username, password, name, faculty, department):
         self.id = id
@@ -28,7 +31,7 @@ class Staff(User):
     
     def toJSON_with_notifications(self):
         return {
-            'staffId': self.staffId,
+            'staffId': self.id,
             'name': self.name,
             'faculty': self.faculty,
             'department': self.department,

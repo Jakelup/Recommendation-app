@@ -1,11 +1,16 @@
 from App.database import db
-from App.models import User
+from App.models import User, user
+
 
 class Student(User):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'student'
     # student has a list of recommendation objects
     recommendationList = db.relationship('Recommendation', backref=db.backref('student', lazy='joined'))
     requests = db.relationship('Request',  backref=db.backref('student', lazy='joined')) 
+
+    __mapper_args__ = {
+        "polymorphic_identity": "student",
+    }
 
     def __init__(self, id, username, password, name, faculty, department):
         self.username = username
@@ -15,6 +20,7 @@ class Student(User):
         self.department = department
         self.id = id
         self.userType = "staff"
+
 
 
     def toJSON(self):
