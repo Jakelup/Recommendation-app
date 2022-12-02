@@ -3,7 +3,7 @@ from App.database import db
 class Notification(db.Model):
     notifId = db.Column(db.Integer, primary_key=True)
     # who it was sent to
-    staffId= db.Column(db.Integer,db.ForeignKey('staff.staffId'))
+    staffid = db.Column(db.Integer,db.ForeignKey('staff.id'))
     # who sent it
     requestId = db.Column(db.Integer, db.ForeignKey('request.requestID'))
     body = db.Column(db.String, nullable=False)
@@ -13,7 +13,7 @@ class Notification(db.Model):
 
     def __init__(self, notifId, staffId, requestID, body, dateNTime, seen):
         self.notifId = notifId
-        self.staffId = staffId
+        self.staff = staffid
         self.requestId =requestId
         self.body = body
         self.dateNTime = dateNTime
@@ -22,7 +22,7 @@ class Notification(db.Model):
     def toJSON(self):
         return{
             'notifId': self.notifId,
-            'staffId': self.staffId,
+            'staffId': self.staffid,
             'requestID': self.requestID,
             'body': self.body,
             'dateNTime': self.dateNTime,

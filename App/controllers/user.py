@@ -15,7 +15,7 @@ from flask import Response, flash
 
 # STUDENT SIGNUP
 def student_signup(id, username, password, name, faculty, department):
-    newStudent = Student(studentId=id, username=username, password=password, name=name, faculty=faculty, department=department)
+    newStudent = Student(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
     try:
         db.session.add(newStudent)
         db.session.commit()
@@ -29,17 +29,20 @@ def student_signup(id, username, password, name, faculty, department):
 
 # STAFF SIGNUP
 def staff_signup(id, username, password, name, faculty, department):
-    newStaff = Staff(staffId=id, username=username, password=password, name=name, faculty=faculty, department=department)
+    newStaff = Staff(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
+    db.session.add(newStaff)
+    db.session.commit()
+    return newStaff
     # newUser = User(username=username, password=password, name=name, faculty=faculty, department=department, userType="staff")
-    try:
-        db.session.add(newStaff)
-        db.session.commit()
-        # db.session.add(newUser)
-        # db.session.commit()
-        return newStaff
-    except IntegrityError: # attempted to insert a duplicate user
-        db.session.rollback()
-        return None
+    # try:
+    #     db.session.add(newStaff)
+    #     db.session.commit()
+    #     # db.session.add(newUser)
+    #     # db.session.commit()
+    #     return newStaff
+    # except IntegrityError: # attempted to insert a duplicate user
+    #     db.session.rollback()
+    #     return None
     
 
 # get User by id

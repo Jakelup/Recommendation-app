@@ -90,7 +90,7 @@ def approve_request(notifID):
     status = request.get_json()
     staff = get_staff(current_identity.id)
     if staff:
-        notif = approve_notif(staff.staffID, notifID, status['status'])
+        notif = approve_notif(staff.id, notifID, status['status'])
         if notif:
             return Response({"request " + status['status']}, status=200)
         return Response({"invalid request"}, status=401)

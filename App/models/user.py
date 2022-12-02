@@ -4,15 +4,16 @@ from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     __abstract__ = True
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     username = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     faculty = db.Column(db.String, nullable=False)
     department = db.Column(db.String, nullable=False)
-    # userType = db.Column(db.String, nullable=False)
+    userType = db.Column(db.String, nullable=False)
 
-    def __init__(self, password, username, name, faculty, department):
+    def __init__(self, id,password, username, name, faculty, department):
+        self.id=id
         self.set_password(password)
         self.username=username
         self.name=name

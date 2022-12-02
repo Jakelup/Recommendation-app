@@ -45,7 +45,8 @@ user_views = Blueprint('user_views', __name__, template_folder='../templates')
 def getLoginPage():
     if current_user.is_authenticated:
         flash('Already Logged In')
-        return redirect(url_for('student_views.studentMain'))
+        # return redirect(url_for('student_views.studentMain'))
+        return render_template('studentMain.html')
     form = StudentLogIn()
     return render_template('login.html', form=form, usertype="Student")
 
@@ -60,7 +61,8 @@ def LoginAction():
         if user:
             login_user(user, True)
             flash('Successful Login')
-            return redirect(url_for('student_views.studentMain'))
+            # return redirect(url_for('student_views.studentMain'))
+            return render_template('studentMain.html')
 
     flash('Invalid. Check username and/or password')
     return render_template('login.html', form=form, usertype="Student")
@@ -73,7 +75,8 @@ def LoginAction():
 def getStaffLoginPage():
     if current_user.is_authenticated:
         flash('Already Logged In')
-        return redirect(url_for('staff_views.staffMain'))
+        # return redirect(url_for('staff_views.staffMain'))
+        return render_template('staffMain.html')
     form = StaffLogIn()
     return render_template('login.html', form=form, usertype="Staff")
 
@@ -86,11 +89,12 @@ def loginStaff():
         if user:
             login_user(user, True)
             flash('Successful Login')
-            return redirect(url_for('staff_views.staffMain'))
+            # return redirect(url_for('staff_views.staffMain'))
+            return render_template('staffMain.html')
 
     flash('Invalid. Check username and/or password')
-    return redirect(url_for('user_views.loginStaff'))
-
+    # return redirect(url_for('user_views.loginStaff'))
+    return render_template('login.html', form=form, usertype="Staff")
 
 
 
@@ -113,7 +117,8 @@ def logout():
 def getStudentSignUpPage():
     if current_user.is_authenticated:
         flash('You cannot create an account while logged in.')
-        return redirect(url_for('student_views.studentMain'))
+        # return redirect(url_for('student_views.studentMain'))
+        return render_template('studentMain.html')
     form = StudentRegister()
     return render_template('signUp.html', form=form, usertype="Student")
 
@@ -140,7 +145,8 @@ def studentSignUpAction():
 def getStaffSignUpPage():
     if current_user.is_authenticated:
         flash('You cannot create an account while logged in.')
-        return redirect(url_for('staff_views.staffMain'))
+        # return redirect(url_for('staff_views.staffMain'))
+        return render_template('staffMain.html')
     form = StaffRegister()
     return render_template('signUp.html', form=form, usertype="Staff")
 
@@ -149,14 +155,14 @@ def staffSignUpAction():
     form = StaffRegister()
     data = request.form 
     staff = staff_signup(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
-    if staff == None:
-        flash('Error in creating account')
-        # return redirect(url_for('getStaffSignUpPage'))
-        return render_template('signUp.html', form=form, usertype="Staff")
-    else:
+    if staff:
         flash('Account Created!')
         # return redirect(url_for('user_views.loginStaff'))
         return render_template('login.html', form=form, usertype="Staff")
+    else:
+        flash('Error. Account not created')
+        # return redirect(url_for('getStaffSignUpPage'))
+        return render_template('signUp.html', form=form, usertype="Staff")
 
 
 

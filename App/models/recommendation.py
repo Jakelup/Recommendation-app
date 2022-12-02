@@ -3,8 +3,8 @@ from datetime import date
 
 class Recommendation(db.Model):
     recId = db.Column(db.Integer, primary_key=True)
-    staffId = db.Column(db.Integer, db.ForeignKey('staff.staffId'))
-    studentId = db.Column(db.Integer, db.ForeignKey('student.studentId'))
+    staffId = db.Column(db.Integer, db.ForeignKey('staff.id'))
+    studentId = db.Column(db.Integer, db.ForeignKey('student.id'))
     body = db.Column(db.String, nullable=False)
     date = db.Column(db.Date, nullable= False)
 
