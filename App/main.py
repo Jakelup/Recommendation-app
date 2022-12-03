@@ -1,22 +1,20 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_uploads import DOCUMENTS, IMAGES, TEXT, UploadSet, configure_uploads
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
-from flask_login import LoginManager
-
-login_manager = LoginManager()
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
+from flask_login import LoginManager, current_user
 
 from App.database import create_db
 
 from App.controllers import (
-    setup_jwt
+    setup_jwt,
+)
+
+from App.models import (
+    User
 )
 
 from App.views import (
@@ -28,10 +26,7 @@ from App.views import (
     recommendation_views,
 )
 
-
-
 # New views must be imported and added to this list
-
 views = [
     user_views,
     index_views,
@@ -40,6 +35,20 @@ views = [
     notification_views,
     recommendation_views
 ]
+
+
+app = Flask(__name__, static_url_path='/static')
+
+login_manager = LoginManager(app)
+# login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    if current_user == None:
+        return render_template('index.html')
+    # return User.query.get(user_id)
+#should return even if none
+
 
 def add_views(app, views):
     for view in views:
@@ -75,10 +84,11 @@ def create_app(config={}):
     app.config['UPLOADED_PHOTOS_DEST'] = "App/uploads"
     photos = UploadSet('photos', TEXT + DOCUMENTS + IMAGES)
     configure_uploads(app, photos)
+    login_manager.init_app(app)
     add_views(app, views)
     create_db(app)
     setup_jwt(app)
-    login_manager.init_app(app)
     app.app_context().push()
     return app
+
 
