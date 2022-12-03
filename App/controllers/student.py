@@ -1,6 +1,10 @@
 from App.models import Student
 from App.database import db
 
+# create_student()
+#     student=
+#     return student
+
 def get_student(id):
     student = Student.query.get(id)
     if student:
