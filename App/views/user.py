@@ -10,12 +10,17 @@ from App.controllers import (
     # create_user,
     get_all_users,
     get_all_users_json,
+    get_student,
+    get_all_staff,
     get_all_students_json,
     get_user,
+    get_student_reclist,
     staff_signup,
     student_signup,
     validate_Staff,
     validate_Student,
+    get_student_pendingR,
+    get_student_acceptedR,
     login_user
 )
 
@@ -72,9 +77,15 @@ def LoginAction():
         user = validate_Student(data['username'], data['password'])
         if user:
             login_user(user, True)
-            flash('Successful Login')
+            # # flash('Successful Login')
+            studentID = current_user.id
+            student = get_student(studentID)
+            staff = get_all_staff()
+            recommendations = get_student_reclist(studentID)
+            acceptedrs = get_student_acceptedR(studentID)
+            pendingrs = get_student_pendingR(studentID)
+            return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=0)
             # return redirect(url_for('student_views.studentMain'))
-            return render_template('studentMain.html')
 
     flash('Invalid. Check username and/or password')
     return render_template('login.html', form=form, usertype="Student")
@@ -100,7 +111,7 @@ def loginStaff():
         user = validate_Staff(data['username'], data['password'])
         if user:
             login_user(user, True)
-            flash('Successful Login')
+            # flash('Successful Login')
             # return redirect(url_for('staff_views.staffMain'))
             return render_template('staffMain.html')
 

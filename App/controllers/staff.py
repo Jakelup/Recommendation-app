@@ -27,6 +27,14 @@ def get_all_staff_notifs_json():
     staff = [staf.toJSON_with_notifications() for staf in staff]
     return staff
 
+#get the staff object for the recommendation
+def get_staff_by_recommendation(recommendation):
+    staff=Staff.query.get(id=recommendation.staffId)
+    if staff:
+        return staff
+    return None
+
+
 # def get_staff_by_firstName(firstName):
 #     staff= Staff.query.filter_by(firstName=firstName).all()
 #     staff = [staf.toJSON() for staf in staff]

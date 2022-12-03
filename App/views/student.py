@@ -8,48 +8,39 @@ from App.controllers import (
     get_all_students_json,
     get_all_staff,
     get_all_staff_json,
-    get_student_reclist_json,
+    get_student_reclist,
     get_student_pendingR,
     get_student_acceptedR,
+    get_all_recommendations
 )
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')
 
 ## Render first version of studentMain.html
+#VIEW ALL STAFF 
 @student_views.route('/studentMain', methods=['GET'])
 @login_required
 def studentMain():
-    return render_template('studentMain.html')
+    studentID = current_user.id
+    student = get_student(studentID)
+    staff = get_all_staff()
+    recommendations = get_student_reclist(studentID)
+    accepted = get_student_acceptedR(studentID)
+    pending = get_student_pendingR(studentID)
+    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, accepted=accepted, pending=pending, selectedstaff=0)
+
+
+#VIEW ALL STAFF
+# @student_views.route('/studentMain', methods=['GET'])
+# @login_required 
+# def view_all_staff():
+#     staff = get_all_staff()
+#     return render_template('studentMain.html', staff=staff)
+#     # return Response({'Staff not found.'}, status=404)
 
 
 
-    ###STAFF###
-
-# JSON VIEW ALL STAFF
-@student_views.route('/studentMain', methods=['GET'])
-@login_required 
-def view_all_staff():
-    staff = get_all_staff_json()
-    if staff:
-        return staff
-    return Response({'Staff not found.'}, status=404)
-
-
-
-    ###RECOMMENDATIONS###
-
-# VIEW RECOMMENDATION LISTING
-@student_views.route('/studentMain', methods=['GET'])
-@login_required 
-@jwt_required()
-def get_recommendations():
-    studentID = current_identity.id
-    if get_student(studentID):
-        recs = get_student_reclist_json(studentID)
-        if recs:
-            return jsonify(recs)
-        return Response({'There are no recommendations found for this user.'}, status=404)
-    return Response("staff cannot perform this action.", status=401)
+ 
 
 '''
 

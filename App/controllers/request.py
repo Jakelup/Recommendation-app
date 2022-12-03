@@ -15,7 +15,7 @@ def create_request(studentId,staffId,body):
     return None
 
 def get_all_student_requests(studentId):
-    return Request.query.filter_by(studentId).first()
+    return Request.query.filter_by(studentId=studentId).first()
 
 def get_all_student_requests_JSON(studentId):
     requests = get_all_student_requests(studentId)
@@ -27,10 +27,10 @@ def get_all_student_requests_JSON(studentId):
 
 
 def get_all_staff_requests(staffId):
-    return Request.query.filter_by(staffId).first()
+    return Request.query.filter_by(staffId=staffId).first()
 
 def get_all_staff_request_JSON(staffId):
-    requests = get_all_student_requests(staffId)
+    requests = get_all_student_requests(staffId=staffId)
     if not requests:
         return None
     requests = [request.toJSON() for request in requests]
@@ -60,14 +60,14 @@ def get_student_pendingR(studentId):
     requests = get_all_student_requests(studentId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Pending").all()
+    requests = Request.query.filter(Request.status.in_(Status.PENDING)).all()
     return requests
 
 def get_student_acceptedR(studentId):
     requests = get_all_student_requests(studentId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Accepted").all()
+    requests = Request.query.filter(Request.status.in_(Status.ACCEPTED)).all()
     return requests
 
 
@@ -77,26 +77,26 @@ def get_staff_acceptedR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Accepted").all()
+    requests = Request.query.filter_by(Request.status.in_(Status.ACCEPTED)).all()
     return requests
 
 def get_staff_rejectedR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Rejected").all()
+    requests = Request.query.filter_by(Request.status.in_(Status.REJECTED)).all()
     return requests
 
 def get_staff_completedR():
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Completed").all()
+    requests = Request.query.filter_by(Request.status.in_(Status.COMPLETED)).all()
     return requests
 
 def get_staff_pendingR():
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Status="Pending").all()
+    requests = Request.query.filter_by(Request.status.in_(Status.PENDING)).all()
     return requests

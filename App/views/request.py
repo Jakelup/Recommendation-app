@@ -19,30 +19,52 @@ from App.controllers import (
 
 request_views = Blueprint('request_views', __name__, template_folder='../templates')
 
-## Create Route called /studentMain to:
-# GET ALL PENDING REQUESTS
-@request_views.route('/studentMain', methods=['GET'])
-@login_required 
-def view_all_pending_reqs():
-    studentID = current_identity.id
-    if get_student(studentID):
-        pending = get_student_pendingR(studentID)
-        if pending:
-            return render_template('staffMain.html', pending=pendingRequests)
-        return Response({'There are no pending requests found for this user.'}, status=404)
-    return Response("Staff cannot perform this action.", status=401)
 
-# GET ALL ACCEPTED REQUESTS
-@request_views.route('/studentMain', methods=['GET'])
+
+#SELECT STAFF TO BEGIN WRITING REQUEST
+@request_views.route('/studentMain/selectStaff', methods=['GET', 'POST'])
 @login_required 
-def view_all_accepted_reqs():
-    studentID = current_identity.id
-    if get_student(studentID):
-        accepted = get_student_acceptedR(studentID)
-        if accepted:
-            return render_template('studentMain.html', accepted=acceptedRequests)
-        return Response({'There are no accepted requests found for this user.'}, status=404)
-    return Response("Staff cannot perform this action.", status=401)
+def create_request():
+    data = request.form
+    selectedstaff = get_staff(data['staffId'])
+
+    studentID = current_user.id
+    student = get_student(studentID)
+    staff = get_all_staff()
+    recommendations = get_student_reclist(studentID)
+    acceptedrs = get_student_acceptedR(studentID)
+    pendingrs = get_student_pendingR(studentID)
+
+    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
+
+
+
+## Create route for /studentMain/writeRequest
+# REQUEST A RECOMMENDATION
+@request_views.route('/studentMain/writeRequest', methods=['POST'])
+@login_required 
+def create_request():
+    data = request.form
+    studentID = current_user.id
+
+    if studentID:
+        selectedstaff = get_staff(data['staffId'])
+        request = create_request(studentID, data['staffId'], data['body'])
+        if request:
+            return request
+
+    student = get_student(studentID)
+    staff = get_all_staff()
+    recommendations = get_student_reclist(studentID)
+    acceptedrs = get_student_acceptedR(studentID)
+    pendingrs = get_student_pendingR(studentID)
+
+    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
+
+    #     return Response({'The request could not be made.'}, status=422)
+    # return Response("Staff cannot perform this action.", status=401)
+
+
 
 
 ## Create Route called /staffMain to: 
@@ -111,19 +133,31 @@ def reqs_history():
     return render_template('staffMain.html', completed=completed, rejected=rejected)
 
 
-## Create route for /<studentID>/<staffID>/writeRequest
-# REQUEST A RECOMMENDATION
-@request_views.route('/studentMain', methods=['POST'])
-@login_required 
-def create_request():
-    studentID = current_identity.id
-    if studentID:
-        staff = get_staff(staffID)
-        body = data.form
-        request = create_request(studentID,staffID,body)
-        if request:
-            return request
-        return Response({'The request could not be made.'}, status=422)
-    return Response("Staff cannot perform this action.", status=401)
+##ARCHIVE BECAUSE FIRST INSTANCE OF STUDENTMAIN ROUTE HANDLES THESE FUNCTIONS:
+# ## Create Route called /studentMain to:
+# # GET ALL PENDING REQUESTS
+# @request_views.route('/studentMain', methods=['GET'])
+# @login_required 
+# def view_all_pending_reqs():
+#     studentID = current_identity.id
+#     if get_student(studentID):
+#         pending = get_student_pendingR(studentID)
+#         if pending:
+#             return render_template('staffMain.html', pending=pendingRequests)
+#         return Response({'There are no pending requests found for this user.'}, status=404)
+#     return Response("Staff cannot perform this action.", status=401)
+
+# # GET ALL ACCEPTED REQUESTS
+# @request_views.route('/studentMain', methods=['GET'])
+# @login_required 
+# def view_all_accepted_reqs():
+#     studentID = current_identity.id
+#     if get_student(studentID):
+#         accepted = get_student_acceptedR(studentID)
+#         if accepted:
+#             return render_template('studentMain.html', accepted=acceptedRequests)
+#         return Response({'There are no accepted requests found for this user.'}, status=404)
+#     return Response("Staff cannot perform this action.", status=401)
+
 
 
