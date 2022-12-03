@@ -17,7 +17,7 @@ student_views = Blueprint('student_views', __name__, template_folder='../templat
 
 ## Render first version of studentMain.html
 @student_views.route('/studentMain', methods=['GET'])
-# @login_required
+@login_required
 def studentMain():
     return render_template('studentMain.html')
 
@@ -27,6 +27,7 @@ def studentMain():
 
 # JSON VIEW ALL STAFF
 @student_views.route('/studentMain', methods=['GET'])
+@login_required 
 def view_all_staff():
     staff = get_all_staff_json()
     if staff:
@@ -39,6 +40,7 @@ def view_all_staff():
 
 # VIEW RECOMMENDATION LISTING
 @student_views.route('/studentMain', methods=['GET'])
+@login_required 
 @jwt_required()
 def get_recommendations():
     studentID = current_identity.id

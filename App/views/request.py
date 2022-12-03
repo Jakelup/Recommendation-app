@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response
 from flask_jwt import jwt_required, current_identity
+from flask_login import login_required
 
 from App.controllers import (
     get_all_student_requests,
@@ -21,6 +22,7 @@ request_views = Blueprint('request_views', __name__, template_folder='../templat
 ## Create Route called /studentMain to:
 # GET ALL PENDING REQUESTS
 @request_views.route('/studentMain', methods=['GET'])
+@login_required 
 def view_all_pending_reqs():
     studentID = current_identity.id
     if get_student(studentID):
@@ -32,6 +34,7 @@ def view_all_pending_reqs():
 
 # GET ALL ACCEPTED REQUESTS
 @request_views.route('/studentMain', methods=['GET'])
+@login_required 
 def view_all_accepted_reqs():
     studentID = current_identity.id
     if get_student(studentID):
@@ -48,6 +51,7 @@ def view_all_accepted_reqs():
     
 # GET ALL PENDING REQUESTS
 @request_views.route('/staffMain', methods=['GET'])
+@login_required 
 def view_all_pending_reqs():
     staffID = current_identity.id
     if get_staff(staffID):
@@ -59,6 +63,7 @@ def view_all_pending_reqs():
 
 # GET ALL ACCEPTED REQUESTS
 @request_views.route('/staffMain', methods=['GET'])
+@login_required 
 def view_all_accepted_reqs():
     staffID = current_identity.id
     if get_staff(staffID):
@@ -70,6 +75,7 @@ def view_all_accepted_reqs():
 
 # GET ALL REJECTED REQUESTS
 @request_views.route('/staffMain', methods=['GET'])
+@login_required 
 def view_all_rejected_reqs():
     staffID = current_identity.id
     if get_staff(staffID):
@@ -82,6 +88,7 @@ def view_all_rejected_reqs():
 
 # GET ALL COMPLETED REQUESTS
 @request_views.route('/staffMain', methods=['GET'])
+@login_required 
 def view_all_completed_reqs():
     staffID = current_identity.id
     if get_staff(staffID):
@@ -94,6 +101,7 @@ def view_all_completed_reqs():
 
 # REQUESTS HISTORY
 @request_views.route('/staffMain', methods=['GET'])
+@login_required 
 def reqs_history():
     staffID = current_identity.id
     if get_staff(staffID):
@@ -106,6 +114,7 @@ def reqs_history():
 ## Create route for /<studentID>/<staffID>/writeRequest
 # REQUEST A RECOMMENDATION
 @request_views.route('/studentMain', methods=['POST'])
+@login_required 
 def create_request():
     studentID = current_identity.id
     if studentID:

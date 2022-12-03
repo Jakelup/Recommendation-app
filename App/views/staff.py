@@ -20,7 +20,7 @@ staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 
 ## Render first version of staffMain.html
 @staff_views.route('/staffMain', methods=['GET'])
-# @login_required 
+@login_required 
 def staffMain():
     return render_template('staffMain.html')
 
@@ -30,6 +30,7 @@ def staffMain():
 
 # CREATE A RECOMMENDATION
 @staff_views.route('/staffMain', methods=['POST'])
+@login_required 
 def create_recommendation():
     staff = get_all_staff_json()
     if staff:
@@ -39,6 +40,7 @@ def create_recommendation():
 
 # VIEW NOTIFICATION FEED
 @staff_views.route('/notifications', methods=['GET'])
+@login_required 
 @jwt_required()
 def view_user_feed():
     staffID = current_identity.id
@@ -52,12 +54,14 @@ def view_user_feed():
 
 # routes for testing purposes
 @staff_views.route('/view/staff', methods=['GET'])
+@login_required 
 def get_staff_page():
     staff = get_all_staff()
     return render_template('users.html', users=staff)
 
 # JSON view all Staff
 @staff_views.route('/staff', methods=['GET'])
+@login_required 
 def staff():
     staff = get_all_staff_json()
     if staff:
@@ -68,6 +72,7 @@ def staff():
 
 # JSON view all staff + their notification feed
 @staff_views.route('/staff/NotifFeed', methods=['GET'])
+@login_required 
 def staff_notifs():
     staff = get_all_staff_notifs_json()
     if staff:

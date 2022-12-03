@@ -1,16 +1,10 @@
 from flask import Flask
 from flask import Blueprint, flash, redirect, render_template, jsonify, request, send_from_directory, url_for
 from flask_jwt import jwt_required, current_identity
-from flask_login import LoginManager, current_user, login_required
+from flask_login import LoginManager, current_user, login_required, logout_user
 from App.database import db
 from sqlalchemy.exc import IntegrityError
 from flask_bcrypt import Bcrypt
-
-app = Flask(__name__, static_url_path='/static')
-
-login_manager = LoginManager()
-login_manager.login_view = 'login'
-
 
 from App.controllers import (
     # create_user,
@@ -32,12 +26,30 @@ from App.models import (
     StaffRegister
 )
 
+app = Flask(__name__, static_url_path='/static')
+
+login_manager = LoginManager(app)
+login_manager.init_app(app)
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User.query.get(user_id)
+   
+login_manager.login_view = 'login'
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
 
+## LOGOUT
+@user_views.route('/logout')
+# @login_required
+def logout():
+    logout_user()
+    flash('Logged Out')
+    return render_template('index.html')
 
-    
+
+ 
 ## LOG IN:
 
 ##STUDENT LOGIN PAGES
@@ -98,15 +110,6 @@ def loginStaff():
 
 
 
-## LOGOUT
-@user_views.route('/logout', methods=['GET','POST'])
-@login_required
-def logout():
-    logout_user()
-    return render_template('index.html')
-
-
-
 
 
 # SIGNUP - CREATE ACCOUNT
@@ -122,6 +125,7 @@ def getStudentSignUpPage():
     form = StudentRegister()
     return render_template('signUp.html', form=form, usertype="Student")
 
+
 @user_views.route('/signup/Student', methods = ['GET', 'POST'])
 def studentSignUpAction():
     form = StudentRegister()
@@ -134,7 +138,7 @@ def studentSignUpAction():
     else:
         flash('Account Created!')
     # return redirect(url_for('user_views.LoginAction'))
-    return render_template('login.html', form=form, usertype="Student")
+    return render_template('login.html', form=StudentLogIn(), usertype="Student")
 
 
 
@@ -158,7 +162,7 @@ def staffSignUpAction():
     if staff:
         flash('Account Created!')
         # return redirect(url_for('user_views.loginStaff'))
-        return render_template('login.html', form=form, usertype="Staff")
+        return render_template('login.html', form=StaffLogIn(), usertype="Staff")
     else:
         flash('Error. Account not created')
         # return redirect(url_for('getStaffSignUpPage'))

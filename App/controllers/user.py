@@ -2,6 +2,7 @@ from App.models import User, Student, Staff
 from App.database import db
 from sqlalchemy.exc import IntegrityError
 from flask import Response, flash
+from flask_login import LoginManager
 
 # Create new User
 # def create_user(username, password, name, faculty, department, userType):
