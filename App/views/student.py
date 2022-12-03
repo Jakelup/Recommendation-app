@@ -30,6 +30,23 @@ def studentMain():
     return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, accepted=accepted, pending=pending, selectedstaff=0)
 
 
+#SELECT STAFF TO BEGIN WRITING REQUEST
+@student_views.route('/studentMain/selectStaff', methods=['GET', 'POST'])
+@login_required 
+def create_request():
+    data = request.form
+    selectedstaff = get_staff(data['staffId'])
+
+    studentID = current_user.id
+    student = get_student(studentID)
+    staff = get_all_staff()
+    recommendations = get_student_reclist(studentID)
+    acceptedrs = get_student_acceptedR(studentID)
+    pendingrs = get_student_pendingR(studentID)
+
+    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
+
+
 #VIEW ALL STAFF
 # @student_views.route('/studentMain', methods=['GET'])
 # @login_required 

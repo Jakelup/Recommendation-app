@@ -10,9 +10,7 @@ from App.controllers import (
     get_staff_by_name,
     get_staff_feed_json,
     get_staff_acceptedR,
-    get_staff_rejectedR,
-    get_staff_completedR,
-    get_staff_pendingR
+    get_staff_historyR,
 )
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
@@ -22,20 +20,14 @@ staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 @staff_views.route('/staffMain', methods=['GET'])
 @login_required 
 def staffMain():
-    return render_template('staffMain.html')
+    staff = get_staff(current_user.id)
+
+    acceptedrs = get_staff_acceptedR(current_user.id)
+    historyrs = get_staff_historyR(current_user.id)
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0)
 
 
 
-    ###RECOMMENDATION ROUTES###
-
-# CREATE A RECOMMENDATION
-@staff_views.route('/staffMain', methods=['POST'])
-@login_required 
-def create_recommendation():
-    staff = get_all_staff_json()
-    if staff:
-        return staff
-    return Response({'Staff not found.'}, status=404)
 
 
 # VIEW NOTIFICATION FEED

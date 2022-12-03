@@ -3,8 +3,13 @@ from App.database import db
 from sqlalchemy.exc import IntegrityError
 
 
-def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
-    newrec = Recommendation(sentFromStaffID=sentFromStaffID, sentToStudentID=sentToStudentID, recURL=recURL)
+def create_recommendation(sentFromStaffID, sentToStudentID, body):
+    date = date.today()
+    newrec = Recommendation(staffId=sentFromStaffID, studentId=sentToStudentID, body=body, date=date)
+    if newrec:
+        db.session.add(newrec)
+        db.session.commit()
+        return request
     return newrec
     
 def get_all_recommendations():

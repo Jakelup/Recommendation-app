@@ -7,7 +7,7 @@
 {% block content %}
 <div class="row flex">
 
-    <!-- FIRST COLUMN -->
+    <!-- LEFT COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4" >
         <!-- PROFILE SECTION -->
         <div class="card-panel #0d47a1 blue darken-4 white-text" style="margin-top: 35px; margin-left: 15px;  margin-right: 15px; box-shadow: none;">
@@ -16,7 +16,7 @@
                     <img src="{{url_for('static', filename = 'images/Staff_Icon.png')}}" alt="mock profile pic" class="staffprofile" >
                 </div>
                 <div class="col s7">
-                    <h5 class="">Hey <b>Jinja Name Here</b>,</h5> <!--JINJA HERE-->
+                    <h5 class="">Hey <b>{{staff.name}}</b>,</h5> <!--JINJA HERE-->
                     <h5 class="">Get started on these requests!</h5>
                 </div>
                 <!-- NOTIFACTION BUTTON -->
@@ -59,24 +59,48 @@
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Accepted Requests</h5>
             </span>
-            <!-- TABLE FOR REQUESTS -->
-            <table class="black-text">
-                <thead>
-                  <tr>
-                      <th>Student</th>
-                      <th>Faculty</th>
-                      <th>Request</th>
-                  </tr>
-                </thead>
-        
-                <tbody>
-                  <tr>
-                    <td>Example Amy</td><!--JINJA HERE-->
-                    <td>FST </td><!--JINJA HERE-->
-                    <td><a href="" class="" type="submit" name="" value ="">Hey i'd like to have a recommendation written for grad school. </a></td><!--JINJA HERE-->
-                  </tr>
-                </tbody>
-              </table>    
+            <form method="POST" action="/staffMain/selectReq">
+                <!-- TABLE FOR REQUESTS -->
+                {% if acceptedrs != None %}
+                <table class="black-text">
+                    <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Faculty</th>
+                        <th>Request</th>
+                    </tr>
+                    </thead>
+            
+                    <tbody>
+                    {% for acceptedr in acceptedrs %}
+                    <tr>
+                        <td>{{acceptedr.studentId.name}}</td><!--JINJA HERE-->
+                        <td>{{acceptedr.studentId.faculty}} </td><!--JINJA HERE-->
+                        <td><a href="" class="" type="submit" name="reqID" value ="{{acceptedr.id}}">{{acceptedr.body}}</a></td><!--JINJA HERE-->
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>   
+                {% else %}
+                <table class="black-text">
+                    <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Faculty</th>
+                        <th>Request</th>
+                    </tr>
+                    </thead>
+            
+                    <tbody>
+                    <tr>
+                        <td>None </td>
+                        <td>None </td>
+                        <td>None </td>
+                    </tr>
+                    </tbody>
+                </table>   
+                {% endif %} 
+            </form>
         </div>
         <!-- HISTORY SECTION -->
         <div class="card-panel" style="margin: 25px; box-shadow: none; padding: 0;">
@@ -84,6 +108,7 @@
                 <h5>History</h5>
             </span>
              <!-- TABLE FOR REQUESTS -->
+            {% if historyrs != None %}
              <table class="black-text">
                 <thead>
                   <tr>
@@ -94,29 +119,63 @@
                 </thead>
         
                 <tbody>
+                {% for historyr in historyrs %}
                   <tr>
-                    <td>Completed </td><!--JINJA HERE-->
-                    <td>Oogah Boogah</td><!--JINJA HERE-->
-                    <td>Jacey Pacey</td><!--JINJA HERE-->
+                    <td>{{historyr.Status}} </td><!--JINJA HERE-->
+                    <td>{{historyr.body}}</td><!--JINJA HERE-->
+                    <td>{{historyr.studentId.Name}}</td><!--JINJA HERE-->
                   </tr>
+                {% endfor %}
                 </tbody>
               </table>    
+            {% else %}
+            <table class="black-text">
+                <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Request</th>
+                    <th>Student</th>
+                </tr>
+                </thead>
+        
+                <tbody>
+                <tr>
+                    <td>None </td>
+                    <td>None </td>
+                    <td>None </td>
+                </tr>
+                </tbody>
+            </table>   
+            {% endif %} 
         </div>
         </div>
     </div>
     <!-- RIGHT COLUMN -->
-    <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
+    <div class="col s12 m4 l6 #bbdefb blue lighten-4">
         <!-- WRITE RECOMMENDATION SECTION -->
-        <form class="card-panel col s12" style="margin-top: 35px; margin-left: 15px;  margin-right: 15px; padding: 0;" method="" action="/">
+        {% if selectedRec != 0 %} <!--ENABLE FORM-->
+        <form class="card-panel col s12 recform" style="margin-top: 35px; margin-left: 0px; padding: 0;  height: 587px;" method="" action="/staffMain/writeRecommendation">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Write Recommendation</h5>
             </span>
-            <h6 class="grey-text" style="margin-left: 15px;">Please select a REQUEST to get started writing!</h6>
+            <textarea id="body" name="body" class="materialize-textarea" aria-required></textarea>
+            <input type = "hidden" name = "staffId" value = "{{selectedRec.id}}">
             <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action">Submit
                 <i class="material-icons right">send</i>
             </button>
         </form>
-    </div>
+        {% else %} <!--DISABLE FORM-->
+        <form class="card-panel col s12 recform" style="margin-top: 35px; margin-left: 0px; padding: 0;  height: 587px;">
+            <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
+                <h5>Write Recommendation</h5>
+            </span>
+            <h6 class="grey-text" style="margin-left: 15px;">Please select a REQUEST to get started writing!</h6>
+            <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action" disabled>Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+        {% endif %}
+    </div> 
     
 </div>
 

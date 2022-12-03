@@ -14,16 +14,16 @@ class Request(db.Model):
     body = db.Column(db.String, nullable=False)
     status = db.Column(db.Enum(Status), nullable = False, default = Status.PENDING)
     dateNTime = db.Column(db.TIMESTAMP,nullable=False)
-    deadline = db.Column(db.Date, nullable=False)
+    # deadline = db.Column(db.Date, nullable=False)
 
-    def __init__(self, requestId, staffId, studentId, body, dateNTime, deadline):
+    def __init__(self, requestId, staffId, studentId, body, dateNTime):
         self.requestID = requestID
         self.staffId = staffId
         self.studentId = studentId
         self.body = body
         self.status = status
         self.dateNTime = dateNTime
-        self.deadline = deadline
+        # self.deadline = deadline
         
     def toJSON(self):
         return{

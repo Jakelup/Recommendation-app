@@ -14,10 +14,37 @@ from App.controllers import (
 recommendation_views = Blueprint('recommendation_views', __name__, template_folder='../templates')
 
 
+#SELECT REQUEST TO BEGIN WRITING RECOMMENDATION
+@recommendation_views.route('/staffMain/selectReq', methods=['GET', 'POST'])
+@login_required 
+def create_recommendation():
+    data = request.form
+    selectedRec = get_request(data['recID'])
+
+    staff = get_staff(current_user.id)
+    acceptedrs = get_staff_acceptedR(current_user.id)
+    historyrs = get_staff_historyR(current_user.id)
+
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=selectedRec)
+
+
 ## Create route for /<staffID>/<reqID>/writeRecommendation
 #(Use change_status(reqID, "Completed"))
+# CREATE A RECOMMENDATION
+@recommendation_views.route('/staffMain/writeRecommendation', methods=['GET', 'POST'])
+@login_required 
+def write_recommendation():
+    data = request.form
 
+    staff = get_staff(current_user.id)
+    selectedRec = get_request(data['reqID'])
 
+    recommendation = create_recommendation(staff.id, selectedRec.studentId, data['body'])
+
+    acceptedrs = get_staff_acceptedR(current_user.id)
+    historyrs = get_staff_historyR(current_user.id)
+
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=selectedRec)
 
 
 

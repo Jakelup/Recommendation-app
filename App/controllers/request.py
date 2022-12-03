@@ -3,11 +3,11 @@ from App.database import db
 from datetime import date
 
 
-def create_request(studentId,staffId,body):
+def create_request(studentId, staffId, body):
     ### request ID auto generated???
     datetime = date.today()
-    deadline = date.today() + timedelta(days=10)# temp measure until buttons have been decided
-    request = new.Request(staffId, studentId, body, datetime, deadline)
+    # deadline = date.today() + timedelta(days=10)# temp measure until buttons have been decided
+    request = Request(staffId=staffId, studentId=studentId, body=body, dateNTime=datetime)
     if request:
         db.session.add(request)
         db.session.commit()
@@ -80,20 +80,16 @@ def get_staff_acceptedR(staffId):
     requests = Request.query.filter_by(Request.status.in_(Status.ACCEPTED)).all()
     return requests
 
-def get_staff_rejectedR(staffId):
+def get_staff_historyR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Request.status.in_(Status.REJECTED)).all()
+    requests = Request.query.filter_by(Request.status.in_([Status.REJECTED, Status.COMPLETED])).all()
     return requests
 
-def get_staff_completedR():
-    requests = get_all_staff_requests(staffId)
-    if not requests:
-        return None
-    requests = Request.query.filter_by(Request.status.in_(Status.COMPLETED)).all()
-    return requests
 
+
+#staff does not handle pending requests directly, they are turned into notifications. notification.py uses this:
 def get_staff_pendingR():
     requests = get_all_staff_requests(staffId)
     if not requests:

@@ -24,6 +24,7 @@ from App.views import (
     staff_views,
     notification_views,
     recommendation_views,
+    request_views
 )
 
 # New views must be imported and added to this list
@@ -33,21 +34,33 @@ views = [
     student_views,
     staff_views,
     notification_views,
-    recommendation_views
+    recommendation_views,
+    request_views
 ]
 
 
 app = Flask(__name__, static_url_path='/static')
 
 login_manager = LoginManager(app)
-# login_manager.init_app(app)
+# login_manager.init_app(app) -- moved this to create_app function below
 
 @login_manager.user_loader
 def load_user(user_id):
     if current_user == None:
         return render_template('index.html')
-    # return User.query.get(user_id)
-#should return even if none
+    # else:
+    #     return current_user
+
+
+
+    # if current_user.userType == 'Staff':
+    #     return Staff.query.get(int(user_id))
+    # elif current_user.userType == 'Student':
+    #     return Student.query.get(int(user_id))
+    # elif current_user == None:
+    #     return None
+        # return render_template('index.html')
+#should return obj even if none
 
 
 def add_views(app, views):

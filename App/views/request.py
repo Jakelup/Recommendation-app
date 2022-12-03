@@ -11,8 +11,6 @@ from App.controllers import (
     get_student_pendingR,
     get_student_acceptedR,
     get_staff_acceptedR,
-    get_staff_rejectedR,
-    get_staff_completedR,
     get_staff_pendingR,
     create_request
 )
@@ -21,37 +19,17 @@ request_views = Blueprint('request_views', __name__, template_folder='../templat
 
 
 
-#SELECT STAFF TO BEGIN WRITING REQUEST
-@request_views.route('/studentMain/selectStaff', methods=['GET', 'POST'])
-@login_required 
-def create_request():
-    data = request.form
-    selectedstaff = get_staff(data['staffId'])
-
-    studentID = current_user.id
-    student = get_student(studentID)
-    staff = get_all_staff()
-    recommendations = get_student_reclist(studentID)
-    acceptedrs = get_student_acceptedR(studentID)
-    pendingrs = get_student_pendingR(studentID)
-
-    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
-
-
-
-## Create route for /studentMain/writeRequest
+## Create route for /writeRequest
 # REQUEST A RECOMMENDATION
-@request_views.route('/studentMain/writeRequest', methods=['POST'])
+@request_views.route('/studentMain/writeRequest', methods=['GET', 'POST'])
 @login_required 
-def create_request():
+def write_request():
     data = request.form
     studentID = current_user.id
 
     if studentID:
         selectedstaff = get_staff(data['staffId'])
-        request = create_request(studentID, data['staffId'], data['body'])
-        if request:
-            return request
+        request = create_request(studentID, selectedstaff.id, data['body'])
 
     student = get_student(studentID)
     staff = get_all_staff()
@@ -65,72 +43,34 @@ def create_request():
     # return Response("Staff cannot perform this action.", status=401)
 
 
-
-
 ## Create Route called /staffMain to: 
     #GET ALL ACCEPTED REQUESTS BY STAFF ID
     #BUILD HISTORY: GET ALL REJECTED AND COMPLETED REQUESTS BY STAFF ID
     
-# GET ALL PENDING REQUESTS
-@request_views.route('/staffMain', methods=['GET'])
-@login_required 
-def view_all_pending_reqs():
-    staffID = current_identity.id
-    if get_staff(staffID):
-        pending = get_staff_pendingR(staffID)
-        if pending:
-            return render_template('staffMain.html', pending=pendingRequests)
-        return Response({'There are no pending requests found for this user.'}, status=404)
-    return Response("Student cannot perform this action.", status=401)
-
-# GET ALL ACCEPTED REQUESTS
-@request_views.route('/staffMain', methods=['GET'])
-@login_required 
-def view_all_accepted_reqs():
-    staffID = current_identity.id
-    if get_staff(staffID):
-        accepted = get_staff_acceptedR(staffID)
-        if accepted:
-            return render_template('staffMain.html', accepted=acceptedRequests)
-        return Response({'There are no accepted requests found for this user.'}, status=404)
-    return Response("Students cannot perform this action.", status=401)
-
-# GET ALL REJECTED REQUESTS
-@request_views.route('/staffMain', methods=['GET'])
-@login_required 
-def view_all_rejected_reqs():
-    staffID = current_identity.id
-    if get_staff(staffID):
-        rejected = get_staff_rejectedR(staffID)
-        if rejected:
-            return render_template('staffMain.html', accepted=acceptedRequests)
-        return Response({"There are no rejected requests found for this user."}, status=404)
-    return Response("Students cannot perform this action.", status=401)
+# GET ALL PENDING REQUESTS (realized not needed)
+# @request_views.route('/staffMain', methods=['GET'])
+# @login_required 
+# def view_all_pending_reqs():
+#     staffID = current_identity.id
+#     if get_staff(staffID):
+#         pending = get_staff_pendingR(staffID)
+#         if pending:
+#             return render_template('staffMain.html', pending=pendingRequests)
+#         return Response({'There are no pending requests found for this user.'}, status=404)
+#     return Response("Student cannot perform this action.", status=401)
 
 
-# GET ALL COMPLETED REQUESTS
-@request_views.route('/staffMain', methods=['GET'])
-@login_required 
-def view_all_completed_reqs():
-    staffID = current_identity.id
-    if get_staff(staffID):
-        completed = get_staff_completedR(staffID)
-        if completed:    
-          return render_template('staffMain.html', completed=completedRequests)
-        return Response({"There are no completed requests found for this user."}, status=404)
-    return Response("Students cannot perform this action.", status=401)
 
-
-# REQUESTS HISTORY
-@request_views.route('/staffMain', methods=['GET'])
-@login_required 
-def reqs_history():
-    staffID = current_identity.id
-    if get_staff(staffID):
-        completed = get_staff_completedR(staffID)
-        rejected = get_staff_rejectedR(staffID)
+# # REQUESTS HISTORY (realized not needed)
+# @request_views.route('/staffMain', methods=['GET'])
+# @login_required 
+# def reqs_history():
+#     staffID = current_identity.id
+#     if get_staff(staffID):
+#         completed = get_staff_completedR(staffID)
+#         rejected = get_staff_rejectedR(staffID)
         
-    return render_template('staffMain.html', completed=completed, rejected=rejected)
+#     return render_template('staffMain.html', completed=completed, rejected=rejected)
 
 
 ##ARCHIVE BECAUSE FIRST INSTANCE OF STUDENTMAIN ROUTE HANDLES THESE FUNCTIONS:
@@ -161,3 +101,40 @@ def reqs_history():
 
 
 
+##ARCHIVE BECAUSE FIRST INSTANCE OF STAFF ROUTE HANDLES THESE FUNCTIONS:
+# # GET ALL ACCEPTED REQUESTS
+# @request_views.route('/staffMain', methods=['GET'])
+# @login_required 
+# def view_all_accepted_reqs():
+#     staffID = current_identity.id
+#     if get_staff(staffID):
+#         accepted = get_staff_acceptedR(staffID)
+#         if accepted:
+#             return render_template('staffMain.html', accepted=acceptedRequests)
+#         return Response({'There are no accepted requests found for this user.'}, status=404)
+#     return Response("Students cannot perform this action.", status=401)
+
+# # GET ALL REJECTED REQUESTS
+# @request_views.route('/staffMain', methods=['GET'])
+# @login_required 
+# def view_all_rejected_reqs():
+#     staffID = current_identity.id
+#     if get_staff(staffID):
+#         rejected = get_staff_rejectedR(staffID)
+#         if rejected:
+#             return render_template('staffMain.html', accepted=acceptedRequests)
+#         return Response({"There are no rejected requests found for this user."}, status=404)
+#     return Response("Students cannot perform this action.", status=401)
+
+
+# # GET ALL COMPLETED REQUESTS
+# @request_views.route('/staffMain', methods=['GET'])
+# @login_required 
+# def view_all_completed_reqs():
+#     staffID = current_identity.id
+#     if get_staff(staffID):
+#         completed = get_staff_completedR(staffID)
+#         if completed:    
+#           return render_template('staffMain.html', completed=completedRequests)
+#         return Response({"There are no completed requests found for this user."}, status=404)
+#     return Response("Students cannot perform this action.", status=401)

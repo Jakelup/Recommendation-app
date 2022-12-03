@@ -11,6 +11,7 @@ from App.controllers import (
     get_all_users,
     get_all_users_json,
     get_student,
+    get_staff,
     get_all_staff,
     get_all_students_json,
     get_user,
@@ -21,6 +22,8 @@ from App.controllers import (
     validate_Student,
     get_student_pendingR,
     get_student_acceptedR,
+    get_staff_acceptedR,
+    get_staff_historyR,
     login_user
 )
 
@@ -78,6 +81,8 @@ def LoginAction():
         if user:
             login_user(user, True)
             # # flash('Successful Login')
+
+            ##TEMP SET UP BECAUSE ROUTES FAILING TO LOAD USER:
             studentID = current_user.id
             student = get_student(studentID)
             staff = get_all_staff()
@@ -112,8 +117,13 @@ def loginStaff():
         if user:
             login_user(user, True)
             # flash('Successful Login')
+
+            ##TEMP SET UP BECAUSE ROUTES FAILING TO LOAD USER:
+            staff = get_staff(current_user.id)
+            acceptedrs = get_staff_acceptedR(current_user.id)
+            historyrs = get_staff_historyR(current_user.id)
+            return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0)
             # return redirect(url_for('staff_views.staffMain'))
-            return render_template('staffMain.html')
 
     flash('Invalid. Check username and/or password')
     # return redirect(url_for('user_views.loginStaff'))

@@ -71,7 +71,7 @@
     <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
         <!-- WRITE REQUEST SECTION -->
         {% if selectedstaff != 0 %} <!--ENABLE FORM -->
-        <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; padding: 0;" method="POST" action="/studentMain/writeReview">
+        <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; padding: 0;" method="POST" action="/studentMain/writeRequest">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Write a Request</h5>
             </span>
@@ -85,7 +85,7 @@
             </div>
         </form>
         {% else %} <!--DISABLE FORM -->
-        <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; padding: 0;" method="" action="/">
+        <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; padding: 0;">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Write a Request</h5>
             </span>
@@ -103,13 +103,13 @@
                 <h5>Available Staff   <i class="material-icons">people</i></h5>  
                 <!-- TABLE FOR STAFF -->
                 <form method="POST" action="/studentMain/selectStaff">
+                    {% if staff != None %}
                     <table class="black-text">
                         <thead>
                         <tr>
                             <th>Name</th>
                             <th>Faculty</th>
                             <th>Department</th>
-
                         </tr>
                         </thead>
                 
@@ -124,6 +124,9 @@
                         {% endfor %}
                         </tbody>
                     </table> 
+                    {% else %}
+                    <h6> No staff in system. </h6>
+                    {% endif %}
                   </form>   
             </div>
         </div>
