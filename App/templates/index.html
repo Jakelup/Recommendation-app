@@ -5,6 +5,13 @@
 {{ super() }}
 
 {% block content %}
+<style>
+.row{
+    background-color: #bbdefb;
+}
+</style>
+
+
 <div class="row">
     <div class="col center-align">
         <div class="row s7">
@@ -15,10 +22,14 @@
         </div>
         <div class="row s2" style="margin-top: 0px">
             <div class="col s6">
-                <a href="/chooseAccount/student"> Student Button </a>
+                <a href="/chooseAccount/student"> Student Button 
+                    <img src="Student_Icon.png" alt="Student icon button" width="200" height="200">
+                </a>
             </div>
             <div class="col s6">
-                <a href="/chooseAccount/staff"> Staff Button </a>
+                <a href="/chooseAccount/staff"> Staff Button 
+                    <img src="Staff_Icon.png" alt="Staff icon button" width="200" height="200"> 
+                </a>
             </div>
         </div>    
     </div>
