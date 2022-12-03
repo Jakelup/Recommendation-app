@@ -99,11 +99,8 @@ def reqs_history():
     if get_staff(staffID):
         completed = get_staff_completedR(staffID)
         rejected = get_staff_rejectedR(staffID)
-        if completed:
-            history = history + completed
-        if rejected:
-            history = history + rejected
-    return render_template('staffMain.html', history=requestHistory)
+        
+    return render_template('staffMain.html', completed=completed, rejected=rejected)
 
 
 ## Create route for /<studentID>/<staffID>/writeRequest
