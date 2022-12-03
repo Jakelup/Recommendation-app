@@ -5,31 +5,24 @@
 {{ super() }}
 
 {% block content %}
-<style>
-    body{
-        background-color: #bbdefb;
-    }
-</style>
 
-<div class="row">
-    <div class="col center-align">
-        <div class="row s7">
-            <img src="{{url_for('static', filename = 'images/colourlogo_transparentBG1.png')}}" alt="logo" class="brand-logo hide-on-med-and-down" style="height: 400px">
+
+<body class= "#bbdefb blue lighten-4">
+    <div class="row">
+        <div class="col s12 m4 l6 left-align">
+            <img src="{{url_for('static', filename = 'images/colourlogo_transparentBG1.png')}}" alt="logo" class="brand-logo hide-on-med-and-down" style="height: 500px">
         </div>
-        <div class="row s3 left-align">
-            <p>I'M A ... </p>
-        </div>
-        <div class="row s2" style="margin-top: 0px">
+        <div class="col s12 m4 l6 center-align" style="padding: 40px; margin-top: 75px;" >
+            <h4>I'M A...</h4>
             <div class="col s6">
-                <a href="/chooseAccount/student"> <img src="../static/images/Student_Icon.png" alt="Student icon button" width="180" height ="180">Student</a>
+                <a href="/chooseAccount/student"> <img src="../static/images/Student_Icon.png" alt="Student icon button" height ="150"><h5 class="black-text">Student</h5></a>
             </div>
             <div class="col s6">
-                <a href="/chooseAccount/staff"> <img src="../static/images/Staff_Icon.png" alt="Staff icon button" width="180" height ="180"><br>Staff</a>
-            </div>
-        </div>    
+                <a href="/chooseAccount/staff"> <img src="../static/images/Staff_Icon.png" alt="Staff icon button" height ="150"><br><h5 class="black-text">Staff</h5></a>
+            </div>  
+        </div>
     </div>
-</div>
-
+</body>
     
 
 {% endblock %}

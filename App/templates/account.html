@@ -6,11 +6,19 @@
 
 {% block content %}
 
-<div class="row center-align" style="margin-top: 50px;">
-    <a href="/login/{{usertype}}"> Log in </a>
-    <br>
-    <a href="/signup/{{usertype}}"> SignUp </a>
-</div>
-
-    
+<body class= "#bbdefb blue lighten-4">
+    <h3 class="left-align" style="margin-left: 65px; margin-top:65px;">Welcome {{usertype}}!</h3>
+    <div class="row center-align" style="margin-top: 50px;">
+        <a href="/login/{{usertype}}" class="btn-large waves-effect waves-light #1976d2 blue darken-2" style="width: 150px;">Login<i class="material-icons">lock_open
+        </i></a>
+        <br>
+        <br>
+        <br>
+        <a href="/signup/{{usertype}}" class="btn-large waves-effect waves-light #0d47a1 blue darken-4" style="width: 150px;">SignUp  <i class="material-icons">perm_contact_calendar
+        </i></a>
+        <br>
+        <br>
+        <a href="/" class="black-text"><u><i class="material-icons">chevron_left</i>BACK</u></a>
+    </div>
+</body>  
 {% endblock %}
