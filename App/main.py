@@ -14,7 +14,9 @@ from App.controllers import (
 )
 
 from App.models import (
-    User
+    User,
+    Student,
+    Staff
 )
 
 from App.views import (
@@ -46,12 +48,21 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    if current_user == None:
-        return render_template('index.html')
-    # else:
+    return Student.query.get(user_id)
+
+    # try: 
+    #     return Student.query.get(user_id)
+    #     try:
+    #         return Staff.query.get(user_id)
+    #     except: 
+    #         return None
+    # except: 
+    #     return None
+
+    # if current_user == None:
+    #     return render_template('index.html')
+    # # else:
     #     return current_user
-
-
 
     # if current_user.userType == 'Staff':
     #     return Staff.query.get(int(user_id))

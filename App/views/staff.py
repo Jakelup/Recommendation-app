@@ -16,6 +16,7 @@ from App.controllers import (
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 
 
+
 ## Render first version of staffMain.html
 @staff_views.route('/staffMain', methods=['GET'])
 @login_required 

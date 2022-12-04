@@ -1,23 +1,41 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response
+from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response, redirect, url_for
 from flask_jwt import jwt_required, current_identity
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from App.controllers import (
     get_all_student_requests,
     get_all_student_requests_JSON,
     get_request,
+    get_student,
+    get_all_staff,
+    get_staff,
     get_request_JSON,
     change_status,
     get_student_pendingR,
     get_student_acceptedR,
     get_staff_acceptedR,
     get_staff_pendingR,
+    get_student_reclist,
     create_request
 )
 
 request_views = Blueprint('request_views', __name__, template_folder='../templates')
 
+#SELECT STAFF TO BEGIN WRITING REQUEST
+@request_views.route('/studentMain/selectStaff', methods=['GET', 'POST'])
+@login_required 
+def start_request():
+    data = request.form
+    selectedstaff = get_staff(data['staffId'])
 
+    studentID = current_user.id
+    student = get_student(studentID)
+    staff = get_all_staff()
+    recommendations = get_student_reclist(studentID)
+    acceptedrs = get_student_acceptedR(studentID)
+    pendingrs = get_student_pendingR(studentID)
+
+    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
 
 ## Create route for /writeRequest
 # REQUEST A RECOMMENDATION
@@ -28,16 +46,9 @@ def write_request():
     studentID = current_user.id
 
     if studentID:
-        selectedstaff = get_staff(data['staffId'])
-        request = create_request(studentID, selectedstaff.id, data['body'])
+        therequest = create_request(studentID, data['staffId'], data['body'])
 
-    student = get_student(studentID)
-    staff = get_all_staff()
-    recommendations = get_student_reclist(studentID)
-    acceptedrs = get_student_acceptedR(studentID)
-    pendingrs = get_student_pendingR(studentID)
-
-    return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
+    return redirect(url_for('student_views.studentMain'))
 
     #     return Response({'The request could not be made.'}, status=422)
     # return Response("Staff cannot perform this action.", status=401)
