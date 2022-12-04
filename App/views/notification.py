@@ -31,21 +31,17 @@ def sendRequest():
 # SEND NOTIFICATIONS TO NOTIFICATIONLOG.HTML
 
 
+'''## Old thought process: (ignore and try checklist items on trello task first)""
 #Create route with address /staffMain/notifcationLog/<staffID> to get and return notifcations 
 #(created from pendings requests for a staff: Refactor routes below to interact with request object)
-
-
 
 #Create route /staffMain/acceptRequest/<reqID> that will change the status of a request to accepted. Change the notification to seen using the ID
 #Seen notifications should no longer have accept reject buttons
 #(Use change_status(reqID, "Accepted"), it's already imported)
 
-
-
-
 #Create route /staffMain/acceptRequest/<reqID> that will change the status of a request to rejected. Change the notification to seen using the ID
 #Seen notifications should no longer have accept reject buttons
-#(Use change_status(reqID, "Rejected"), it's already imported)
+#(Use change_status(reqID, "Rejected"), it's already imported)'''
 
 
 
