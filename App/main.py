@@ -48,7 +48,11 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Student.query.get(user_id)
+    student = Student.query.get(user_id)
+    if student:
+        return student
+    else:
+        return Staff.query.get(user_id)
 
     # try: 
     #     return Student.query.get(user_id)
