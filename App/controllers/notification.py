@@ -10,7 +10,7 @@ def create_notifications(requests, staff):
         if newNotif:
             db.session.add(newNotif)
             db.session.commit()
-    notificans = get_all_notifs(staff)
+    notifications = get_all_notifs(staff)
     return notications
 
 

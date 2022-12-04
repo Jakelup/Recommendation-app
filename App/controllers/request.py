@@ -94,5 +94,6 @@ def get_staff_pendingR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Request.status.in_(Status.PENDING)).all()
+    requests = Request.query.filter(Request.status==Status.PENDING).all()
     return requests
+
