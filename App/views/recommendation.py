@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response
+from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response, redirect, url_for
 from flask_jwt import jwt_required, current_identity
 from flask_login import login_required, current_user
 
@@ -8,7 +8,8 @@ from App.controllers import (
     get_student,
     get_recommendation,
     get_student_reclist_json, 
-    get_student_reclist
+    get_student_reclist,
+    create_recommendation
 )
 
 recommendation_views = Blueprint('recommendation_views', __name__, template_folder='../templates')
@@ -17,7 +18,7 @@ recommendation_views = Blueprint('recommendation_views', __name__, template_fold
 #SELECT REQUEST TO BEGIN WRITING RECOMMENDATION
 @recommendation_views.route('/staffMain/selectReq', methods=['GET', 'POST'])
 @login_required 
-def create_recommendation():
+def start_recommendation():
     data = request.form
     selectedRec = get_request(data['recID'])
 
@@ -38,73 +39,71 @@ def write_recommendation():
 
     staff = get_staff(current_user.id)
     selectedRec = get_request(data['reqID'])
+    studentid = selectedRec.studentId
 
-    recommendation = create_recommendation(staff.id, selectedRec.studentId, data['body'])
-
-    acceptedrs = get_staff_acceptedR(current_user.id)
-    historyrs = get_staff_historyR(current_user.id)
-
-    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=selectedRec)
-
-
-
-
-   ###RECOMMENDATIONS###
-
-# VIEW RECOMMENDATION LISTING
-@recommendation_views.route('/studentMain', methods=['GET'])
-@login_required 
-@jwt_required()
-def get_recommendations():
-    studentID = current_identity.id
-    if get_student(studentID):
-        recs = get_student_reclist(studentID)
-    return render_template('studentMain.html', staff=staff, recommendation=recs)
+    if staff:
+        recommendation = create_recommendation(current_user.id, studentid, data['body'])
     
-    #     if recs:
-    #         return jsonify(recs)
-    #     return Response({'There are no recommendations found for this user.'}, status=404)
-    # return Response("staff cannot perform this action.", status=401)
+    flash('Recommendation created and sent!')
+    return redirect(url_for('staff_views.staffMain'))
 
 
 
+# ## ARCHIVE - Original Code & code moved after refinement:
 
-## ARCHIVE - Original Code:
+#    ###RECOMMENDATIONS###
 
-# SEND RECOMMENDATION TO STUDENT
-@recommendation_views.route('/send', methods=['POST'])
-@jwt_required()
-def sendRecommendation():
-    if not get_student(current_identity.id):
-        data = request.get_json()
-        student = get_student(data['sentToStudentID'])
-        if not student:
-            return Response({'student not found'}, status=404)
-        # send_recommendation(current_identity.id, data['sentToStudentID'], data['recURL'])
-        return Response({'recommendation sent'}, status=200)
-    return Response({"students cannot perform this action"}, status=401)
-
-
-# VIEW RECOMMENDATION
-@recommendation_views.route('/recommendations/<recID>', methods=['GET'])
-@jwt_required()
-def view_recommendation(recID):
-    studID = current_identity.id
-    student = get_student(studID)
-    if student:
-        recs = get_student_reclist_json(studID)
-        if not recs:
-            return Response({"no recommendations found for this user"}, status=404)
-        rec = get_recommendation(studID, recID)
-        if rec:
-            return jsonify(rec)
-        return Response({'recommendation with id ' + recID + ' not found'}, status=404)
-    return Response({"staff cannot perform this action"}, status=401)
+# # VIEW RECOMMENDATION LISTING
+# @recommendation_views.route('/studentMain', methods=['GET'])
+# @login_required 
+# @jwt_required()
+# def get_recommendations():
+#     studentID = current_identity.id
+#     if get_student(studentID):
+#         recs = get_student_reclist(studentID)
+#     return render_template('studentMain.html', staff=staff, recommendation=recs)
+    
+#     #     if recs:
+#     #         return jsonify(recs)
+#     #     return Response({'There are no recommendations found for this user.'}, status=404)
+#     # return Response("staff cannot perform this action.", status=401)
 
 
-# routes for testing purposes
-# View all recommendations for all users
-@recommendation_views.route('/recs', methods=['GET'])
-def get_all_recs():
-    return jsonify(get_all_recommendations_json())
+
+# # SEND RECOMMENDATION TO STUDENT
+# @recommendation_views.route('/send', methods=['POST'])
+# @jwt_required()
+# def sendRecommendation():
+#     if not get_student(current_identity.id):
+#         data = request.get_json()
+#         student = get_student(data['sentToStudentID'])
+#         if not student:
+#             return Response({'student not found'}, status=404)
+#         # send_recommendation(current_identity.id, data['sentToStudentID'], data['recURL'])
+#         return Response({'recommendation sent'}, status=200)
+#     return Response({"students cannot perform this action"}, status=401)
+
+
+# # VIEW RECOMMENDATION
+# @recommendation_views.route('/recommendations/<recID>', methods=['GET'])
+# @jwt_required()
+# def view_recommendation(recID):
+#     studID = current_identity.id
+#     student = get_student(studID)
+#     if student:
+#         recs = get_student_reclist_json(studID)
+#         if not recs:
+#             return Response({"no recommendations found for this user"}, status=404)
+#         rec = get_recommendation(studID, recID)
+#         if rec:
+#             return jsonify(rec)
+#         return Response({'recommendation with id ' + recID + ' not found'}, status=404)
+#     return Response({"staff cannot perform this action"}, status=401)
+
+
+# # routes for testing purposes
+# # View all recommendations for all users
+# @recommendation_views.route('/recs', methods=['GET'])
+# def get_all_recs():
+#     return jsonify(get_all_recommendations_json())
     

@@ -1,4 +1,4 @@
-from App.models import Request
+from App.models import Request, Status
 from App.database import db
 from datetime import date
 
@@ -7,7 +7,7 @@ def create_request(studentId, staffId, body):
     ### request ID auto generated???
     datetime = date.today()
     # deadline = date.today() + timedelta(days=10)# temp measure until buttons have been decided
-    request = Request(staffId=staffId, studentId=studentId, body=body, dateNTime=datetime)
+    request = Request(staffId=staffId, studentId=studentId, body=body, dateNTime=datetime, status=Status.PENDING)
     if request:
         db.session.add(request)
         db.session.commit()
@@ -48,7 +48,7 @@ def get_request_JSON(requestID):
 #CHANGE REQUEST STATUS
 def change_status(requestID,newStatus):
     request = get_request(requestID)
-    request.Status = newStatus
+    request.status = newStatus
     return request
 
 
@@ -57,14 +57,14 @@ def get_student_pendingR(studentId):
     requests = get_all_student_requests(studentId)
     if not requests:
         return None
-    requests = Request.query.filter(Request.status.in_(Status.PENDING)).all()
+    requests = Request.query.filter(Request.status== Status.PENDING).all()
     return requests
 
 def get_student_acceptedR(studentId):
     requests = get_all_student_requests(studentId)
     if not requests:
         return None
-    requests = Request.query.filter(Request.status.in_(Status.ACCEPTED)).all()
+    requests = Request.query.filter(Request.status== Status.ACCEPTED).all()
     return requests
 
 
@@ -74,7 +74,7 @@ def get_staff_acceptedR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Request.status.in_(Status.ACCEPTED)).all()
+    requests = Request.query.filter_by(Request.status== Status.ACCEPTED).all()
     return requests
 
 def get_staff_historyR(staffId):
@@ -87,9 +87,10 @@ def get_staff_historyR(staffId):
 
 
 #staff does not handle pending requests directly, they are turned into notifications. notification.py uses this:
-def get_staff_pendingR():
+def get_staff_pendingR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None
-    requests = Request.query.filter_by(Request.status.in_(Status.PENDING)).all()
+    requests = Request.query.filter(Request.status==Status.PENDING).all()
     return requests
+

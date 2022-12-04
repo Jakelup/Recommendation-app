@@ -11,8 +11,7 @@ class Notification(db.Model):
     seen = db.Column(db.Boolean, default=False, nullable=False)
     
 
-    def __init__(self, notifId, staffId, requestID, body, dateNTime, seen):
-        self.notifId = notifId
+    def __init__(self, staffId, requestID, body, dateNTime, seen):
         self.staff = staffid
         self.requestId =requestId
         self.body = body

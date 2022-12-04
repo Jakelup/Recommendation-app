@@ -49,10 +49,11 @@ class StudentsIntegrationTests(unittest.TestCase):
         assert staff.name == "Betty"
 
     #checks to see if a staff was be found by ID
-    # def test_search_all_staff(self):
-    #     #id = "816000000"
-    #     staff = get_staff("816000000")
-    #     assert staff.name == "Betty"
+
+    def test_search_all_staff(self):
+        #id = "816000000"
+        staff = get_staff("816000000")
+        assert staff.name == "Betty"
 
     #checks if data from the staff table in json was retrieved
     # def test_get_all_staff_json(self):

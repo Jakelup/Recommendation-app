@@ -9,8 +9,8 @@ class Recommendation(db.Model):
     date = db.Column(db.TIMESTAMP,nullable=False)
 
 
-    def __init__(self, recId, staffId, studentId, body):
-        self.recId = recId
+
+    def __init__(self, staffId, studentId, body, date):
         self.staffId = staffId
         self.studentId=studentId
         self.body=body
