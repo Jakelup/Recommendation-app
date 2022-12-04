@@ -170,8 +170,8 @@ def studentSignUpAction():
 def getStaffSignUpPage():
     if current_user.is_authenticated:
         flash('You cannot create an account while logged in.')
-        # return redirect(url_for('staff_views.staffMain'))
-        return render_template('staffMain.html')
+        return redirect(url_for('staff_views.staffMain'))
+        # return render_template('staffMain.html')
     form = StaffRegister()
     return render_template('signUp.html', form=form, usertype="Staff")
 

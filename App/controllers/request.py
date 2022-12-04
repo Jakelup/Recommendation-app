@@ -51,7 +51,7 @@ def get_request_JSON(requestID):
 #CHANGE REQUEST STATUS
 def change_status(requestID,newStatus):
     request = get_request(requestID)
-    request.Status = newStatus
+    request.status = newStatus
     return request
 
 
@@ -90,7 +90,7 @@ def get_staff_historyR(staffId):
 
 
 #staff does not handle pending requests directly, they are turned into notifications. notification.py uses this:
-def get_staff_pendingR():
+def get_staff_pendingR(staffId):
     requests = get_all_staff_requests(staffId)
     if not requests:
         return None

@@ -11,6 +11,8 @@ from App.controllers import (
     get_staff_feed_json,
     get_staff_acceptedR,
     get_staff_historyR,
+    get_staff_pendingR,
+    create_notifications
 )
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
@@ -25,7 +27,17 @@ def staffMain():
 
     acceptedrs = get_staff_acceptedR(current_user.id)
     historyrs = get_staff_historyR(current_user.id)
-    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0)
+
+    ##create notications for all pending requests:
+    requests = get_staff_pendingR(current_user.id)
+
+    if requests:
+        notifications = create_notifications(requests, staff)
+    else:
+        notifications = 0
+
+
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
 
 
 
