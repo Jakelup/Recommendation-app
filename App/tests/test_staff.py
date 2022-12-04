@@ -49,6 +49,7 @@ class StudentsIntegrationTests(unittest.TestCase):
         assert staff.name == "Betty"
 
     #checks to see if a staff was be found by ID
+
     def test_search_all_staff(self):
         #id = "816000000"
         staff = get_staff("816000000")

@@ -9,11 +9,12 @@ class Recommendation(db.Model):
     date = db.Column(db.TIMESTAMP,nullable=False)
 
 
+
     def __init__(self, staffId, studentId, body, date):
         self.staffId = staffId
         self.studentId=studentId
         self.body=body
-        self.date = date
+        self.date = date.today()
     
     def toJSON(self):
         return{
