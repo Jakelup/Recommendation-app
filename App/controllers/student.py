@@ -1,9 +1,9 @@
 from App.models import Student
 from App.database import db
 
-# create_student()
-#     student=
-#     return student
+def create_student()
+    newstudent = Student(name=name, username=username, password=password, id=id, faculty=faculty, department=department)
+    return newstudent
 
 def get_student(id):
     student = Student.query.get(id)
