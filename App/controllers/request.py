@@ -24,8 +24,6 @@ def get_all_student_requests_JSON(studentId):
     requests = [request.toJSON() for request in requests]
     return requests
 
-
-
 def get_all_staff_requests(staffId):
     return Request.query.filter_by(staffId=staffId).first()
 
@@ -35,7 +33,6 @@ def get_all_staff_request_JSON(staffId):
         return None
     requests = [request.toJSON() for request in requests]
     return requests
-
 
 
 def get_request(requestID):

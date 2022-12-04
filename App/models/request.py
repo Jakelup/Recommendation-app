@@ -1,4 +1,4 @@
-from App.database import db
+from App.database import db 
 import enum
 
 class Status(enum.Enum):

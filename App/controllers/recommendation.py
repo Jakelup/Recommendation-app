@@ -1,11 +1,12 @@
 from App.models import Recommendation, Student
 from App.database import db
 from sqlalchemy.exc import IntegrityError
+from datetime import date
 
 
 def create_recommendation(sentFromStaffID, sentToStudentID, body):
-    date = date.today()
-    newrec = Recommendation(staffId=sentFromStaffID, studentId=sentToStudentID, body=body, date=date)
+    create_date = date.today()
+    newrec = Recommendation(staffId=sentFromStaffID, studentId=sentToStudentID, body=body)
     if newrec:
         db.session.add(newrec)
         db.session.commit()

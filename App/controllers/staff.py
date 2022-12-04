@@ -3,7 +3,7 @@ from App.database import db
 from flask import jsonify
 
 
-def create_staff():
+def create_staff(id, username, password, name, faculty, department):
     newstaff = Staff(name=name, username=username, password=password, id=id, faculty=faculty, department=department)
     return newstaff
 
