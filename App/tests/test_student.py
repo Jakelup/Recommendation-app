@@ -5,15 +5,11 @@ from App.main import create_app
 from App.database import create_db
 from App.models import Student
 from App.controllers import (
+    create_student,
     get_student,
-    get_all_staff_json,
     get_all_students_json,
-    search_staff,
-    create_notification,
-    change_status,
-    get_all_notifs_json,
-    create_recommendation,
-    get_all_recommendations_json
+    get_all_recommendations_json,
+    get_student_reclist_json
 )
 
 from wsgi import app
@@ -49,16 +45,16 @@ class StudentsIntegrationTests(unittest.TestCase):
     
     #checks if a student user was created
     def test_create_student(self):
-        student = create_student(name="Betty", username="boop", password="pass123", id= "816000000", faculty= "FST", department="DCIT")
+        student = create_student(id="816000000", username="boop", password="pass123", name="Betty", faculty= "FST", department="DCIT")
         assert student.name == "Betty"
 
-    #checks if data from the student table in json was retrieved
+    # #checks to see if all students were found
     # def test_get_all_students_json(self):
     #     students_json = get_all_students_json()
-    #     self.assertListEqual([{name="Betty", username="boop", password="pass123", id="816000000", faculty="FST", department="DCIT"}], students_json)
+    #     self.assertListEqual([{"id"=="816000222", "username"=="boop", "password"=="pass123", "name"=="Betty", "faculty"=="FST", "department"=="DCIT"}], students_json)
 
-    #checks to see if a student was be found by ID
-    def test_search_all_students(self):
-        #id = "816000000"
-        student = get_students("816000000")
-        assert student.name == "Betty"
+    # #checks to see if a student was be found by ID
+    # def test_search_all_students(self):
+    #     #id = "816000000"
+    #     student = get_student("816000000")
+    #     assert student.name == "Betty"

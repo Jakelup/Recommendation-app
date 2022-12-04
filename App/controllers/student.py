@@ -1,8 +1,8 @@
 from App.models import Student
 from App.database import db
 
-def create_student()
-    newstudent = Student(name=name, username=username, password=password, id=id, faculty=faculty, department=department)
+def create_student():
+    newstudent = Student(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
     return newstudent
 
 def get_student(id):
