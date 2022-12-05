@@ -78,7 +78,7 @@ $ flask user create bob bobpass
 
 _For development run the serve command (what you execute):_
 ```bash
-$ flask run
+$ flask run --host=0.0.0.0
 ```
 
 _For production using gunicorn (what heroku executes):_
