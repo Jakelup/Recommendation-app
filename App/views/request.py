@@ -16,7 +16,8 @@ from App.controllers import (
     get_staff_acceptedR,
     get_staff_pendingR,
     get_student_reclist,
-    create_request
+    create_request,
+    create_notification
 )
 
 request_views = Blueprint('request_views', __name__, template_folder='../templates')
@@ -49,7 +50,11 @@ def write_request():
     if studentID:
         therequest = create_request(studentID, data['staffId'], data['body'])
 
+    ##CREATE NOTIFICATION FOR THAT REQUEST
+    notification = create_notification(therequest, student.name)
+
     return redirect(url_for('student_views.studentMain'))
+
 
     #     return Response({'The request could not be made.'}, status=422)
     # return Response("Staff cannot perform this action.", status=401)

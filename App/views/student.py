@@ -24,10 +24,13 @@ student_views = Blueprint('student_views', __name__, template_folder='../templat
 def studentMain():
     studentID = current_user.id
     student = get_student(studentID)
+
     staff = get_all_staff()
     recommendations = get_student_reclist(studentID)
+
     acceptedrs = get_student_acceptedR(studentID)
     pendingrs = get_student_pendingR(studentID)
+    
     selectedstaff=0
     return render_template('studentMain.html', student=student, staff=staff, recommendations=recommendations, acceptedrs=acceptedrs, pendingrs=pendingrs, selectedstaff=selectedstaff)
 

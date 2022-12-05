@@ -1,17 +1,17 @@
 from App.models import Recommendation, Student
 from App.database import db
 from sqlalchemy.exc import IntegrityError
-from datetime import date
+from datetime import datetime
 
 
 def create_recommendation(sentFromStaffID, sentToStudentID, body):
-    create_date = date.today()
-    newrec = Recommendation(staffId=sentFromStaffID, studentId=sentToStudentID, body=body)
+    currdate = datetime.now()
+    newrec = Recommendation(staffId=sentFromStaffID, studentId=sentToStudentID, body=body, date=currdate)
     if newrec:
         db.session.add(newrec)
         db.session.commit()
-        return request
-    return newrec
+        return newrec
+    return None
     
 def get_all_recommendations():
     return Recommendation.query.all()

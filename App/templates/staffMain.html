@@ -13,7 +13,7 @@
     <!-- LEFT COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4" >
         <!-- PROFILE SECTION -->
-        <div class="card-panel #0d47a1 blue darken-4 white-text" style="margin-top: 35px; margin-left: 15px;  margin-right: 15px; box-shadow: none;">
+        <div class="card-panel #0d47a1 blue darken-4 white-text" style="margin-top: 35px; margin-left: 0px;  margin-right: 40px; box-shadow: none; width: 620px;">
             <div class="row">
                 <div class="col s2">
                     <img src="{{url_for('static', filename = 'images/Staff_Icon.png')}}" alt="mock profile pic" class="staffprofile" >
@@ -33,12 +33,12 @@
                             <span class="close">&times;</span>
                             <br>
                             <br>
-                            {% if notifications != 0 %} 
-                            
+                            {% if notifications != None %} 
                                 <!-- TO DO: FOR LOOP-->
                                 {% for notification in notifications %}
                                 <div class="card-panel #00b0ff light-blue left-align white-text">
-                                    <h6><i class="material-icons">account_box</i> {{notification.body}} </h6> <!-- JINJA HERE-->
+                                    <h5><i class="material-icons">account_box</i> {{notification.body}}</h5> <!-- JINJA HERE-->
+                                    <h8><i class="material-icons">access_time</i> {{notification.dateNTime}}</h8> 
                                     <!-- <h8><b>Request: </b></h8> -->
                                     <br><br>
                                     <div class="row">
@@ -46,13 +46,13 @@
                                         </div>
                                         <div class="col s3 right-align">
                                             <form method="POST" action="/staffMain/reject">
-                                                <input type = "hidden" name = "notifid" value = "{{notification.id}}">
+                                                <input type = "hidden" name = "notifid" value = "{{notification.notifId}}">
                                                 <button class="waves-effect waves-light btn #f44336 red" type="submit" name="action"> Reject </button>    
                                             </form>
                                         </div>
                                         <div class="col s3">
                                             <form method="POST" action="/staffMain/accept">
-                                                <input type = "hidden" name = "notifid" value = "{{notification.id}}">
+                                                <input type = "hidden" name = "notifid" value = "{{notification.notifId}}">
                                                 <button class="waves-effect waves-light btn #4caf50 green" type="submit" name="action"> Accept </button>    
                                             </form>
                                         </div>
@@ -71,96 +71,81 @@
                 </div>
             </div>
         <!-- ACCEPTED REQUESTS -->
-        <div class="card-panel" style="margin: 25px; padding: 0;">
+        <div class="card-panel" style="margin: 25px; padding: 0; height: 300px;">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>Accepted Requests</h5>
             </span>
-            <form method="POST" action="/staffMain/selectReq">
                 <!-- TABLE FOR REQUESTS -->
-                <table class="black-text">
-                {% if acceptedrs != None %}
-                    <tbody>
-                    {% for acceptedr in acceptedrs %}
-                    <tr>
-                        <!-- <td></td>JINJA HERE -->
-                        <!-- <td> faculty </td>JINJA HERE -->
-                        <td><a href="" class="" type="submit" name="reqID" value ="{{acceptedr.id}}">{{acceptedr.body}}</a></td><!--JINJA HERE-->
-                    </tr>
-                    {% endfor %}
-                    </tbody>
+                {% if acceptedrs == None %}
+                <h6 class="black-text" style="margin-left: 8px;"> No accepted requests. </h6>
                 {% else %}
-                    <tbody>
-                    <tr>
-                        <td>None </td>
-                        <td>None </td>
-                        <td>None </td>
-                    </tr>
-                    </tbody>
+                <form method="POST" action="/staffMain/selectReq" style="margin-left: 10px;">
+                    <table class="black-text" >
+                        <thead>
+                            <tr>
+                                <th> Student ID </th>
+                                <th> Request </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for acceptedr in acceptedrs %}
+                        <tr>
+                            <!-- <td></td>JINJA HERE -->
+                            <td> {{acceptedr.studentId}} </td>
+                            <td>{{acceptedr.body}}</td>
+                            <td><button class="waves-effect waves-light btn #00b0ff light-blue accent-3 staffSel" type="submit" name="reqID" value ="{{acceptedr.requestID}}">SELECT</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>  
+                </form>
                 {% endif %} 
-                </table>   
-            </form>
-        </div>
+            </div>
         <!-- HISTORY SECTION -->
-        <div class="card-panel" style="margin: 25px; box-shadow: none; padding: 0;">
+        <div class="card-panel" style="margin: 25px; box-shadow: none; padding: 0; height: 300px;">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                 <h5>History</h5>
             </span>
-             <!-- TABLE FOR REQUESTS -->
-            {% if historyrs != None %}
-             <table class="black-text">
-                <thead>
-                  <tr>
-                      <th>Status</th>
-                      <th>Request</th>
-                      <!-- <th>Student</th> -->
-                  </tr>
-                </thead>
-        
-                <tbody>
-                {% for historyr in historyrs %}
-                  <tr>
-                    <td>{{historyr.status}} </td>
-                    <td>{{historyr.body}}</td>
-                    <!-- <td></td> -->
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>    
-            {% else %}
-            <table class="black-text">
-                <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Request</th>
-                    <!-- <th>Student</th> -->
-                </tr>
-                </thead>
-        
-                <tbody>
-                <tr>
-                    <td>None </td>
-                    <td>None </td>
-                    <!-- <td>None </td> -->
-                </tr>
-                </tbody>
-            </table>   
-            {% endif %} 
-        </div>
+                <!-- TABLE FOR REQUESTS -->
+                {% if historyrs == None %}
+                <h6 class="black-text" style="margin-left: 10px;"> No pending nor completed requests. </h6>
+                {% else %}
+                <table class="black-text" style="margin-left: 10px;">
+                    <thead>
+                        <tr>
+                            <th> Status </th>
+                            <th> Request </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for historyr in historyrs %}
+                    <tr>
+                        <td>{{historyr.status}} </td>
+                        <td>{{historyr.body}}</td>
+                        <!-- <td></td> -->
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>   
+                {% endif %} 
+            </div>
         </div>
     </div>
     <!-- RIGHT COLUMN -->
     <div class="col s12 m4 l6 #bbdefb blue lighten-4">
         <!-- WRITE RECOMMENDATION SECTION -->
         {% if selectedRec != 0 %} <!--ENABLE FORM-->
-        <form class="card-panel col s12 recform" style="margin-top: 35px; margin-left: 0px; padding: 0;  height: 587px;" method="" action="/staffMain/writeRecommendation">
+        <form class="card-panel col s12 recform" style="margin-top: 35px; margin-right: 50px; padding: 0;  height: 587px;" method="POST" action="/staffMain/writeRecommendation">
             <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
-                <h5>Write Recommendation</h5>
+                <h5>Write Recommendation</h5> 
+                <input type = "hidden" name ="id" value ="{{selectedRec.requestID}}">
             </span>
-            <textarea id="body" name="body" class="materialize-textarea" aria-required></textarea>
-            <input type = "hidden" name = "recId" value = "{{selectedRec.id}}">
-            <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action">Submit
-                <i class="material-icons right">send</i>
-            </button>
+            <div class="input-field col s12">
+                <textarea id="body" name="body" class="materialize-textarea"  aria-required></textarea>
+                <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
         </form>
         {% else %} <!--DISABLE FORM-->
         <form class="card-panel col s12 recform" style="margin-top: 35px; margin-left: 0px; padding: 0;  height: 587px;">
@@ -168,7 +153,7 @@
                 <h5>Write Recommendation</h5>
             </span>
             <h6 class="grey-text" style="margin-left: 15px;">Please select a REQUEST to get started writing!</h6>
-            <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 510px;" type="submit" name="action" disabled>Submit
+            <button class="btn waves-effect waves-light #00b0ff light-blue accent-3" style="margin-left: 485px;" type="submit" name="action" disabled>Submit
                 <i class="material-icons right">send</i>
             </button>
         </form>
