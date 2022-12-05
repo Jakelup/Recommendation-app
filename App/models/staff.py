@@ -6,7 +6,7 @@ class Staff(User):
     # staff has a list of notification objects
     notificationList = db.relationship('Notification', backref=db.backref('staff', lazy='joined'))
     # staff has a list of request objects
-    requestList = db.relationship('Request', backref=db.backref('staff', lazy='joined'))
+    requests = db.relationship('Request', backref=db.backref('staff', lazy='joined'))
     
     __mapper_args__ = {
         "polymorphic_identity": "staff",

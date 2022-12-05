@@ -5,6 +5,9 @@
 {{ super() }}
 
 {% block content %}
+<body style="background-color: #bbdefb">
+
+
 <div class="row flex">
 
     <!-- LEFT COLUMN -->
@@ -31,20 +34,27 @@
                             <br>
                             <br>
                             {% if notifications != 0 %} 
+                            
                                 <!-- TO DO: FOR LOOP-->
                                 {% for notification in notifications %}
                                 <div class="card-panel #00b0ff light-blue left-align white-text">
-                                    <h6><i class="material-icons">account_box</i><b> Student Name</b></h6> <!-- JINJA HERE-->
-                                    <h8><b>Request: </b></h8><h8>{{notification.body}}</h8><!-- JINJA HERE-->
+                                    <h6><i class="material-icons">account_box</i> {{notification.body}} </h6> <!-- JINJA HERE-->
+                                    <!-- <h8><b>Request: </b></h8> -->
                                     <br><br>
                                     <div class="row">
                                         <div class="col s6">
                                         </div>
                                         <div class="col s3 right-align">
-                                            <button method="GET" action="/staffMain/{{notification.id}}/reject" class="waves-effect waves-light btn #f44336 red" type="submit" > Reject </button>    
+                                            <form method="POST" action="/staffMain/reject">
+                                                <input type = "hidden" name = "notifid" value = "{{notification.id}}">
+                                                <button class="waves-effect waves-light btn #f44336 red" type="submit" name="action"> Reject </button>    
+                                            </form>
                                         </div>
                                         <div class="col s3">
-                                            <button method="GET" action="/staffMain/{{notification.id}}/accept" class="waves-effect waves-light btn #4caf50 green" type="submit" > Accept </button>    
+                                            <form method="POST" action="/staffMain/accept">
+                                                <input type = "hidden" name = "notifid" value = "{{notification.id}}">
+                                                <button class="waves-effect waves-light btn #4caf50 green" type="submit" name="action"> Accept </button>    
+                                            </form>
                                         </div>
                                     </div>
                                 </div>  
@@ -67,36 +77,18 @@
             </span>
             <form method="POST" action="/staffMain/selectReq">
                 <!-- TABLE FOR REQUESTS -->
-                {% if acceptedrs != None %}
                 <table class="black-text">
-                    <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Faculty</th>
-                        <th>Request</th>
-                    </tr>
-                    </thead>
-            
+                {% if acceptedrs != None %}
                     <tbody>
                     {% for acceptedr in acceptedrs %}
                     <tr>
-                        <td>{{acceptedr.studentId.name}}</td><!--JINJA HERE-->
-                        <td>{{acceptedr.studentId.faculty}} </td><!--JINJA HERE-->
+                        <!-- <td></td>JINJA HERE -->
+                        <!-- <td> faculty </td>JINJA HERE -->
                         <td><a href="" class="" type="submit" name="reqID" value ="{{acceptedr.id}}">{{acceptedr.body}}</a></td><!--JINJA HERE-->
                     </tr>
                     {% endfor %}
                     </tbody>
-                </table>   
                 {% else %}
-                <table class="black-text">
-                    <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Faculty</th>
-                        <th>Request</th>
-                    </tr>
-                    </thead>
-            
                     <tbody>
                     <tr>
                         <td>None </td>
@@ -104,8 +96,8 @@
                         <td>None </td>
                     </tr>
                     </tbody>
-                </table>   
                 {% endif %} 
+                </table>   
             </form>
         </div>
         <!-- HISTORY SECTION -->
@@ -120,16 +112,16 @@
                   <tr>
                       <th>Status</th>
                       <th>Request</th>
-                      <th>Student</th>
+                      <!-- <th>Student</th> -->
                   </tr>
                 </thead>
         
                 <tbody>
                 {% for historyr in historyrs %}
                   <tr>
-                    <td>{{historyr.Status}} </td><!--JINJA HERE-->
-                    <td>{{historyr.body}}</td><!--JINJA HERE-->
-                    <td>{{historyr.studentId.Name}}</td><!--JINJA HERE-->
+                    <td>{{historyr.status}} </td>
+                    <td>{{historyr.body}}</td>
+                    <!-- <td></td> -->
                   </tr>
                 {% endfor %}
                 </tbody>
@@ -140,7 +132,7 @@
                 <tr>
                     <th>Status</th>
                     <th>Request</th>
-                    <th>Student</th>
+                    <!-- <th>Student</th> -->
                 </tr>
                 </thead>
         
@@ -148,7 +140,7 @@
                 <tr>
                     <td>None </td>
                     <td>None </td>
-                    <td>None </td>
+                    <!-- <td>None </td> -->
                 </tr>
                 </tbody>
             </table>   
@@ -184,6 +176,6 @@
     </div> 
     
 </div>
-
+</body>
     
 {% endblock %}

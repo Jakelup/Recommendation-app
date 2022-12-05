@@ -16,8 +16,8 @@ from App.controllers import (
     get_all_students_json,
     get_user,
     get_student_reclist,
-    staff_signup,
-    student_signup,
+    create_staff,
+    create_student,
     validate_Staff,
     validate_Student,
     get_student_pendingR,
@@ -151,7 +151,7 @@ def getStudentSignUpPage():
 def studentSignUpAction():
     form = StudentRegister()
     data = request.form 
-    student = student_signup(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
+    student = create_student(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
     if student == None:
         flash('Error in creating account')
         return redirect(url_for('user_views.getStudentSignUpPage'))
@@ -179,7 +179,7 @@ def getStaffSignUpPage():
 def staffSignUpAction():
     form = StaffRegister()
     data = request.form 
-    staff = staff_signup(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
+    staff = create_staff(data['sID'], data['username'], data['password'], data['name'], data['faculty'], data['department'])
     if staff:
         flash('Account Created!')
         return redirect(url_for('user_views.loginStaff'))
