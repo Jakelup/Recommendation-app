@@ -107,26 +107,43 @@
                 <h5>History</h5>
             </span>
                 <!-- TABLE FOR REQUESTS -->
-                {% if historyrs == None %}
-                <h6 class="black-text" style="margin-left: 10px;"> No pending nor completed requests. </h6>
+                {% if completedrs == None %}
+                <h6 class="black-text" style="margin-left: 10px;"> No completed requests. </h6>
                 {% else %}
                 <table class="black-text" style="margin-left: 10px;">
                     <thead>
                         <tr>
-                            <th> Status </th>
-                            <th> Request </th>
+                            <th> Completed Requests </th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for historyr in historyrs %}
+                    {% for completedr in completedrs %}
                     <tr>
-                        <td>{{historyr.status}} </td>
-                        <td>{{historyr.body}}</td>
+                        <td>{{completedr.body}}</td>
                         <!-- <td></td> -->
                     </tr>
                     {% endfor %}
                     </tbody>
-                </table>   
+                </table>  
+                {% endif %} 
+                {% if rejectedrs == None %}
+                <br><h6 class="black-text" style="margin-left: 10px;"> No rejected requests. </h6>
+                {% else %}
+                <table class="black-text" style="margin-left: 10px;">
+                    <thead>
+                        <tr>
+                            <th> Rejected Requests </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for rejectedr in rejectedrs%}
+                    <tr>
+                        <td>{{rejectedr.body}}</td>
+                        <!-- <td></td> -->
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>  
                 {% endif %} 
             </div>
         </div>
