@@ -9,7 +9,8 @@ from App.controllers import (
     get_request,
     change_status,
     get_staff_acceptedR,
-    get_staff_historyR,
+    get_staff_completedR,
+    get_staff_rejectedR,
     get_all_notifs_unseen,
     # approve_notif, REMOVED DURING REFACTORING OF NOTICATION CONTROLLER
     get_staff_pendingR
@@ -39,12 +40,13 @@ def requestRejected():
     ##get accepted requests
     acceptedrs = get_staff_acceptedR(staffID)
         
-    ##get pending and completed requests
-    historyrs = get_staff_historyR(staffID)
+    ##get rejected and completed requests
+    completedrs = get_staff_completedR(staffID)
+    rejectedrs = get_staff_rejectedR(staffID)
 
     ##get all notifications
     notifications = get_all_notifs_unseen(staff)
-    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
+    return render_template('staffMain.html', staff=staff, completedrs=completedrs, rejectedrs=rejectedrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
 
 
 
@@ -70,15 +72,14 @@ def requestAccepted():
     ##get accepted requests
     acceptedrs = get_staff_acceptedR(staffID)
         
-    ##get pending and completed requests
-    historyrs = get_staff_historyR(staffID)
+    ##get rejected and completed requests
+    completedrs = get_staff_completedR(staffID)
+    rejectedrs = get_staff_rejectedR(staffID)
 
     ##get all notifications
     notifications = get_all_notifs_unseen(staff)
-    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
+    return render_template('staffMain.html', staff=staff, completedrs=completedrs, rejectedrs=rejectedrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
 
-
-    
 
 
 

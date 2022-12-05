@@ -23,7 +23,8 @@ from App.controllers import (
     get_student_pendingR,
     get_student_acceptedR,
     get_staff_acceptedR,
-    get_staff_historyR,
+    get_staff_completedR,
+    get_staff_rejectedR,
     login_user
 )
 

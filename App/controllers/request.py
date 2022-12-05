@@ -80,9 +80,30 @@ def get_staff_acceptedR(staffId):
     return None
 
 
-def get_staff_historyR(staffId):
-    #where request status is rejected & also completed
-    queries = [Request.staffId==staffId] + [Request.status==Status.REJECTED] + [Request.status==Status.COMPLETED]
+# def get_staff_historyR(staffId):
+#     #where request status is rejected & also completed
+#     queries = [Request.staffId==staffId] 
+#     queries += [Request.status==Status.COMPLETED]
+#     # queries += [Request.status==Status.REJECTED] 
+#     # doesnt work for a third filter
+#     requests = Request.query.filter(*queries).all()
+#     if requests:
+#         return requests
+#     return None
+
+
+def get_staff_completedR(staffId):
+    queries = [Request.staffId==staffId] 
+    queries += [Request.status==Status.COMPLETED]
+    requests = Request.query.filter(*queries).all()
+    if requests:
+        return requests
+    return None
+
+
+def get_staff_rejectedR(staffId):
+    queries = [Request.staffId==staffId] 
+    queries += [Request.status==Status.REJECTED]
     requests = Request.query.filter(*queries).all()
     if requests:
         return requests

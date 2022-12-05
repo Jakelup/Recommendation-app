@@ -13,7 +13,8 @@ from App.controllers import (
     get_request,
     get_staff,
     get_staff_acceptedR,
-    get_staff_historyR,
+    get_staff_completedR,
+    get_staff_rejectedR,
     get_all_notifs_unseen,
     create_recommendation,
     change_status
@@ -37,13 +38,13 @@ def start_recommendation():
     ##get accepted requests
     acceptedrs = get_staff_acceptedR(staffID)
         
-    ##get pending and completed requests
-    historyrs = get_staff_historyR(staffID)
+    ##get rejected and completed requests
+    completedrs = get_staff_completedR(staffID)
+    rejectedrs = get_staff_rejectedR(staffID)
 
     ##get all notifications
     notifications = get_all_notifs_unseen(staff)
-    
-    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=selectedRec, notifications=notifications)
+    return render_template('staffMain.html', staff=staff, completedrs=completedrs, rejectedrs=rejectedrs, acceptedrs=acceptedrs, selectedRec=selectedRec, notifications=notifications)
 
 
    
