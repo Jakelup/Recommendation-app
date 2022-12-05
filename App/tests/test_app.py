@@ -10,8 +10,8 @@ from App.controllers import (
     get_user,
     get_all_users,
     get_all_users_json,
-    student_signup,
-    staff_signup,
+    create_student,
+    create_staff,
     validate_Staff,
     validate_Student
 )

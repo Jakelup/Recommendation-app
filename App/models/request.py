@@ -26,8 +26,8 @@ class Request(db.Model):
         
     def toJSON(self):
         return{
-            'notifId': self.notifId,
             'staffId': self.staffId,
+            'studentId': self.studentId,
             'requestID': self.requestID,
             'body': self.body,
             'status': self.status,

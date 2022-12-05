@@ -6,20 +6,16 @@ from flask import jsonify
 # STAFF SIGNUP
 def create_staff(id, username, password, name, faculty, department):
     newStaff = Staff(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
-    db.session.add(newStaff)
-    db.session.commit()
-    return newStaff
-    # newUser = User(username=username, password=password, name=name, faculty=faculty, department=department, userType="staff")
-    # try:
-    #     db.session.add(newStaff)
-    #     db.session.commit()
-    #     # db.session.add(newUser)
-    #     # db.session.commit()
-    #     return newStaff
-    # except IntegrityError: # attempted to insert a duplicate user
-    #     db.session.rollback()
-    #     return None
-    
+    # db.session.add(newStaff)
+    # db.session.commit()
+    # return newStaff
+    try:
+        db.session.add(newStaff)
+        db.session.commit()
+        return newStaff
+    except IntegrityError: # attempted to insert a duplicate user or other errors
+        db.session.rollback()
+        return None
 
 
 
@@ -38,8 +34,8 @@ def get_all_staff_json():
     staff = get_all_staff()
     if not staff:
         return None
-    staff = [staf.toJSON() for staf in staff]
-    return staff
+    staff_json = [staff.toJSON() for staf in staff]
+    return staff_json
 
 def get_all_staff_notifs_json():
     staff = get_all_staff()
@@ -75,7 +71,7 @@ def get_staff_by_name(name):
     staff = [staf.toJSON() for staf in staff]
     if staff == []:
         return None
-    return jsonify(staff)
+    return staff
 
 # def search_staff(type, keyword):
 #     if (type=="ID"):

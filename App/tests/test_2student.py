@@ -21,7 +21,7 @@ LOGGER = logging.getLogger(__name__)
    Unit Tests
 '''
 
-class UserUnitTests(unittest.TestCase):
+class StudentUnitTests(unittest.TestCase):
 
     def test_create_student(self):
         student = Student(username= "sponge",password= "pass123",name = "spongebob",id= "816000111",faculty= "FST",department= "DCIT")
@@ -43,14 +43,14 @@ def empty_db():
     os.unlink(os.getcwd()+'/App/test.db')
 
 
-class StudentsIntegrationTests(unittest.TestCase):
+# class StudentIntegrationTests(unittest.TestCase):
     
-    #checks if a student user was created
-    def test_create_student(self):
-        student = create_student(id="816000000", username="boop", password="pass123", name="Betty", faculty= "FST", department="DCIT")
-        assert student.name == "Betty"
+#     #checks if a student user was created
+    # def test_create_student(self):
+    #     student = create_student(id="816000000", username="Boop", password="pass123", name="Betty", faculty= "FST", department="DCIT")
+    #     assert student.name == "Betty"
 
-    #checks to see if a student was be found by ID
+    # #checks to see if a student was be found by ID
     # def test_search_all_students(self):
     #     #id = "816000000"
     #     student = get_student("816000000")
@@ -58,7 +58,7 @@ class StudentsIntegrationTests(unittest.TestCase):
 
 
     #checks to see if all students were found
-    # def test_get_all_students_json(self):
+    #def test_get_all_students_json(self):
     #     #add another user so student wont be none
     #     student = create_student(id="816000000", username="boop", password="pass123", name="Betty", faculty= "FST", department="DCIT")
     #     s = create_student(id="816000111", username="spongebob", password="pass123", name="Spongebob", faculty= "FST", department="DCIT")
@@ -80,4 +80,3 @@ class StudentsIntegrationTests(unittest.TestCase):
     #     request = create_request(staffId="819000111", studentId="816000111", body="Request Made")
     #     assert request.body == "Request Made"
     #     #TypeError: __init__() missing 1 required positional argument: 'requestId'
-  

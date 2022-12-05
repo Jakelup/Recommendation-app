@@ -14,7 +14,7 @@ class Recommendation(db.Model):
         self.staffId = staffId
         self.studentId=studentId
         self.body=body
-        self.date = date.today()
+        self.date = date
     
     def toJSON(self):
         return{
