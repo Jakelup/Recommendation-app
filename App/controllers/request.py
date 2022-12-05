@@ -1,13 +1,13 @@
 from App.models import Request, Status
 from App.database import db
-from datetime import date
+from datetime import datetime
 
 
 def create_request(studentId, staffId, body):
     ### request ID auto generated???
-    datetime = date.today()
+    date = datetime.now()
     # deadline = date.today() + timedelta(days=10)# temp measure until buttons have been decided
-    request = Request(staffId=staffId, studentId=studentId, body=body, dateNTime=datetime, status=Status.PENDING)
+    request = Request(staffId=staffId, studentId=studentId, body=body, dateNTime=date, status=Status.PENDING)
     if request:
         db.session.add(request)
         db.session.commit()
@@ -36,7 +36,7 @@ def get_all_staff_request_JSON(staffId):
 
 
 def get_request(requestID):
-    return Request.query.filter_by(requestID).first()
+    return Request.query.filter_by(requestID=requestID).first()
     
 def get_request_JSON(requestID):
     req = get_request(requestID)
@@ -54,16 +54,20 @@ def change_status(requestID,newStatus):
 
 #STUDENT REQUESTS
 def get_student_pendingR(studentId):
-    queries = [Request.staffId==studentId]
+    queries = [Request.studentId==studentId]
     queries += [Request.status==Status.PENDING]
     requests = Request.query.filter(*queries).all()
-    return requests
+    if requests:
+        return requests
+    return None
 
 def get_student_acceptedR(studentId):
-    queries = [Request.staffId==studentId]
+    queries = [Request.studentId==studentId]
     queries += [Request.status==Status.ACCEPTED]
     requests = Request.query.filter(*queries).all()
-    return requests
+    if requests:
+        return requests
+    return None
 
 
 ##STAFF REQUESTS
@@ -71,18 +75,18 @@ def get_staff_acceptedR(staffId):
     queries = [Request.staffId==staffId]
     queries += [Request.status==Status.ACCEPTED]
     requests = Request.query.filter(*queries).all()
-    return requests
+    if requests:
+        return requests
+    return None
 
 
-def get_staff_historyR(id):
+def get_staff_historyR(staffId):
     #where request status is rejected & also completed
-    queries = [Request.staffId==id]
-    queries += [Request.status==Status.REJECTED]
-    queries += [Request.status==Status.COMPLETED]
-
-    requests = Request.query.filter(*queries)
-                                    
-    return requests
+    queries = [Request.staffId==staffId] + [Request.status==Status.REJECTED] + [Request.status==Status.COMPLETED]
+    requests = Request.query.filter(*queries).all()
+    if requests:
+        return requests
+    return None
 
 
 
@@ -91,5 +95,7 @@ def get_staff_pendingR(staffId):
     queries = [Request.staffId==staffId]
     queries += [Request.status==Status.PENDING]
     requests = Request.query.filter(*queries).all()
-    return requests
+    if requests:
+        return requests
+    return None
 

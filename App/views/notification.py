@@ -1,12 +1,16 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response, redirect, url_for
 from flask_jwt import jwt_required, current_identity
-from flask_login import login_required
+from flask_login import login_required, current_user
+from App.models import Status
 
 from App.controllers import (
     get_staff,
     get_notif,
     get_request,
     change_status,
+    get_staff_acceptedR,
+    get_staff_historyR,
+    get_all_notifs_unseen,
     # approve_notif, REMOVED DURING REFACTORING OF NOTICATION CONTROLLER
     get_staff_pendingR
 )
@@ -15,41 +19,65 @@ notification_views = Blueprint('notification_views', __name__, template_folder='
 
 
 ## REJECT
-@notification_views.route('/staffMain/reject', methods=['POST'])
+@notification_views.route('/staffMain/reject', methods=['GET','POST'])
 @login_required
 def requestRejected():
-    data = request.form
-    notification = get_notif(data['notifid'])
+    # data = request.form
+    notification = get_notif(request.form.get('notifid'))
     
     if notification:
         therequest = get_request(notification.requestId) #find the original request
 
         if therequest: 
         #change the status of that request
-            therequest = change_status(request.requestID, Status.REJECTED)
+            therequest = change_status(therequest.requestID, Status.REJECTED)
         notification.seen = True
     
-    return redirect(url_for('staff_views.staffMain'))
-    
+    staffID = current_user.id
+    staff = get_staff(staffID)
+
+    ##get accepted requests
+    acceptedrs = get_staff_acceptedR(staffID)
+        
+    ##get pending and completed requests
+    historyrs = get_staff_historyR(staffID)
+
+    ##get all notifications
+    notifications = get_all_notifs_unseen(staff)
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
+
 
 
 
 ##ACCEPT NOTIFICATION
-@notification_views.route('/staffMain/accept', methods=['POST'])
+@notification_views.route('/staffMain/accept', methods=['GET','POST'])
 @login_required
 def requestAccepted():
-    data = request.form
-    notification = get_notif(data['notifid'])
+    # data = request.form
+    notification = get_notif(request.form.get('notifid'))
     
     if notification:
         therequest = get_request(notification.requestId) #find the original request
 
         if therequest: 
         #change the status of that request
-            therequest = change_status(request.requestID, Status.ACCEPTED)
+            therequest = change_status(therequest.requestID, Status.ACCEPTED)
         notification.seen = True
     
-    return redirect(url_for('staff_views.staffMain'))
+    staffID = current_user.id
+    staff = get_staff(staffID)
+
+    ##get accepted requests
+    acceptedrs = get_staff_acceptedR(staffID)
+        
+    ##get pending and completed requests
+    historyrs = get_staff_historyR(staffID)
+
+    ##get all notifications
+    notifications = get_all_notifs_unseen(staff)
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
+
+
     
 
 

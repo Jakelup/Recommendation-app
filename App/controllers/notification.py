@@ -4,30 +4,37 @@ from sqlalchemy.exc import IntegrityError
 from App.controllers import get_staff, get_student
 
 #accept request (pending) objects and create a notification for it
-def create_notifications(requests, staff):
-    for request in requests:
-        student = get_student(request.studentId)
-        newbody = student.name + ": " + request.body 
-        newNotif = Notification(staffId=request.staffId, requestId=request.requestID, body=newbody, dateNTime=request.dateNTime, seen=False)
-        if newNotif:
-            db.session.add(newNotif)
-            db.session.commit()
-    notifications = get_all_notifs_unseen(staff)
-    return notifications
+def create_notification(request, name):
+    newbody = name + ": " + request.body 
+    newNotif = Notification(staffId=request.staffId, requestId=request.requestID, body=newbody, dateNTime=request.dateNTime, seen=False)
+    if newNotif:
+        db.session.add(newNotif)
+        db.session.commit()
+        return newNotif
+    return None
 
 
 #get all unseen notifications for a staff member
 def get_all_notifs_unseen(staff):
+    notifications = Notification.query.filter(Notification.staffId==staff.id).all()
+    for notification in notifications:
+        if notification.seen ==True:
+            db.session.delete(notification)
+            db.session.commit()
+
     queries = [Notification.staffId==staff.id]
     queries += [Notification.seen==False]
 
-    notifications = Notification.query.filter(*queries)
-    return notifications
+    notifications = Notification.query.filter(*queries).all()
+    if notifications:
+        return notifications
+    return None
 
 
 #get a notification by id
 def get_notif(notifID):
     return Notification.query.filter_by(notifId=notifID).first()
+
 
 
 # def send_notification(sentFromStudentID, requestBody, sentToStaffID):
@@ -64,7 +71,6 @@ def get_notif(notifID):
 # #search notification by Notification ID
 # def get_user_notif(staffID, notifID):
 #     return Notification.query.filter_by(sentToStaffID=staffID, notifID=notifID).first()
-
 
 
 

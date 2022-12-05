@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, Response, redirect, url_for
+from flask import Blueprint, render_template, jsonify, flash, request, send_from_directory, Response, redirect, url_for
 from flask_jwt import jwt_required, current_identity
 from flask_login import login_required, current_user
+from App.models import Status
 
 from App.controllers import (
     # send_recommendation, REMOVED DURING REFACTORING OF RECOMMENDATION.PY
@@ -9,7 +10,13 @@ from App.controllers import (
     get_recommendation,
     get_student_reclist_json, 
     get_student_reclist,
-    create_recommendation
+    get_request,
+    get_staff,
+    get_staff_acceptedR,
+    get_staff_historyR,
+    get_all_notifs_unseen,
+    create_recommendation,
+    change_status
 )
 
 recommendation_views = Blueprint('recommendation_views', __name__, template_folder='../templates')
@@ -19,16 +26,27 @@ recommendation_views = Blueprint('recommendation_views', __name__, template_fold
 @recommendation_views.route('/staffMain/selectReq', methods=['GET', 'POST'])
 @login_required 
 def start_recommendation():
-    data = request.form
-    selectedRec = get_request(data['recID'])
+    # data = request.form
 
-    staff = get_staff(current_user.id)
-    acceptedrs = get_staff_acceptedR(current_user.id)
-    historyrs = get_staff_historyR(current_user.id)
+    ##get request according to id selected
+    selectedRec = get_request(request.form.get('reqID'))
+    
+    staffID = current_user.id
+    staff = get_staff(staffID)
 
-    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=selectedRec)
+    ##get accepted requests
+    acceptedrs = get_staff_acceptedR(staffID)
+        
+    ##get pending and completed requests
+    historyrs = get_staff_historyR(staffID)
+
+    ##get all notifications
+    notifications = get_all_notifs_unseen(staff)
+    
+    return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=selectedRec, notifications=notifications)
 
 
+   
 ## Create route for /<staffID>/<reqID>/writeRecommendation
 #(Use change_status(reqID, "Completed"))
 # CREATE A RECOMMENDATION
@@ -38,11 +56,15 @@ def write_recommendation():
     data = request.form
 
     staff = get_staff(current_user.id)
-    selectedRec = get_request(data['reqID'])
-    studentid = selectedRec.studentId
+    id = data['id']
+    selectedReq = get_request(id)
 
-    if staff:
-        recommendation = create_recommendation(current_user.id, studentid, data['body'])
+    if selectedReq == None:
+        render_template('index.html')
+
+    selectedReq = change_status(selectedReq.requestID, Status.COMPLETED)
+
+    recommendation = create_recommendation(current_user.id, selectedReq.studentId, data['body'])
     
     flash('Recommendation created and sent!')
     return redirect(url_for('staff_views.staffMain'))
