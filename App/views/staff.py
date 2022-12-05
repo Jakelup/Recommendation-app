@@ -23,19 +23,18 @@ staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 @staff_views.route('/staffMain', methods=['GET'])
 @login_required 
 def staffMain():
-    staff = get_staff(current_user.id)
+    staffID = current_user.id
+    staff = get_staff(staffID)
+    acceptedrs = get_staff_acceptedR(staffID)
+    historyrs = get_staff_historyR(staffID)
 
-    acceptedrs = get_staff_acceptedR(current_user.id)
-    historyrs = get_staff_historyR(current_user.id)
-
-    ##create notications for all pending requests:
-    requests = get_staff_pendingR(current_user.id)
+    ##create notifications for all pending requests:
+    requests = get_staff_pendingR(staffID)
 
     if requests:
         notifications = create_notifications(requests, staff)
     else:
         notifications = 0
-
 
     return render_template('staffMain.html', staff=staff, historyrs=historyrs, acceptedrs=acceptedrs, selectedRec=0, notifications=notifications)
 

@@ -16,38 +16,6 @@ from flask_login import LoginManager
 #     return newuser
 
 
-# STUDENT SIGNUP
-def student_signup(id, username, password, name, faculty, department):
-    newStudent = Student(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
-    try:
-        db.session.add(newStudent)
-        db.session.commit()
-        return newStudent
-    except IntegrityError: # attempted to insert a duplicate user or other errors
-        db.session.rollback()
-        return None
-    #     return Response({'user already exists with this username'}, status=400) #error message
-    # return Response({'user created successfully'}, status=201) # success
-
-
-# STAFF SIGNUP
-def staff_signup(id, username, password, name, faculty, department):
-    newStaff = Staff(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
-    db.session.add(newStaff)
-    db.session.commit()
-    return newStaff
-    # newUser = User(username=username, password=password, name=name, faculty=faculty, department=department, userType="staff")
-    # try:
-    #     db.session.add(newStaff)
-    #     db.session.commit()
-    #     # db.session.add(newUser)
-    #     # db.session.commit()
-    #     return newStaff
-    # except IntegrityError: # attempted to insert a duplicate user
-    #     db.session.rollback()
-    #     return None
-    
-
 # get User by id
 def get_user(id):
     return User.query.get(id)

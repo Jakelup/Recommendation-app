@@ -3,9 +3,25 @@ from App.database import db
 from flask import jsonify
 
 
+# STAFF SIGNUP
 def create_staff(id, username, password, name, faculty, department):
-    newstaff = Staff(name=name, username=username, password=password, id=id, faculty=faculty, department=department)
-    return newstaff
+    newStaff = Staff(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
+    db.session.add(newStaff)
+    db.session.commit()
+    return newStaff
+    # newUser = User(username=username, password=password, name=name, faculty=faculty, department=department, userType="staff")
+    # try:
+    #     db.session.add(newStaff)
+    #     db.session.commit()
+    #     # db.session.add(newUser)
+    #     # db.session.commit()
+    #     return newStaff
+    # except IntegrityError: # attempted to insert a duplicate user
+    #     db.session.rollback()
+    #     return None
+    
+
+
 
 ###Staff Info Functions
 #search staff by ID

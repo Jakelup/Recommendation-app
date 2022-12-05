@@ -1,27 +1,33 @@
 from App.models import Notification
 from App.database import db
 from sqlalchemy.exc import IntegrityError
-from App.controllers import get_staff
+from App.controllers import get_staff, get_student
 
 #accept request (pending) objects and create a notification for it
 def create_notifications(requests, staff):
     for request in requests:
-        newNotif = Notification(staffId=request.staffId, requestID=request.requestID, body=request.body, dateNTime=request.dateNTime, seen=False)
+        student = get_student(request.studentId)
+        newbody = student.name + ": " + request.body 
+        newNotif = Notification(staffId=request.staffId, requestId=request.requestID, body=newbody, dateNTime=request.dateNTime, seen=False)
         if newNotif:
             db.session.add(newNotif)
             db.session.commit()
-    notifications = get_all_notifs(staff)
-    return notications
+    notifications = get_all_notifs_unseen(staff)
+    return notifications
 
 
 #get all unseen notifications for a staff member
-def get_all_notifs(staff):
-    return Notification.query.all(staffid=staff.id, seen=false)
+def get_all_notifs_unseen(staff):
+    queries = [Notification.staffId==staff.id]
+    queries += [Notification.seen==False]
+
+    notifications = Notification.query.filter(*queries)
+    return notifications
 
 
 #get a notification by id
 def get_notif(notifID):
-    return Notification.query.filter_by(notifID=notifID).first()
+    return Notification.query.filter_by(notifId=notifID).first()
 
 
 # def send_notification(sentFromStudentID, requestBody, sentToStaffID):

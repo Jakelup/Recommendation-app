@@ -44,6 +44,7 @@ def start_request():
 def write_request():
     data = request.form
     studentID = current_user.id
+    student = get_student(studentID)
 
     if studentID:
         therequest = create_request(studentID, data['staffId'], data['body'])

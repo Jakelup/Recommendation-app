@@ -54,43 +54,42 @@ def change_status(requestID,newStatus):
 
 #STUDENT REQUESTS
 def get_student_pendingR(studentId):
-    requests = get_all_student_requests(studentId)
-    if not requests:
-        return None
-    requests = Request.query.filter(Request.status== Status.PENDING).all()
+    queries = [Request.staffId==studentId]
+    queries += [Request.status==Status.PENDING]
+    requests = Request.query.filter(*queries).all()
     return requests
 
 def get_student_acceptedR(studentId):
-    requests = get_all_student_requests(studentId)
-    if not requests:
-        return None
-    requests = Request.query.filter(Request.status== Status.ACCEPTED).all()
+    queries = [Request.staffId==studentId]
+    queries += [Request.status==Status.ACCEPTED]
+    requests = Request.query.filter(*queries).all()
     return requests
-
 
 
 ##STAFF REQUESTS
 def get_staff_acceptedR(staffId):
-    requests = get_all_staff_requests(staffId)
-    if not requests:
-        return None
-    requests = Request.query.filter_by(Request.status== Status.ACCEPTED).all()
+    queries = [Request.staffId==staffId]
+    queries += [Request.status==Status.ACCEPTED]
+    requests = Request.query.filter(*queries).all()
     return requests
 
-def get_staff_historyR(staffId):
-    requests = get_all_staff_requests(staffId)
-    if not requests:
-        return None
-    requests = Request.query.filter_by(Request.status.in_([Status.REJECTED, Status.COMPLETED])).all()
+
+def get_staff_historyR(id):
+    #where request status is rejected & also completed
+    queries = [Request.staffId==id]
+    queries += [Request.status==Status.REJECTED]
+    queries += [Request.status==Status.COMPLETED]
+
+    requests = Request.query.filter(*queries)
+                                    
     return requests
 
 
 
 #staff does not handle pending requests directly, they are turned into notifications. notification.py uses this:
 def get_staff_pendingR(staffId):
-    requests = get_all_staff_requests(staffId)
-    if not requests:
-        return None
-    requests = Request.query.filter(Request.status==Status.PENDING).all()
+    queries = [Request.staffId==staffId]
+    queries += [Request.status==Status.PENDING]
+    requests = Request.query.filter(*queries).all()
     return requests
 

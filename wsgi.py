@@ -6,8 +6,8 @@ from App.database import create_db, get_migrate
 from App.main import create_app
 from App.controllers import (
     # create_user,
-    staff_signup,
-    student_signup,
+    create_staff,
+    create_student,
     get_all_users_json,
     get_all_users
 )

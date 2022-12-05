@@ -9,8 +9,8 @@ class Status(enum.Enum):
 
 class Request(db.Model):
     requestID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    staffId = db.Column(db.Integer,db.ForeignKey('staff.id'))
-    studentId = db.Column(db.Integer,db.ForeignKey('student.id'))
+    staffId = db.Column(db.Integer ,db.ForeignKey('staff.id'))
+    studentId = db.Column(db.Integer, db.ForeignKey('student.id'))
     body = db.Column(db.String, nullable=False)
     status = db.Column(db.Enum(Status), nullable = False, default = Status.PENDING)
     dateNTime = db.Column(db.TIMESTAMP,nullable=False)
