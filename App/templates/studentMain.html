@@ -81,7 +81,7 @@
     <div class="col s12 m4 l6 #bbdefb blue lighten-4 flex">
         <!-- WRITE REQUEST SECTION -->
         {% if selectedstaff != 0 %} <!--ENABLE FORM -->
-            <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; padding: 0;" method="POST" action="/studentMain/writeRequest">
+            <form class="card-panel col s12" style="margin: 0px; margin-top: 30px; padding: 0px;" method="POST" action="/studentMain/writeRequest">
                 <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                     <h5>Write a Request</h5> 
                 </span>
@@ -95,7 +95,7 @@
                 </div>
             </form>
             {% else %} <!--DISABLE FORM -->
-            <form class="card-panel col s12" style="margin: 15px; margin-top: 30px; height: 200px; padding: 0;">
+            <form class="card-panel col s12" style="margin: 0px; margin-top: 30px; height: 200px; padding: 0;">
                 <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                     <h5>Write a Request</h5>
                 </span>
@@ -108,7 +108,7 @@
             </form>
         {% endif %}
           <!-- STAFF SECTION -->
-            <div class="card-panel col s12" style="padding: 0; margin: 15px; ">
+            <div class="card-panel col s12" style="padding: 0px; margin: 0px; margin-top: 20px ; ">
                 <span class="col s12 #00b0ff light-blue accent-3 white-text z-depth-1" style="margin-bottom: 15px; height: 50px;">
                     <h5>Available Staff <i class="material-icons">people</i> </h5>
                 </span> 
@@ -145,7 +145,7 @@
     </div>
     <!-- FINAL COLUMN: RECOMMENDATION SECTION -->
     <div class="col s12 m4 l3 blue lighten-4">
-        <h6 class="center-align" style="margin-top: 25px;"><b>COMPLETED RECOMMENDATIONS</b></h6>
+        <h6 class="right-align" style="padding:0px; margin-top: 25px;"><b>COMPLETED RECOMMENDATIONS</b></h6>
         {% if recommendations != None %}
             {% for recommendation in recommendations %}
             <div class="card-panel #00b0ff light-blue left-align white-text">
