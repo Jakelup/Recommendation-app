@@ -23,7 +23,7 @@ from wsgi import app
 LOGGER = logging.getLogger(__name__)
 
 
-class UserUnitTests(unittest.TestCase):
+class StaffUnitTests(unittest.TestCase):
 
     def test_create_staff(self):
         staff = Staff(username= "sponge",password= "pass123",name = "spongebob",id= "819000111",faculty= "FST",department= "DCIT")
