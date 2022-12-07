@@ -6,9 +6,6 @@ from flask import jsonify
 # STAFF SIGNUP
 def create_staff(id, username, password, name, faculty, department):
     newStaff = Staff(id=id, username=username, password=password, name=name, faculty=faculty, department=department)
-    # db.session.add(newStaff)
-    # db.session.commit()
-    # return newStaff
     try:
         db.session.add(newStaff)
         db.session.commit()
@@ -46,7 +43,7 @@ def get_all_staff_notifs_json():
 
 #get the staff object for the recommendation
 def get_staff_by_recommendation(recommendation):
-    staff=Staff.query.get(id=recommendation.staffId)
+    staff=Staff.query.filter_by(id=recommendation.staffId).first()
     if staff:
         return staff
     return None
@@ -119,6 +116,7 @@ def create_recommendation(sentFromStaffID, sentToStudentID, recURL):
 ##This function should be used for staff submitting rec. Considering moving to views. Will review in testing
 def submit_recommendation(sentFromStaffID, sentToStudentID, recURL):
     student = Student.query.get(sentToStudentID)
+    # student = get_student(sentToStudentID)
     newrec = create_recommendation(sentFromStaffID, sentToStudentID, recURL)
     try:
         db.session.add(newrec)

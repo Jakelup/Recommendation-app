@@ -13,8 +13,8 @@ from App.controllers import (
 from wsgi import app
 LOGGER = logging.getLogger(__name__)
 
-
-def test_create_user():
-        user = User(id= "816000001",password= "pass123",username= "sponge",name = "spongebob",faculty= "FST",department= "DCIT")
-        assert user.name == "spongebob"
-        
+class UserUnitTests(unittest.TestCase):
+    def test_create_user(self):
+            user = User(id= "816000001",password= "pass123",username= "sponge",name = "spongebob",faculty= "FST",department= "DCIT")
+            assert user.name == "spongebob"
+            

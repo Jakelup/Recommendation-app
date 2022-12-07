@@ -1,5 +1,6 @@
 from App.models import Student, Recommendation
 from App.database import db
+from flask import jsonify
 
 from sqlalchemy.exc import IntegrityError
 

@@ -24,7 +24,7 @@ def get_all_recommendations_json():
     return recs
 
 def get_recommendation(studentID, recID):
-    rec = Recommendation.query.filter_by(sentToStudentID=studentID, recID=recID).first()
+    rec = Recommendation.query.filter_by(studentId=studentID, recId=recID).first()
     if rec:
         return rec.toJSON()
     return None
