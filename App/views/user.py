@@ -148,7 +148,7 @@ def getStudentSignUpPage():
     return render_template('signUp.html', form=form, usertype="Student")
 
 
-@user_views.route('/signup/Student', methods = ['GET', 'POST'])
+@user_views.route('/signup/Student', methods = ['POST'])
 def studentSignUpAction():
     form = StudentRegister()
     data = request.form 
