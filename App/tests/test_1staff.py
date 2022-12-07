@@ -26,7 +26,7 @@ LOGGER = logging.getLogger(__name__)
 class StaffUnitTests(unittest.TestCase):
 
     def test_create_staff(self):
-        staff = Staff(username= "sponge",password= "pass123",name = "spongebob",id= "819000111",faculty= "FST",department= "DCIT")
+        staff = Staff(username= "sponge",password= "pass123",name = "spongebob",id= "816000111",faculty= "FST",department= "DCIT")
         assert staff.name == "spongebob"
 '''
     Integration Tests
@@ -50,7 +50,6 @@ class StaffIntegrationTests(unittest.TestCase):
         assert staff.name == "Betty"
 
     #checks to see if a staff was be found by ID
-
     def test_search_all_staff(self):
         #id = "816000000"
         staff = get_staff("819000000")
@@ -65,26 +64,26 @@ class StaffIntegrationTests(unittest.TestCase):
     #     self.assertListEqual([{'department'=="DCIT",'faculty'=="FST",'name'=="Betty",'staffId'=="816000000"}], staff_json)
 
             
-        #       list error where list is here but backward?
-        # E       First differing element 0:
-        # E       {False}
-        # E       {'staffId': 819000000, 'name': 'Betty', 'faculty': 'FST', 'department': 'DCIT'}
-        # E       
-        # E       - [{False}]
-        # E       + [{'department': 'DCIT',
-        # E       +   'faculty': 'FST',
-        # E       +   'name': 'Betty',
-        # E       +   'staffId': 819000000}]
-            
     # def test_get_staff_by_name(self):
     #     #idk why not working
     #     staff = get_staff_by_name("Betty")
     #     # assert staff.id == 819000000
     #     self.assertListEqual([{ 'staffId'=="819000000",'name'=="Betty", 'faculty'=="FST", 'department'=="DCIT"}], staff)
 
-   
+
+    #test to see if create recommendation is working
     def test_create_recommendation(self):
-        recom = create_recommendation(sentFromStaffID = "819000111", sentToStudentID = "816000111", body = "Recommendation Made")
+        recom = create_recommendation(sentFromStaffID = "819000000", sentToStudentID = "816000111", body = "Recommendation Made")
         assert recom.body == "Recommendation Made"
+    #cannot be moved to correct file, DB error where there is no read write permissions, test fails if moved.
     
-    #def test_submit_recommendation():
+    #test to see if get staff by recommendation is working
+    def test_get_staff_by_recommendation(self):
+        recom = create_recommendation(sentFromStaffID = "819000000", sentToStudentID="816000111", body = "Recommendation Made")
+        staff = get_staff_by_recommendation(recom)
+        assert staff.id ==819000000
+
+    # def test_submit_recommendation(self):
+    #     recom = submit_recommendation(sentFromStaffID= "819000000", sentToStudentID="816000111", recURL="this is a recommendation.")
+    #     assert recom.body == "this is a recommendation."
+    

@@ -46,13 +46,14 @@ def empty_db():
 # class StudentIntegrationTests(unittest.TestCase):
     
 #     #checks if a student user was created
-    # def test_create_student(self):
-    #     student = create_student(id="816000000", username="Boop", password="pass123", name="Betty", faculty= "FST", department="DCIT")
-    #     assert student.name == "Betty"
+    def test_create_student(self):
+        student = create_student(id="816000000", username="Boop", password="pass123", name="Betty", faculty= "FST", department="DCIT")
+        assert student.name == "Betty"
+
 
     # #checks to see if a student was be found by ID
     # def test_search_all_students(self):
-    #     #id = "816000000"
+    #     id = "816000000"
     #     student = get_student("816000000")
     #     assert student.name == "Betty"
 

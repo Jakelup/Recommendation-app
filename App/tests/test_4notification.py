@@ -46,21 +46,29 @@ def empty_db():
     
     #cant do other test if the create integration fails
     #test below was a temp measure
-    def test_create_notification(self):
-        date = datetime.now()
-        notification = Notification(staffId= "819000111",requestId= "1",body= "request" ,dateNTime=date, seen=False)
-        assert notification.body == "request"
+    # def test_create_notification(self):
+    #     # date = datetime.now()
+    #     # notification = Notification(staffId= "819000111",requestId= "1",body= "request" ,dateNTime=date, seen=False)
+    #     assert notification.body == "request"
 
 
 
-#     #checks if a request was created
-    # test currently failing, AttributeError: 'str' object has no attribute 'body'
+    # #checks if a notification was created
+    # #test currently failing, AttributeError: 'str' object has no attribute 'body'
     # def test_create_notification(self):
     #     notification = create_notification(request= "this is a request",name= "Betty")
     #     assert notification.body == "request"
 
+    # #checks if a notification can be found by id
     # def test_get_notif(self):
-    #     notif = get_notif("1")
+    #     notif = get_notif(1)
     #     assert notif.body == "request"
+    
+    # #checks if a notification status can be changed
+    # def test_change_status(self):
+    #     notif = create_notification(request= "this is a request",name= "Betty")
+    #     change_status(notif, "REJECTED")
+    #     assert notif.status == "REJECTED"
+    
 
 
